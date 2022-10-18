@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 
 app.get("/", (request, response) => {
-  response.send("<h1>This is our backend test with team acc on render</h1>");
+response.send("<h1>This is our backend test with team acc on render</h1>");
 });
 
 const PORT = 3001;
