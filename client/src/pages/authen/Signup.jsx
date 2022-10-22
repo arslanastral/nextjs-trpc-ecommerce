@@ -8,20 +8,18 @@ function Signup() {
   const initialValues = {
     username: "",
     password: "",
-    rememberme: false,
+    email: "",
   };
   // validate form
   const validationSchema = Yup.object().shape({
     username: Yup.string()
       .required("Username is required.")
       .max(30, "Username should not exceed 30 characters"),
-    email: Yup.string()
-      .required("Email address is required.")
-      .max(150, "Email should not exceed 150 characters"),
+    email: Yup.string().required("Email address is required."),
+
     password: Yup.string()
       .required("Password is required.")
       .max(32, "Password should not exceed 32 characters"),
-    rememberme: Yup.bool(),
   });
 
   const checkUserName = (action, event) => {
@@ -40,7 +38,10 @@ function Signup() {
           enableReinitialize
           initialValues={initialValues}
           validationSchema={validationSchema}
-          //onSubmit={onSubmit}
+          onSubmit={async (values, { setSubmitting }) => {
+            await new Promise((r) => setTimeout(r, 500));
+            setSubmitting(false);
+          }}
         >
           {(formik) => (
             <Form className="relative p-5">
@@ -51,65 +52,70 @@ function Signup() {
                   type="text"
                   name="username"
                   placeholder="Username"
-                  className="w-full h-10 pl-2"
                   autoComplete="off"
                   onChange={(e) => checkUserName(formik, e)}
+                  className={`w-full h-10 pl-2  rounded-md ${
+                    formik.errors.username
+                      ? "border-solid border-2 border-red-600"
+                      : "border-solid border-2 border-slate-200"
+                  }`}
                 />
               </div>
-              <div className="validate-show">
-                <ErrorMessage
-                  name="username"
-                  component="div"
-                  className="negative"
-                />
-              </div>
+
+              <ErrorMessage
+                name="username"
+                component="div"
+                className="text-red-400"
+              />
+
               <div className="flex flex-col items-start mb-4">
                 <label className="mb-2">Email</label>
                 <Field
-                  type="text"
+                  type="email"
                   name="email"
                   placeholder="Email"
-                  className="w-full h-10 pl-2"
                   autoComplete="off"
-                  onChange={(e) => checkUserName(formik, e)}
+                  className={`w-full h-10 pl-2  rounded-md  ${
+                    formik.errors.email
+                      ? "border-solid border-2 border-red-600"
+                      : "border-solid border-2 border-slate-200"
+                  }`}
                 />
               </div>
-              <div className="validate-show">
-                <ErrorMessage
-                  name="email"
-                  component="div"
-                  className="negative"
-                />
-              </div>
+
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="text-red-400"
+              />
+
               <div className="flex flex-col items-start mb-4">
                 <label className="mb-2">Password</label>
                 <input
                   type="password"
                   name="password"
                   placeholder="Password"
-                  className={`w-full h-10 pl-2 ${
+                  className={`w-full h-10 pl-2  rounded-md  ${
                     formik.errors.password && formik.touched.password
-                      ? "error-border"
-                      : ""
+                      ? "border-solid border-2 border-red-600"
+                      : "border-solid border-2 border-slate-200"
                   }`}
                   autoComplete="off"
                   formik={formik}
                 />
               </div>
-              <div className="validate-show">
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  className="negative"
-                />
-              </div>
+
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="text-red-400"
+              />
 
               <div className="text-center">
-                <button className="w-full my-2 bg-slate-500 text-white">
+                <button className="w-full my-2 bg-[#614C47] text-white">
                   Sign Up
                 </button>
               </div>
-              {/* <ErrorServer msg={errorServer} /> */}
 
               <div className="text-center p3-regular-14 mb-4 mt-7">
                 <p>

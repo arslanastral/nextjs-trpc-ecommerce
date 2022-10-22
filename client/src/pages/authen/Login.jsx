@@ -6,7 +6,7 @@ import { ConnectedFocusError } from "focus-formik-error";
 function login() {
   // initialvalues
   const initialValues = {
-    username: "",
+    email: "",
     password: "",
     rememberme: false,
   };
@@ -51,7 +51,11 @@ function login() {
                   type="text"
                   name="email"
                   placeholder="Email"
-                  className="w-full h-10 pl-2"
+                  className={`w-full h-10 pl-2  rounded-md  ${
+                    formik.errors.email
+                      ? "border-solid border-2 border-red-600"
+                      : "border-solid border-2 border-slate-200"
+                  }`}
                   autoComplete="off"
                   onChange={(e) => checkUserName(formik, e)}
                 />
@@ -60,7 +64,7 @@ function login() {
                 <ErrorMessage
                   name="email"
                   component="div"
-                  className="negative"
+                  className="text-red-600"
                 />
               </div>
               <div className="flex flex-col items-start mb-4">
@@ -69,10 +73,10 @@ function login() {
                   type="password"
                   name="password"
                   placeholder="Password"
-                  className={`w-full h-10 pl-2 ${
-                    formik.errors.password && formik.touched.password
-                      ? "error-border"
-                      : ""
+                  className={`w-full h-10 pl-2  rounded-md  ${
+                    formik.errors.email
+                      ? "border-solid border-2 border-red-600"
+                      : "border-solid border-2 border-slate-200"
                   }`}
                   autoComplete="off"
                   formik={formik}
@@ -82,7 +86,7 @@ function login() {
                 <ErrorMessage
                   name="password"
                   component="div"
-                  className="negative"
+                  className="text-red-600"
                 />
               </div>
 
