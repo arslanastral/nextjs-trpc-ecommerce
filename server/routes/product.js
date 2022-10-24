@@ -1,15 +1,20 @@
-const express = require("express");
-const router = express.Router();
-const upload = require("../middleware/multer");
-const productContoller = require("../controllers/products");
-const { ensureAuth, ensureGuest } = require("../middleware/auth");
+import { Router } from "express";
+const router = Router();
+import { single } from "../middleware/multer";
+import {
+  getPost,
+  createPost,
+  likePost,
+  deletePost,
+} from "../controllers/products";
+import { ensureAuth, ensureGuest } from "../middleware/auth";
 
-router.get("/:id", ensureAuth, productContoller.getPost);
+router.get("/:id", ensureAuth, getPost);
 
-router.post("/createPost", upload.single("file"), productContoller.createPost);
+router.post("/createPost", single("file"), createPost);
 
-router.put("/likePost/:id", productContoller.likePost);
+router.put("/likePost/:id", likePost);
 
-router.delete("/deletePost/:id", productContoller.deletePost);
+router.delete("/deletePost/:id", deletePost);
 
-module.exports = router;
+export default router;
