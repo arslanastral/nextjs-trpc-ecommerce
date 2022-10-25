@@ -1,26 +1,24 @@
 {
-  "name": "vite-mern-template",
-  "version": "1.1.1",
-  "main": "server.js",
+  "name": "v41-bears-team-32",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "server": "nodemon server/server.js",
-    "start": "nodemon server/server.js",
-    "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "repository": "https://github.com/apicgg/vite-mern-template.git",
-  "author": "Anurag Pramanik <p.anurag@outlook.com>",
-  "license": "MIT",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "concurrently": "^7.3.0",
-    "dotenv": "^16.0.1",
-    "express": "^4.18.1",
-    "express-async-handler": "^1.2.0",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.5.1"
+    "next": "12.3.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.19"
+    "@types/node": "18.11.5",
+    "@types/react": "18.0.22",
+    "@types/react-dom": "18.0.7",
+    "eslint": "8.26.0",
+    "eslint-config-next": "12.3.1",
+    "typescript": "4.8.4"
   }
 }
