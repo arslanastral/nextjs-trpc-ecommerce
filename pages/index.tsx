@@ -1,9 +1,11 @@
-import type { NextPage } from 'next';
 import Head from 'next/head';
+import { PageWithLayout } from '@/lib/types/page';
+import { ReactElement } from 'react';
+import Layout from '@/lib/components/Layouts/Layout';
 
-const Home: NextPage = () => {
+const Home: PageWithLayout = () => {
   return (
-    <div className="flex items-center justify-center 2xl:justify-around min-h-screen bg-black text-white">
+    <div className="flex items-center justify-center 2xl:justify-around min-h-screen min-w-full bg-black text-white">
       <Head>
         <title>Store</title>
         <meta name="description" content="An ecommerce store" />
@@ -13,9 +15,13 @@ const Home: NextPage = () => {
         />
       </Head>
 
-      <h1 className="text-4xl">Store 🛒🔥🔥🔥</h1>
+      <h1 className="text-4xl">Store Items</h1>
     </div>
   );
+};
+
+Home.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
 };
 
 export default Home;
