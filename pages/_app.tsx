@@ -1,5 +1,6 @@
 import '@/lib/styles/globals.css';
 import { SessionProvider } from 'next-auth/react';
+import { Session } from 'next-auth';
 import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';
 import { RouterTransition } from '@/lib/components/UX/RouterTransition';
 import type { AppProps } from 'next/app';
@@ -10,7 +11,9 @@ type Page<P = {}> = NextPage<P> & {
   getLayout?: (page: ReactNode) => ReactNode;
 };
 
-type Props = AppProps & { Component: Page };
+type Props = AppProps<{
+  session: Session;
+}> & { Component: Page };
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: Props) {
   const getLayout = Component.getLayout ?? ((page: ReactNode) => page);
