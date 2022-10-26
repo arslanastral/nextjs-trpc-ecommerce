@@ -6,10 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "netlify-build": "prisma generate && prisma migrate deploy && next build"
   },
   "dependencies": {
     "@emotion/react": "^11.10.4",
+    "@emotion/server": "^11.10.0",
     "@hookform/resolvers": "^2.9.10",
     "@mantine/core": "^5.6.2",
     "@mantine/hooks": "^5.6.2",

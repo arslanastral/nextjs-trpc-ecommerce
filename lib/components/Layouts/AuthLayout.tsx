@@ -1,5 +1,5 @@
 const AuthLayout = ({ children }: React.PropsWithChildren<{}>) => {
-  return <>{children}</>;
+  return <div className="min-h-screen">{children}</div>;
 };
 
 export default AuthLayout;
