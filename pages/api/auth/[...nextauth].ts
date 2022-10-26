@@ -133,6 +133,8 @@ export function requestWrapper(
             type?: string;
           };
 
+          console.log(password);
+
           if (type === 'login') {
             const loginEndpoint = process.env.NEXTAUTH_LOGIN;
             const res = await fetch(loginEndpoint, {
