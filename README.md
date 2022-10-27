@@ -1,34 +1,42 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+![zavy-icon](https://raw.githubusercontent.com/chingu-voyages/v41-bears-team-32/main/public/favicon.ico)
 
-## Getting Started
+# Zavy - An ecommerce store
 
-First, run the development server:
+🚀 **Deploying at:** [https://zavy.netlify.app/](https://zavy.netlify.app/)  
+⚠ **Status:** In development
 
-```bash
-npm run dev
-# or
-yarn dev
+Zavy is an ecommerce store in development by `v41-bears-team-32`.
+
+## Local Development:
+
+### Database Setup:
+
+This project uses PostgreSQL as the database. The easiest way to install it is using docker. Enter the following command on your terminal if you already have docker installed. This will install and run the latest version of postgreSQL.
+
+$ `docker run --name zavy -e POSTGRES_PASSWORD=password -p 5432:5432 -d --rm postgres`
+
+### Project Setup
+
+This project uses [pnpm](https://pnpm.io/) for managing dependancies. If you don't already have it installed, install it using `npm install -g pnpm` or choose other available methods [here](https://pnpm.io/installation) and then:
+
+- `git clone` this repo & `cd v41-bears-team-32`
+- `pnpm install`
+- `pnpm exec prisma migrate dev` (_Will apply migrations, make sure database setup is completed_)
+- `pnpm dev`
+
+### Environment Variables:
+
+`.env.example` file is present in the root directory of project and includes all required envirnoment variables. Following values will get you started:
+
 ```
+# NEXTAUTH_SECRET can be generated using "openssl rand -base64 32"
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+DATABASE_URL=postgresql://postgres:password@localhost:5432/postgres
+GOOGLE_CLIENT_SECRET=<client-secret>
+GOOGLE_CLIENT_ID=<client-id>
+NEXTAUTH_URL=http://localhost:3000/
+NEXTAUTH_SECRET=VJ13WCJAjH1SNoLpvUUIWhvk9+cEfsnOMnjssSsvzJQ=
+NEXTAUTH_LOGIN=http://localhost:3000/api/login
+NEXTAUTH_SIGNUP=http://localhost:3000/api/signup
+CURRENT_ENV=dev
+```
