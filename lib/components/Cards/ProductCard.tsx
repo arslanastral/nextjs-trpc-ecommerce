@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 export type Product = {
   id: number;
   title: string;
@@ -19,7 +17,7 @@ export default function ProductCard({ id, title, image, description, price }: Pr
       key={id}
       className="flex flex-col justify-around m-7 bg-slate-100 p-5 rounded-md text-ellipsis"
     >
-      <Image src={image} alt={description} layout="fill" className="h-60 w-80 object-contain" />
+      <img src={image} alt={description} className="h-60 w-80 object-contain" />
       <h1 className="w-[15rem] text-zinc-800 text-2xl font-bold">{title}</h1>
       <h1 className="text-right text-primary text-2xl text-[#614c47] font-bold">US ${price}</h1>
       <p className="text-right text-zinc-800">sellername</p>
