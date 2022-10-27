@@ -13,8 +13,8 @@ export function UserAuthCheck({
   return (
     <Text align="center" mt="md">
       {message}{' '}
-      <Link href={link}>
-        <a className="text-blue-700">{action}</a>
+      <Link className="text-blue-700" href={link}>
+        {action}
       </Link>
     </Text>
   );
