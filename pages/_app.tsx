@@ -24,34 +24,34 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
 
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-      <SessionProvider session={session}>
-        <MantineProvider
-          withGlobalStyles
-          theme={{
-            fontFamily: 'Inter',
-            headings: { fontFamily: 'Inter' },
-            colorScheme: colorScheme,
-            primaryShade: 5,
-            defaultRadius: 12,
-            globalStyles: (theme) => ({
-              '*, *::before, *::after': {
-                boxSizing: 'border-box',
-                ...theme.fn.fontStyles()
-              },
+      <MantineProvider
+        withGlobalStyles
+        theme={{
+          fontFamily: 'Inter',
+          headings: { fontFamily: 'Inter' },
+          colorScheme: colorScheme,
+          primaryShade: 5,
+          defaultRadius: 12,
+          globalStyles: (theme) => ({
+            '*, *::before, *::after': {
+              boxSizing: 'border-box',
+              ...theme.fn.fontStyles()
+            },
 
-              body: {
-                backgroundColor:
-                  theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
-                color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-                lineHeight: theme.lineHeight
-              }
-            })
-          }}
-        >
-          <RouterTransition />
+            body: {
+              backgroundColor:
+                theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
+              color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+              lineHeight: theme.lineHeight
+            }
+          })
+        }}
+      >
+        <RouterTransition />
+        <SessionProvider session={session}>
           {getLayout(<Component {...pageProps} />)}
-        </MantineProvider>
-      </SessionProvider>
+        </SessionProvider>
+      </MantineProvider>
     </ColorSchemeProvider>
   );
 }
