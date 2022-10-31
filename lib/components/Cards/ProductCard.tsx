@@ -1,16 +1,5 @@
+import { Product } from '@/lib/types/product';
 import Image from 'next/image';
-export type Product = {
-  id: number;
-  title: string;
-  price: number | string;
-  description: string;
-  category: string;
-  image: string;
-  rating: {
-    rate: number;
-    count: number;
-  };
-};
 
 export default function ProductCard({ id, title, image, description, price }: Product) {
   return (
