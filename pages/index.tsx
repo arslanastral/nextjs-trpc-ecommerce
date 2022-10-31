@@ -16,7 +16,7 @@ const Home: PageWithLayout = () => {
   }, []);
 
   return (
-    <div className="flex flex-col p-6 items-center justify-center 2xl:justify-around min-h-screen min-w-full bg-slate-50 text-white">
+    <div className="flex flex-col p-6 items-center justify-center 2xl:justify-around min-h-screen min-w-full text-white">
       <Head>
         <title>Zavy</title>
         <meta name="description" content="An ecommerce store" />
