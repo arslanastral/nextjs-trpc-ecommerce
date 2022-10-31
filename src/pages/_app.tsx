@@ -6,6 +6,7 @@ import { RouterTransition } from '@/lib/components/UX/RouterTransition';
 import type { AppProps } from 'next/app';
 import { ReactNode, useState } from 'react';
 import { NextPage } from 'next';
+import { trpc } from '../utils/trpc';
 
 type Page<P = {}> = NextPage<P> & {
   getLayout?: (page: ReactNode) => ReactNode;
@@ -15,7 +16,7 @@ type Props = AppProps<{
   session: Session;
 }> & { Component: Page };
 
-export default function App({ Component, pageProps: { session, ...pageProps } }: Props) {
+function App({ Component, pageProps: { session, ...pageProps } }: Props) {
   const getLayout = Component.getLayout ?? ((page: ReactNode) => page);
 
   const [colorScheme, setColorScheme] = useState<ColorScheme>('light');
@@ -55,3 +56,5 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
     </ColorSchemeProvider>
   );
 }
+
+export default trpc.withTRPC(App);
