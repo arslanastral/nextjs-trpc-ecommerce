@@ -14,10 +14,7 @@ export type Product = {
 
 export default function ProductCard({ id, title, image, description, price }: Product) {
   return (
-    <div
-      key={id}
-      className="flex flex-col justify-around m-7 bg-slate-100 p-5 rounded-md text-ellipsis"
-    >
+    <div key={id} className="flex flex-col justify-around m-7 p-5 rounded-md text-ellipsis">
       <Image
         src={image}
         alt={description}
