@@ -78,7 +78,7 @@ const data = [
   { link: '', label: 'Other' }
 ];
 
-export function SideNavBar({ opened }: any) {
+export function SideNavBar({ opened }: { opened: boolean }) {
   const { classes, cx } = useStyles();
   const [active, setActive] = useState('Billing');
   const title = opened ? 'Close navigation' : 'Open navigation';
