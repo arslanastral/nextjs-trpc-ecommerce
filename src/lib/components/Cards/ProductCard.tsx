@@ -1,5 +1,6 @@
 import { Product } from '@/lib/types/product';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function ProductCard({ id, title, image, description, price }: Product) {
   return (
@@ -11,7 +12,9 @@ export default function ProductCard({ id, title, image, description, price }: Pr
         height={275}
         width={250}
       />
-      <h1 className="w-[15rem] text-zinc-800 text-2xl font-bold">{title}</h1>
+      <h1 className="w-[15rem] text-zinc-800 text-2xl font-bold">
+        <Link href={`/products/${id}`}>{title}</Link>
+      </h1>
       <h1 className="text-right text-primary text-2xl text-[#614c47] font-bold">US ${price}</h1>
       <p className="text-right text-zinc-800">sellername</p>
       <button className="text-[#614c47] border border-[#614c47] rounded-md mt-4 py-1 w-full">
