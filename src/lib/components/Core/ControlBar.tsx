@@ -24,7 +24,7 @@ const useStyles = createStyles((theme) => ({
     fontWeight: 400,
 
     '&:focus': {
-      borderColor: theme.colors.green[6]
+      borderColor: theme.colors.brown[6]
     }
   }
 }));
@@ -50,7 +50,7 @@ function ControlBar() {
           size="sm"
         />
 
-        <ActionIcon size="lg" color="green" title="Checkout">
+        <ActionIcon size="lg" color="brown" title="Checkout">
           <IconShoppingCart size={20} />
         </ActionIcon>
 
@@ -59,7 +59,7 @@ function ControlBar() {
             <Button
               onClick={() => router.push('/login')}
               leftIcon={<IconUser size="16px" />}
-              className="text-[16px] font-medium rounded-lg hidden lg:block bg-green-600 hover:bg-green-700"
+              className="text-[16px] font-medium rounded-lg hidden lg:block bg-brown-600 hover:bg-brown-700"
               variant="filled"
               size="sm"
             >
@@ -70,13 +70,13 @@ function ControlBar() {
 
         {session && (
           <>
-            <ActionIcon onClick={() => signOut()} size="lg" color="green" title="Logout">
+            <ActionIcon onClick={() => signOut()} size="lg" color="brown" title="Logout">
               <IconLogout size={20} />
             </ActionIcon>
             <Button
               onClick={() => router.push('/login')}
               leftIcon={<IconBolt size="16px" />}
-              className="text-[16px] font-medium rounded-lg hidden lg:block hover:bg-green-50"
+              className="text-[16px] font-medium rounded-lg hidden lg:block hover:bg-brown-50"
               variant="outline"
               size="sm"
             >

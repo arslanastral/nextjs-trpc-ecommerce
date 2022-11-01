@@ -4,9 +4,12 @@ import Logo from '@/lib/components/Core/Logo';
 import { Product } from '@/lib/types/product';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { Button } from '@mantine/core';
+
 function Products() {
   const [product, setProduct] = useState<Product>();
   const [clickedReadMore, setClickedReadMore] = useState(false);
+  const [orderCount, setOrderCount] = useState(1);
   const router = useRouter();
   const { id } = router.query;
   const MAX_CHARACTERS = 135;
@@ -19,6 +22,14 @@ function Products() {
         .then((data) => setProduct(data));
     }
   }, [id]);
+  function addOrderCount() {
+    setOrderCount((oldCount) => oldCount + 1);
+  }
+  function subractOrderCount() {
+    if (orderCount > 1) {
+      setOrderCount((oldCount) => oldCount - 1);
+    }
+  }
   if (product?.description && product?.description.length > MAX_CHARACTERS) {
     isMaxCharacters = true;
   }
@@ -63,6 +74,35 @@ function Products() {
               </>
             )}
           </p>
+          <div
+            className={`${
+              clickedReadMore && 'shadow-[0px_0px_12px_rgba(0,0,0,0.12)]'
+            } mr-1 order-5 lg:order-4 py-3`}
+          >
+            <p className="font-bold text-2xl text-right mb-3">$ {product?.price}</p>
+            <div className="flex">
+              <div className="w-[40%] flex">
+                <div
+                  className="p-3 px-5 md:px-8 bg-zinc-100 rounded-l-lg border border-zinc-200 text-zinc-500"
+                  onClick={addOrderCount}
+                >
+                  +
+                </div>
+                <div className="p-3 px-5 md:px-10 lg:px-10 border border-zinc-200 text-zinc-500">
+                  {orderCount}
+                </div>
+                <div
+                  className="p-3 px-5 md:px-8 bg-zinc-100 rounded-r-lg border border-zinc-200 text-zinc-500"
+                  onClick={subractOrderCount}
+                >
+                  -
+                </div>
+              </div>
+              <Button className="w-[60%] bg-brown-600" size="lg">
+                Add to Cart
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </>

@@ -8,16 +8,16 @@ module.exports = {
         logo: ['Righteous', 'Arial']
       },
       colors: {
-        'green-50': '#feefe9',
-        'green-100': '#e3d4d1',
-        'green-200': '#cab9b4',
-        'green-300': '#b49d98',
-        'green-400': '#9d817b',
-        'green-500': '#846862',
-        'green-600': '#67514b',
-        'green-700': '#4b3a35',
-        'green-800': '#2f221e',
-        'green-900': '#180903'
+        'brown-50': '#feefe9',
+        'brown-100': '#e3d4d1',
+        'brown-200': '#cab9b4',
+        'brown-300': '#b49d98',
+        'brown-400': '#9d817b',
+        'brown-500': '#846862',
+        'brown-600': '#67514b',
+        'brown-700': '#4b3a35',
+        'brown-800': '#2f221e',
+        'brown-900': '#180903'
       }
     }
   },
