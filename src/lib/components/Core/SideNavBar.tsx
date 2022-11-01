@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { createStyles, Navbar, Group, Burger, Text } from '@mantine/core';
-import { IconLogout } from '@tabler/icons';
+import { useSession, signOut } from 'next-auth/react';
+import { IconLogout, IconUser } from '@tabler/icons';
+import Link from 'next/link';
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef('icon');
@@ -79,6 +81,7 @@ const data = [
 ];
 
 export function SideNavBar({ opened }: { opened: boolean }) {
+  const { data: session, status } = useSession();
   const { classes, cx } = useStyles();
   const [active, setActive] = useState('Billing');
   const title = opened ? 'Close navigation' : 'Open navigation';
@@ -115,10 +118,19 @@ export function SideNavBar({ opened }: { opened: boolean }) {
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer}>
-        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
-          <IconLogout className={classes.linkIcon} stroke={1.5} />
-          <span>Logout</span>
-        </a>
+        {session && (
+          <a href="#" className={classes.link} onClick={() => signOut()}>
+            <IconLogout className={classes.linkIcon} stroke={1.5} />
+            <span>Logout</span>
+          </a>
+        )}
+
+        {!session && (
+          <Link href="/login" className={classes.link}>
+            <IconUser className={classes.linkIcon} stroke={1.5} />
+            <span>Log In</span>
+          </Link>
+        )}
       </Navbar.Section>
     </Navbar>
   );
