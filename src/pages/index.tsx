@@ -13,6 +13,7 @@ const Home: PageWithLayout = () => {
       <Head>
         <title>Zavy</title>
         <meta name="description" content="An ecommerce store" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
       <Products />
