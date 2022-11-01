@@ -42,7 +42,7 @@ function Products() {
         <div className="flex flex-col items-center justify-center">
           <div className="text-yellow-600 bg-yellow-100 border border-yellow-200 rounded-xl p-4 text-center">
             If you see this warning then, that means that the navbar isn&apos;t responsive yet or
-            the creator hasn&apos;t been updated about it yet
+            the creator of the product page hasn&apos;t been updated about it yet
           </div>
           <div className="flex flex-col w-full m-3 lg:flex-row lg:max-w-5xl xl:max-w-7xl">
             <div className="lg:mr-10">
