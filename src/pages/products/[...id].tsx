@@ -80,11 +80,7 @@ function Products() {
                   </>
                 )}
               </p>
-              <div
-                className={`${
-                  clickedReadMore && 'shadow-[0px_0px_12px_rgba(0,0,0,0.12)] md:shadow-none'
-                } mr-1 order-5 md:order-4 py-3`}
-              >
+              <div className="mr-1 order-5 md:order-4 py-3">
                 <p className="font-extrabold text-4xl text-right mb-3 lg:mb-10 text-zinc-600">
                   $ {product.price}
                 </p>
