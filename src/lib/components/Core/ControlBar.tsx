@@ -10,7 +10,7 @@ import {
 import {
   IconSearch,
   IconLogout,
-  IconSettings,
+  IconHome,
   IconUser,
   IconShoppingCart,
   IconBolt
@@ -110,7 +110,12 @@ function ControlBar() {
 
               <Menu.Dropdown>
                 <Menu.Label>{session?.user?.name}</Menu.Label>
-                <Menu.Item icon={<IconSettings size={14} />}>Settings</Menu.Item>
+                <Menu.Item
+                  onClick={() => router.push('/dashboard/buyer')}
+                  icon={<IconHome size={14} />}
+                >
+                  Dashboard
+                </Menu.Item>
                 <Menu.Item onClick={() => signOut()} icon={<IconLogout size={14} />}>
                   Logout
                 </Menu.Item>
