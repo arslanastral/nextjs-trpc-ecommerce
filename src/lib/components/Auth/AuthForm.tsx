@@ -18,6 +18,7 @@ import { Loader } from '@mantine/core';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { FacebookButton, GoogleButton } from '../Buttons/AuthButtons';
+import Link from 'next/link';
 
 interface LoginFormProps {
   title: string;
@@ -167,7 +168,9 @@ export function AuthForm({ title, buttonTitle, isForSignUp }: LoginFormProps) {
     <div className={classes.wrapper}>
       <Paper className={classes.form} radius={0} p={30}>
         <Title order={2} className={classes.title} align="center" mt="md" mb={50}>
-          <span className="font-logo text-6xl">Zavy</span>
+          <Link href="/">
+            <span className="font-logo text-6xl">Zavy</span>
+          </Link>
         </Title>
 
         <Group grow mb="md" mt="md">
