@@ -8,7 +8,7 @@ function Header() {
   const dark = colorScheme === 'dark';
 
   return (
-    <div className={`w-full ${dark ? 'bg-black' : 'bg-white'} min-h-fit`}>
+    <div className={`w-full ${dark ? 'bg-black' : 'bg-white'}`}>
       <ControlBar />
       <Logo />
       <NavBar />
