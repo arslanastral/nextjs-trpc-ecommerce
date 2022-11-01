@@ -3,12 +3,15 @@ import { PageWithLayout } from '@/lib/types/page';
 import { ReactElement } from 'react';
 import AuthLayout from '@/lib/components/Layouts/AuthLayout';
 import { AuthForm } from '@/lib/components/Auth/AuthForm';
-import { getSession } from 'next-auth/react';
+import { unstable_getServerSession } from 'next-auth';
+import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { GetServerSideProps } from 'next';
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const session = await getSession(ctx);
+  const { req, res } = ctx;
+  const session = await unstable_getServerSession(req, res, authOptions);
 
+  console.log(session);
   if (session) {
     return {
       redirect: {

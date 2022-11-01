@@ -10,6 +10,119 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  username      String?   @unique @default(cuid())
+  setupComplete Boolean   @default(false)
+  password      String?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  buyer         Buyer?
+  seller        Seller?
+}
+
+model Buyer {
+  id        String    @id @default(cuid())
+  user      User      @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  userId    String    @unique
+  orders    Order[]
+  carts     Cart?
+  addresses Address[]
+}
+
+model Seller {
+  id          String    @id @default(cuid())
+  user        User      @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  userId      String    @unique
+  isActivated Boolean   @default(false)
+  storeName   String
+  storeEmail  String
+  products    Product[]
+  orders      Order[]
+}
+
+model Product {
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  id           String     @id @default(cuid())
+  title        String
+  priceInCents String
+  category     Category[]
+  featured     Boolean    @default(false)
+  description  String
+  stock        Int        @default(1)
+  sold         Int        @default(0)
+  image        String
+  orders       Order[]
+  seller       Seller     @relation(fields: [sellerId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  carts        Cart[]
+  sellerId     String
+}
+
+model Category {
+  id      String    @id @default(cuid())
+  name    String
+  product Product[]
+}
+
+model Cart {
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  id        String    @id @default(cuid())
+  buyer     Buyer     @relation(fields: [buyerId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  buyerId   String    @unique
+  items     Product[]
+}
+
+model Order {
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  id                String      @id @default(cuid())
+  status            OrderStatus @default(PROCESSING)
+  payment           Payment?
+  address           Address?    @relation(fields: [addressId], references: [id])
+  addressId         String?
+  buyer             Buyer       @relation(fields: [buyerId], references: [id])
+  buyerId           String      @unique
+  seller            Seller      @relation(fields: [sellerId], references: [id])
+  sellerId          String      @unique
+  products          Product[]
+  totalPriceInCents String?
+}
+
+model Payment {
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  id        String        @id @default(cuid())
+  status    PaymentStatus @default(PENDING)
+  order     Order         @relation(fields: [orderId], references: [id])
+  orderId   String        @unique
+}
+
+model Address {
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  id           String   @id @default(cuid())
+  isDefault    Boolean  @default(false)
+  unitNumber   String?
+  StreetNumber String?
+  addressLine1 String
+  addressLine2 String?
+  city         String
+  postalCode   String?
+  region       String
+  country      String
+  buyer        Buyer    @relation(fields: [buyerId], references: [id])
+  buyerId      String
+  order        Order[]
+}
+
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -37,22 +150,27 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  username      String?   @unique
-  password      String?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-}
-
 model VerificationToken {
   identifier String
   token      String   @unique
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+enum OrderStatus {
+  OUTOFSTOCK
+  USERCANCELLED
+  SELLERCANCELLED
+  PROCESSING
+  PACKED
+  SHIPPED
+  OUTFORDELIVERY
+  DELIVERED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
 }
