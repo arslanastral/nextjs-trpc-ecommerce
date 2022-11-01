@@ -5,13 +5,15 @@ import Link from 'next/link';
 export default function ProductCard({ id, title, image, description, price }: Product) {
   return (
     <div key={id} className="flex flex-col justify-around m-7 p-5 rounded-md text-ellipsis">
-      <Image
-        src={image}
-        alt={description}
-        className="h-60 w-80 object-contain"
-        height={275}
-        width={250}
-      />
+      <Link href={`/products/${id}`}>
+        <Image
+          src={image}
+          alt={description}
+          className="h-60 w-80 object-contain"
+          height={275}
+          width={250}
+        />
+      </Link>
       <h1 className="w-[15rem] text-zinc-800 text-2xl font-bold">
         <Link href={`/products/${id}`}>{title}</Link>
       </h1>
