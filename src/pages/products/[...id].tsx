@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
-import ControlBar from '@/lib/components/Core/ControlBar';
-import Logo from '@/lib/components/Core/Logo';
 import { Product } from '@/lib/types/product';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { Button } from '@mantine/core';
+import Layout from '@/lib/components/Layouts/Layout';
 
 function Products() {
   const [product, setProduct] = useState<Product>();
@@ -35,15 +34,9 @@ function Products() {
   }
   console.log(product);
   return (
-    <>
-      <ControlBar />
-      <Logo />
+    <Layout>
       {product && (
         <div className="flex flex-col items-center justify-center">
-          <div className="text-yellow-600 bg-yellow-100 border border-yellow-200 rounded-xl p-4 text-center">
-            If you see this warning then, that means that the navbar isn&apos;t responsive yet or
-            the creator of the product page hasn&apos;t been updated about it yet
-          </div>
           <div className="flex flex-col w-full m-3 px-4 lg:flex-row lg:max-w-5xl xl:max-w-7xl">
             <div className="lg:mr-10">
               <Image
@@ -111,7 +104,7 @@ function Products() {
           </div>
         </div>
       )}
-    </>
+    </Layout>
   );
 }
 export default Products;
