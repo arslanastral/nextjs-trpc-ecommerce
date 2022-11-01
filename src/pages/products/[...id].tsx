@@ -7,15 +7,15 @@ import Image from 'next/image';
 function Products() {
   const [product, setProduct] = useState<Product>();
   const router = useRouter();
-  const { slug } = router.query;
+  const { id } = router.query;
   useEffect(() => {
-    console.log(slug);
-    if (slug) {
-      fetch(`https://fakestoreapi.com/products/${slug}`)
+    console.log(id);
+    if (id) {
+      fetch(`https://fakestoreapi.com/products/${id}`)
         .then((res) => res.json())
         .then((data) => setProduct(data));
     }
-  }, [slug]);
+  }, [id]);
   console.log(product);
   return (
     <>
