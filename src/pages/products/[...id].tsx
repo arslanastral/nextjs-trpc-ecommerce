@@ -48,14 +48,14 @@ function Products() {
             height={250}
           />
         </div>
-        <div className="my-3">
+        <div className="my-3 flex flex-col">
           <div className="w-full flex justify-between my-4">
             <p className="mr-auto">Seller name</p>
             <p className="mr-1">Listed on: 11-1-2022</p>
           </div>
           <h1 className="text-xl font-bold">{product?.title}</h1>
           <p className="capitalize text-zinc-500">{product?.category}</p>
-          <p className="my-10">
+          <p className="my-10 order-4 md:order-5">
             {!isMaxCharacters && <>{product?.description}</>}
             {!clickedReadMore && isMaxCharacters && (
               <>
@@ -77,7 +77,7 @@ function Products() {
           <div
             className={`${
               clickedReadMore && 'shadow-[0px_0px_12px_rgba(0,0,0,0.12)]'
-            } mr-1 order-5 lg:order-4 py-3`}
+            } mr-1 order-5 md:order-4 py-3`}
           >
             <p className="font-bold text-2xl text-right mb-3">$ {product?.price}</p>
             <div className="flex">
