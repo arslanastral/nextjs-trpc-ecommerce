@@ -44,7 +44,7 @@ function Products() {
             If you see this warning then, that means that the navbar isn&apos;t responsive yet or
             the creator of the product page hasn&apos;t been updated about it yet
           </div>
-          <div className="flex flex-col w-full m-3 lg:flex-row lg:max-w-5xl xl:max-w-7xl">
+          <div className="flex flex-col w-full m-3 px-4 lg:flex-row lg:max-w-5xl xl:max-w-7xl">
             <div className="lg:mr-10">
               <Image
                 src={product.image}
