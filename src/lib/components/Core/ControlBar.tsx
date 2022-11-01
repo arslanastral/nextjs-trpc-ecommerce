@@ -19,6 +19,7 @@ import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Burger } from '@mantine/core';
+import { useScrollLock } from '@mantine/hooks';
 import { SideNavBar } from './SideNavBar';
 
 const useStyles = createStyles((theme) => ({
@@ -34,6 +35,7 @@ const useStyles = createStyles((theme) => ({
 
 function ControlBar() {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const [scrollLocked, setScrollLocked] = useScrollLock();
   const [opened, setOpened] = useState(false);
   const title = opened ? 'Close navigation' : 'Open navigation';
   const dark = colorScheme === 'dark';
@@ -48,7 +50,10 @@ function ControlBar() {
           className="ml-3 z-20 relative block lg:hidden"
           color={opened ? 'white' : 'black'}
           opened={opened}
-          onClick={() => setOpened((o) => !o)}
+          onClick={() => {
+            setOpened((o) => !o);
+            setScrollLocked((c) => !c);
+          }}
           title={title}
         />
         <SideNavBar opened={opened} />
