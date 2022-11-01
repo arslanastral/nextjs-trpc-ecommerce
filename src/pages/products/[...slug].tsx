@@ -21,7 +21,7 @@ function Products() {
     <>
       <ControlBar />
       <Logo />
-      <div className="flex flex-col lg:flex-row w-full m-3">
+      <div className="flex flex-col w-full m-3 lg:flex-row">
         <div>
           <Image
             src={product?.image ? product.image : ''}
