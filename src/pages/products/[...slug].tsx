@@ -31,7 +31,7 @@ function Products() {
             height={250}
           />
         </div>
-        <div>
+        <div className="my-3">
           <h1 className="text-xl font-bold">{product?.title}</h1>
         </div>
       </div>
