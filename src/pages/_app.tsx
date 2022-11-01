@@ -31,7 +31,22 @@ function App({ Component, pageProps: { session, ...pageProps } }: Props) {
           fontFamily: 'Inter',
           headings: { fontFamily: 'Inter' },
           colorScheme: colorScheme,
-          primaryShade: 5,
+          colors: {
+            green: [
+              '#feefe9',
+              '#e3d4d1',
+              '#cab9b4',
+              '#b49d98',
+              '#9d817b',
+              '#846862',
+              '#67514b',
+              '#4b3a35',
+              '#2f221e',
+              '#180903'
+            ]
+          },
+          primaryColor: 'green',
+          primaryShade: 6,
           defaultRadius: 12,
           globalStyles: (theme) => ({
             '*, *::before, *::after': {
