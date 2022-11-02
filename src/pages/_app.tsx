@@ -32,7 +32,7 @@ function App({ Component, pageProps: { session, ...pageProps } }: Props) {
           headings: { fontFamily: 'Inter' },
           colorScheme: colorScheme,
           colors: {
-            green: [
+            brown: [
               '#feefe9',
               '#e3d4d1',
               '#cab9b4',
@@ -45,7 +45,7 @@ function App({ Component, pageProps: { session, ...pageProps } }: Props) {
               '#180903'
             ]
           },
-          primaryColor: 'green',
+          primaryColor: 'brown',
           primaryShade: 6,
           defaultRadius: 12,
           globalStyles: (theme) => ({
