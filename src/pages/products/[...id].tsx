@@ -73,22 +73,22 @@ function Products() {
               )}
             </p>
             <div className="mr-1 order-5 md:order-4 py-3">
-              <p className="font-extrabold text-4xl text-right mb-3 lg:mb-10 text-zinc-600">
+              <p className="font-extrabold text-4xl text-right mb-5 lg:mb-10 text-zinc-600">
                 $ {product.price}
               </p>
               <div className="flex">
                 <div className="w-[40%] flex">
                   <div
-                    className="p-3 px-5 md:px-8 bg-zinc-100 rounded-l-lg border border-zinc-200 text-zinc-500"
+                    className="p-3 px-5 md:px-6 bg-zinc-100 rounded-l-lg border border-zinc-200 text-zinc-500"
                     onClick={subractOrderCount}
                   >
                     -
                   </div>
-                  <div className="p-3 px-5 md:px-10 lg:px-10 border border-zinc-200 text-zinc-500">
+                  <div className="p-3 px-5 md:px-8 lg:px-10 border border-zinc-200 text-zinc-500">
                     {orderCount}
                   </div>
                   <div
-                    className="p-3 px-5 md:px-8 bg-zinc-100 rounded-r-lg border border-zinc-200 text-zinc-500"
+                    className="p-3 px-5 md:px-6 bg-zinc-100 rounded-r-lg border border-zinc-200 text-zinc-500"
                     onClick={addOrderCount}
                   >
                     +
