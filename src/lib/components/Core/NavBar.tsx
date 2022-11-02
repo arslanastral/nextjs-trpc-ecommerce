@@ -7,7 +7,7 @@ function NavBar({
     `Men's Fashion`,
     'Luxury',
     'Electronics',
-    'Sport',
+    'Sports',
     'Other'
   ]
 }: {
@@ -15,10 +15,10 @@ function NavBar({
   className?: string;
 }) {
   return (
-    <nav className="flex w-full h-24 justify-center items-center text-black text-2xl divide-x-2">
+    <nav className="hidden w-full h-24 justify-center items-center font-light text-black text-xl divide-x-2 xl:text-2xl lg:flex">
       {pages.map((page, i) => (
-        <a className={'px-5 cursor-pointer'} key={i}>
-          {page}
+        <a className={'px-5 cursor-pointer hover:underline hover:decoration-green-600'} key={i}>
+          {page.toUpperCase()}
         </a>
       ))}
     </nav>

@@ -10,13 +10,17 @@ import {
 import {
   IconSearch,
   IconLogout,
-  IconSettings,
+  IconHome,
   IconUser,
   IconShoppingCart,
   IconBolt
 } from '@tabler/icons';
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { Burger } from '@mantine/core';
+import { useScrollLock } from '@mantine/hooks';
+import { SideNavBar } from './SideNavBar';
 
 const useStyles = createStyles((theme) => ({
   input: {
@@ -31,6 +35,9 @@ const useStyles = createStyles((theme) => ({
 
 function ControlBar() {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const [scrollLocked, setScrollLocked] = useScrollLock();
+  const [opened, setOpened] = useState(false);
+  const title = opened ? 'Close navigation' : 'Open navigation';
   const dark = colorScheme === 'dark';
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -38,7 +45,19 @@ function ControlBar() {
 
   return (
     <div className="w-full bg-white h-16 flex items-center justify-between mx-auto">
-      <div className="flex items-center min-h-full"></div>
+      <div className="flex items-center min-h-full">
+        <Burger
+          className="ml-3 z-20 relative block lg:hidden"
+          color={opened ? 'white' : 'black'}
+          opened={opened}
+          onClick={() => {
+            setOpened((o) => !o);
+            setScrollLocked((c) => !c);
+          }}
+          title={title}
+        />
+        <SideNavBar opened={opened} />
+      </div>
 
       <div className="flex items-center min-h-full gap-4 mr-4">
         <TextInput
@@ -70,9 +89,6 @@ function ControlBar() {
 
         {session && (
           <>
-            <ActionIcon onClick={() => signOut()} size="lg" color="brown" title="Logout">
-              <IconLogout size={20} />
-            </ActionIcon>
             <Button
               onClick={() => router.push('/login')}
               leftIcon={<IconBolt size="16px" />}
@@ -94,7 +110,12 @@ function ControlBar() {
 
               <Menu.Dropdown>
                 <Menu.Label>{session?.user?.name}</Menu.Label>
-                <Menu.Item icon={<IconSettings size={14} />}>Settings</Menu.Item>
+                <Menu.Item
+                  onClick={() => router.push('/dashboard/buyer')}
+                  icon={<IconHome size={14} />}
+                >
+                  Dashboard
+                </Menu.Item>
                 <Menu.Item onClick={() => signOut()} icon={<IconLogout size={14} />}>
                   Logout
                 </Menu.Item>
