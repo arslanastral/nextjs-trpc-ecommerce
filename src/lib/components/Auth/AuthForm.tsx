@@ -177,7 +177,9 @@ export function AuthForm({ title, buttonTitle, isForSignUp }: LoginFormProps) {
           <GoogleButton onClick={() => signIn('google')} radius="xl">
             Google
           </GoogleButton>
-          <FacebookButton radius="xl">Facebook</FacebookButton>
+          <FacebookButton onClick={() => signIn('facebook')} radius="xl">
+            Facebook
+          </FacebookButton>
         </Group>
 
         <Divider label="Or continue with email" labelPosition="center" my="lg" />

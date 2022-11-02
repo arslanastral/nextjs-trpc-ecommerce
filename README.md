@@ -34,6 +34,8 @@ This project uses [pnpm](https://pnpm.io/) for managing dependancies. If you don
 DATABASE_URL=postgresql://postgres:password@localhost:5432/postgres
 GOOGLE_CLIENT_SECRET=<client-secret>
 GOOGLE_CLIENT_ID=<client-id>
+FACEBOOK_CLIENT_SECRET=<fb-client-secret>
+FACEBOOK_CLIENT_ID=<fb-client-id>
 NEXTAUTH_URL=http://localhost:3000/
 NEXTAUTH_SECRET=VJ13WCJAjH1SNoLpvUUIWhvk9+cEfsnOMnjssSsvzJQ=
 NEXTAUTH_LOGIN=http://localhost:3000/api/login

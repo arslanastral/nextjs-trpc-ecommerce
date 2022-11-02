@@ -6,7 +6,7 @@ export function GoogleButton(props: ButtonProps & { onClick: () => void }) {
   return <Button leftIcon={<GoogleIcon />} variant="default" color="gray" {...props} />;
 }
 
-export function FacebookButton(props: ButtonProps) {
+export function FacebookButton(props: ButtonProps & { onClick: () => void }) {
   return (
     <Button
       leftIcon={<FacebookIcon />}
