@@ -38,6 +38,6 @@ export const trpc = createTRPCNext<AppRouter>({
   /**
    * @link https://trpc.io/docs/ssr
    **/
-  ssr: true
+  ssr: false
 });
 // => { useQuery: ..., useMutation: ...}
