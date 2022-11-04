@@ -3,9 +3,17 @@ import { IconPlus } from '@tabler/icons';
 import { trpc } from '@/utils/trpc';
 import { Skeleton } from '@mantine/core';
 import AddressCard from './AddressCard';
+import { useState } from 'react';
+import { Address } from '@/server/schema';
 
 function Address() {
+  const [newAddress, setNewAddress] = useState<Address>();
   const addresses = trpc.address.list.useQuery();
+  const createBuyerAddress = trpc.address.create.useMutation();
+
+  const handleAddressCreation = async () => {
+    createBuyerAddress.mutate(newAddress);
+  };
 
   return (
     <div className="p-8">
