@@ -9,7 +9,7 @@ function Products() {
       .then((data) => setProducts(data));
   }, []);
   return (
-    <div className="flex flex-wrap justify-center 2xl:justify-around">
+    <div className="flex flex-wrap justify-center">
       {products.map(({ id, title, image, description, price, category, rating }: Product) => (
         <ProductCard
           key={id}
