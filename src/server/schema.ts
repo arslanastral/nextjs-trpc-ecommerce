@@ -7,7 +7,7 @@ export const addressInput = z.object({
   addressLine1: z.string(),
   addressLine2: z.string().optional(),
   city: z.string(),
-  postalCode: z.string(),
+  postalCode: z.string().nullable(),
   region: z.string(),
   country: z.string()
 });
