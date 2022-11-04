@@ -11,12 +11,15 @@ type UserResponse = {
   id: string;
 };
 
-// type CLientSession = {
-//   name?: string | null | undefined;
-//   email?: string | null | undefined;
-//   image?: string | null | undefined;
-//   username?: string | null | undefined;
-// };
+type ClientSession = {
+  user: {
+    name?: string | null | undefined;
+    email?: string | null | undefined;
+    image?: string | null | undefined;
+    id?: string | null | undefined;
+  };
+  expires?: string;
+};
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -81,6 +84,13 @@ export const authOptions: NextAuthOptions = {
       }
     })
   ],
+  callbacks: {
+    async session({ session, token }) {
+      let clientSession = session as ClientSession;
+      clientSession.user.id = token.sub;
+      return session;
+    }
+  },
   session: { strategy: 'jwt' },
   pages: {
     signIn: '/login',

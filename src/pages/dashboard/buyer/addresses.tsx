@@ -3,6 +3,7 @@ import { PageWithLayout } from '@/lib/types/page';
 import { ReactElement } from 'react';
 import { DashboardLayout } from '@/lib/components/Layouts/DashboardLayout';
 import { useSession, signOut } from 'next-auth/react';
+import Address from '@/lib/components/Dashboard/Buyer/Address';
 
 const BuyerAddresses: PageWithLayout = () => {
   const { data: session, status } = useSession();
@@ -14,7 +15,7 @@ const BuyerAddresses: PageWithLayout = () => {
         <meta name="description" content="An ecommerce store" />
       </Head>
 
-      <div>Hello My Address Book</div>
+      <Address />
     </>
   );
 };
