@@ -32,6 +32,15 @@ export const addressRouter = router({
     let addresses = await ctx.prisma.address.findMany({
       where: {
         buyerId: buyerId
+      },
+      select: {
+        id: true,
+        isDefault: true,
+        addressLine1: true,
+        city: true,
+        postalCode: true,
+        region: true,
+        country: true
       }
     });
 
