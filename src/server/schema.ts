@@ -18,3 +18,4 @@ export const sellerInfoInput = z.object({
 });
 
 export type SellerInfo = z.infer<typeof sellerInfoInput>;
+export type Address = z.infer<typeof addressInput>;
