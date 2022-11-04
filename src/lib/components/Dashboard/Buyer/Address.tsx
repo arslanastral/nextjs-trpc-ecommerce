@@ -21,7 +21,6 @@ function Address() {
               variant="subtle"
               mt="md"
               radius="md"
-              // className="w-4/5 "
             >
               Add Address
             </Button>
@@ -36,6 +35,19 @@ function Address() {
             <Skeleton height={10} mt={7} width="70%" radius="xl" />
           </div>
         )}
+
+        {addresses.data?.map((e, i) => {
+          return (
+            <AddressCard
+              key={i}
+              addressLine1={e.addressLine1}
+              city={e.city}
+              country={e.country}
+              postalCode={e.postalCode}
+              region={e.region}
+            />
+          );
+        })}
       </div>
     </div>
   );
