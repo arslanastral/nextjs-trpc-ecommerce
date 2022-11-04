@@ -4,7 +4,7 @@ import { addressRouter } from './address';
 import { identityRouter } from './identity';
 
 export const appRouter = router({
-  address: addressRouter, // put procedures under "user" namespace
+  address: addressRouter,
   identity: identityRouter
 });
 
