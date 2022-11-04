@@ -29,7 +29,7 @@ export const addressRouter = router({
     let buyerId = await getBuyerId(ctx);
     if (!buyerId) return null;
 
-    let addresses = ctx.prisma.address.findMany({
+    let addresses = await ctx.prisma.address.findMany({
       where: {
         buyerId: buyerId
       }
