@@ -1,7 +1,7 @@
 import { Modal, Button, Input, Grid, Checkbox, LoadingOverlay } from '@mantine/core';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Address, AddressWithId, addressInput } from '@/server/schema';
+import { AddressWithId, addressInput } from '@/server/schema';
 import { trpc } from '@/utils/trpc';
 import { useEffect } from 'react';
 
@@ -18,9 +18,7 @@ function EditAddressModal({ opened, setOpened, data }: EditableAddressModalProps
     register,
     handleSubmit,
     control,
-    setValue,
     reset,
-    watch,
     formState: { errors }
   } = useForm<AddressWithId>({
     defaultValues: {
