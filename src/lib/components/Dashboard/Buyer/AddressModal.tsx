@@ -1,4 +1,5 @@
-import { Modal, Button, Input, Grid, Checkbox, LoadingOverlay } from '@mantine/core';
+import { Modal, Button, Input, Grid, Checkbox, LoadingOverlay, Alert } from '@mantine/core';
+import { IconTrash, IconAlertCircle } from '@tabler/icons';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Address, addressInput } from '@/server/schema';
@@ -47,6 +48,11 @@ function AddressModal({
       closeOnClickOutside={!createBuyerAddress.isLoading}
     >
       <LoadingOverlay visible={createBuyerAddress.isLoading} radius="lg" />
+      {createBuyerAddress.error && (
+        <Alert icon={<IconAlertCircle size={16} />} title="Bummer!" color="red" mb={15}>
+          Something went wrong!
+        </Alert>
+      )}
       <form onSubmit={handleSubmit(addressSubmit)}>
         <Input.Wrapper label="Shipping Address" required error={errors.addressLine1?.message}>
           <Input placeholder="934 Hogwart 21st" {...register('addressLine1')} />
