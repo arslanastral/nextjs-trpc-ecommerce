@@ -1,9 +1,8 @@
-import { Modal, Button, Input, Grid, Checkbox } from '@mantine/core';
+import { Modal, Button, Input, Grid, Checkbox, LoadingOverlay } from '@mantine/core';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Address, addressInput } from '@/server/schema';
 import { trpc } from '@/utils/trpc';
-import { useState } from 'react';
 
 function AddressModal({
   opened,
@@ -32,7 +31,14 @@ function AddressModal({
   };
 
   return (
-    <Modal opened={opened} onClose={() => setOpened(false)} title="Add Address">
+    <Modal
+      opened={opened}
+      onClose={() => setOpened(false)}
+      title="Add Address"
+      closeOnEscape={!createBuyerAddress.isLoading}
+      closeOnClickOutside={!createBuyerAddress.isLoading}
+    >
+      <LoadingOverlay visible={createBuyerAddress.isLoading} radius="lg" />
       <form onSubmit={handleSubmit(addressSubmit)}>
         <Input.Wrapper label="Shipping Address" required error={errors.addressLine1?.message}>
           <Input placeholder="934 Hogwart 21st" {...register('addressLine1')} />
