@@ -1,6 +1,7 @@
 import { router, protectedProcedure } from '../trpc';
 import { getBuyerId } from '@/server/functions/identity';
 import { addressInput, addressInputWithId } from '../schema';
+import { z } from 'zod';
 
 export const addressRouter = router({
   create: protectedProcedure.input(addressInput).mutation(async ({ input, ctx }) => {
@@ -85,5 +86,20 @@ export const addressRouter = router({
     });
 
     return updatedAddress;
-  })
+  }),
+  delete: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      let buyerId = await getBuyerId(ctx);
+      if (!buyerId) return null;
+
+      let deletedAddress = await ctx.prisma.address.deleteMany({
+        where: {
+          id: input.id,
+          buyerId: buyerId
+        }
+      });
+
+      return deletedAddress;
+    })
 });
