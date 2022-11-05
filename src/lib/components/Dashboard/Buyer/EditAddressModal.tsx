@@ -69,6 +69,11 @@ function EditAddressModal({ opened, setOpened, data }: EditableAddressModalProps
         visible={updateBuyerAddress.isLoading || deleteBuyerAddress.isLoading}
         radius="lg"
       />
+      {(deleteBuyerAddress.error || updateBuyerAddress.error) && (
+        <Alert icon={<IconAlertCircle size={16} />} title="Bummer!" color="red" mb={15}>
+          Something went wrong!
+        </Alert>
+      )}
 
       <form onSubmit={handleSubmit(addressUpdate)}>
         <Input.Wrapper label="Shipping Address" required error={errors.addressLine1?.message}>
