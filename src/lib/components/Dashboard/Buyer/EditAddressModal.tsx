@@ -1,40 +1,54 @@
 import { Modal, Button, Input, Grid, Checkbox, LoadingOverlay } from '@mantine/core';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Address, addressInput } from '@/server/schema';
+import { Address, AddressWithId, addressInput } from '@/server/schema';
 import { trpc } from '@/utils/trpc';
+import { useEffect } from 'react';
 
 type EditableAddressModalProps = {
   opened: boolean;
   setOpened: (state: boolean) => void;
-  addressId: string;
-  data: Address;
+  data?: AddressWithId;
 };
 
 function EditAddressModal({ opened, setOpened, data }: EditableAddressModalProps) {
-  const updateBuyerAddress = trpc.address.create.useMutation();
+  const updateBuyerAddress = trpc.address.update.useMutation();
 
   const {
     register,
     handleSubmit,
     control,
+    setValue,
+    reset,
     watch,
     formState: { errors }
-  } = useForm<Address>({
+  } = useForm<AddressWithId>({
     defaultValues: {
       ...data
     },
     resolver: zodResolver(addressInput)
   });
 
-  const addressUpdate = async (address: Address) => {
-    updateBuyerAddress.mutate(address, { onSuccess: () => setOpened(false) });
+  useEffect(() => {
+    reset(data);
+  }, [data, reset]);
+
+  const addressUpdate = async (updatedAddress: AddressWithId) => {
+    if (data) {
+      let updatedAddressWithId = {
+        ...updatedAddress,
+        id: data.id
+      };
+      updateBuyerAddress.mutate(updatedAddressWithId, { onSuccess: () => setOpened(false) });
+    }
   };
 
   return (
     <Modal
       opened={opened}
-      onClose={() => setOpened(false)}
+      onClose={() => {
+        setOpened(false);
+      }}
       title="Update Address"
       closeOnEscape={!updateBuyerAddress.isLoading}
       closeOnClickOutside={!updateBuyerAddress.isLoading}
