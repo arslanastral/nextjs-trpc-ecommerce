@@ -18,6 +18,7 @@ function AddressModal({
     handleSubmit,
     control,
     watch,
+    reset,
     formState: { errors }
   } = useForm<Address>({
     defaultValues: {
@@ -27,13 +28,20 @@ function AddressModal({
   });
 
   const addressSubmit = async (address: Address) => {
-    createBuyerAddress.mutate(address, { onSuccess: () => setOpened(false) });
+    createBuyerAddress.mutate(address, {
+      onSuccess: () => {
+        reset();
+        setOpened(false);
+      }
+    });
   };
 
   return (
     <Modal
       opened={opened}
-      onClose={() => setOpened(false)}
+      onClose={() => {
+        setOpened(false);
+      }}
       title="Add Address"
       closeOnEscape={!createBuyerAddress.isLoading}
       closeOnClickOutside={!createBuyerAddress.isLoading}
