@@ -21,6 +21,10 @@ export const addressInput = z.object({
     .max(30, { message: 'Country name must be under 30 characters' })
 });
 
+export const addressInputWithId = addressInput.extend({
+  id: z.string()
+});
+
 export const sellerInfoInput = z.object({
   storeName: z.string().optional(),
   storeEmail: z.string().optional()
@@ -28,3 +32,4 @@ export const sellerInfoInput = z.object({
 
 export type SellerInfo = z.infer<typeof sellerInfoInput>;
 export type Address = z.infer<typeof addressInput>;
+export type AddressWithId = z.infer<typeof addressInputWithId>;
