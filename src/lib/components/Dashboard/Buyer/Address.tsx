@@ -23,10 +23,6 @@ function Address() {
           <Input placeholder="934 Hogwart 21st" />
         </Input.Wrapper>
 
-        <Input.Wrapper label="City" required mt={15}>
-          <Input placeholder="City" />
-        </Input.Wrapper>
-
         <Grid>
           <Grid.Col span={6}>
             {' '}
