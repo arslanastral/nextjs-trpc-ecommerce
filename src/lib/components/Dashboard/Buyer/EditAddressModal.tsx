@@ -1,45 +1,57 @@
-import { Modal, Button, Input, Grid, Checkbox, LoadingOverlay, Alert } from '@mantine/core';
+import { Modal, Button, Input, Grid, Checkbox, LoadingOverlay, Group, Alert } from '@mantine/core';
 import { IconTrash, IconAlertCircle } from '@tabler/icons';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Address, addressInput } from '@/server/schema';
+import { AddressWithId, addressInput } from '@/server/schema';
 import { trpc } from '@/utils/trpc';
+import { useEffect } from 'react';
 
-function AddressModal({
-  opened,
-  setOpened
-}: {
+type EditableAddressModalProps = {
   opened: boolean;
   setOpened: (state: boolean) => void;
-}) {
-  const createBuyerAddress = trpc.address.create.useMutation();
+  data?: AddressWithId;
+};
+
+function EditAddressModal({ opened, setOpened, data }: EditableAddressModalProps) {
+  const updateBuyerAddress = trpc.address.update.useMutation();
+  const deleteBuyerAddress = trpc.address.delete.useMutation();
 
   const {
     register,
     handleSubmit,
     control,
-    watch,
     reset,
     formState: { errors }
-  } = useForm<Address>({
+  } = useForm<AddressWithId>({
     defaultValues: {
-      isDefault: false
+      ...data
     },
     resolver: zodResolver(addressInput)
   });
 
-  const addressSubmit = async (address: Address) => {
-    if (createBuyerAddress.isLoading) {
+  useEffect(() => {
+    reset(data);
+  }, [data, reset]);
+
+  const addressUpdate = async (updatedAddress: AddressWithId) => {
+    if (updateBuyerAddress.isLoading || deleteBuyerAddress.isLoading) {
       return;
     }
+    if (data) {
+      let updatedAddressWithId = {
+        ...updatedAddress,
+        id: data.id
+      };
+      updateBuyerAddress.mutate(updatedAddressWithId, { onSuccess: () => setOpened(false) });
+    }
+  };
 
-    if (address) {
-      createBuyerAddress.mutate(address, {
-        onSuccess: () => {
-          reset();
-          setOpened(false);
-        }
-      });
+  const deleteAddress = async () => {
+    if (updateBuyerAddress.isLoading || deleteBuyerAddress.isLoading) {
+      return;
+    }
+    if (data) {
+      deleteBuyerAddress.mutate({ id: data.id }, { onSuccess: () => setOpened(false) });
     }
   };
 
@@ -49,17 +61,21 @@ function AddressModal({
       onClose={() => {
         setOpened(false);
       }}
-      title="Add Address"
-      closeOnEscape={!createBuyerAddress.isLoading}
-      closeOnClickOutside={!createBuyerAddress.isLoading}
+      title="Update Address"
+      closeOnEscape={!updateBuyerAddress.isLoading || deleteBuyerAddress.isLoading}
+      closeOnClickOutside={!updateBuyerAddress.isLoading || deleteBuyerAddress.isLoading}
     >
-      <LoadingOverlay visible={createBuyerAddress.isLoading} radius="lg" />
-      {createBuyerAddress.error && (
+      <LoadingOverlay
+        visible={updateBuyerAddress.isLoading || deleteBuyerAddress.isLoading}
+        radius="lg"
+      />
+      {(deleteBuyerAddress.error || updateBuyerAddress.error) && (
         <Alert icon={<IconAlertCircle size={16} />} title="Bummer!" color="red" mb={15}>
           Something went wrong!
         </Alert>
       )}
-      <form onSubmit={handleSubmit(addressSubmit)}>
+
+      <form onSubmit={handleSubmit(addressUpdate)}>
         <Input.Wrapper label="Shipping Address" required error={errors.addressLine1?.message}>
           <Input placeholder="934 Hogwart 21st" {...register('addressLine1')} />
         </Input.Wrapper>
@@ -100,13 +116,26 @@ function AddressModal({
             />
           )}
         />
+        <Group position="apart">
+          <Button type="submit" mt="md" radius="md">
+            Update Address
+          </Button>
 
-        <Button type="submit" mt="md" radius="md">
-          Create Address
-        </Button>
+          <Button
+            type="button"
+            onClick={deleteAddress}
+            leftIcon={<IconTrash size="15" />}
+            mt="md"
+            radius="md"
+            variant="outline"
+            color="red"
+          >
+            Delete
+          </Button>
+        </Group>
       </form>
     </Modal>
   );
 }
 
-export default AddressModal;
+export default EditAddressModal;
