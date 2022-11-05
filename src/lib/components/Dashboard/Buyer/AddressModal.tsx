@@ -29,12 +29,18 @@ function AddressModal({
   });
 
   const addressSubmit = async (address: Address) => {
-    createBuyerAddress.mutate(address, {
-      onSuccess: () => {
-        reset();
-        setOpened(false);
-      }
-    });
+    if (createBuyerAddress.isLoading) {
+      return;
+    }
+
+    if (address) {
+      createBuyerAddress.mutate(address, {
+        onSuccess: () => {
+          reset();
+          setOpened(false);
+        }
+      });
+    }
   };
 
   return (
