@@ -1,5 +1,5 @@
-import { Modal, Button, Input, Grid, Checkbox, LoadingOverlay, Group } from '@mantine/core';
-import { IconTrash } from '@tabler/icons';
+import { Modal, Button, Input, Grid, Checkbox, LoadingOverlay, Group, Alert } from '@mantine/core';
+import { IconTrash, IconAlertCircle } from '@tabler/icons';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AddressWithId, addressInput } from '@/server/schema';
@@ -14,6 +14,7 @@ type EditableAddressModalProps = {
 
 function EditAddressModal({ opened, setOpened, data }: EditableAddressModalProps) {
   const updateBuyerAddress = trpc.address.update.useMutation();
+  const deleteBuyerAddress = trpc.address.delete.useMutation();
 
   const {
     register,
@@ -33,12 +34,24 @@ function EditAddressModal({ opened, setOpened, data }: EditableAddressModalProps
   }, [data, reset]);
 
   const addressUpdate = async (updatedAddress: AddressWithId) => {
+    if (updateBuyerAddress.isLoading || deleteBuyerAddress.isLoading) {
+      return;
+    }
     if (data) {
       let updatedAddressWithId = {
         ...updatedAddress,
         id: data.id
       };
       updateBuyerAddress.mutate(updatedAddressWithId, { onSuccess: () => setOpened(false) });
+    }
+  };
+
+  const deleteAddress = async () => {
+    if (updateBuyerAddress.isLoading || deleteBuyerAddress.isLoading) {
+      return;
+    }
+    if (data) {
+      deleteBuyerAddress.mutate({ id: data.id }, { onSuccess: () => setOpened(false) });
     }
   };
 
@@ -49,10 +62,14 @@ function EditAddressModal({ opened, setOpened, data }: EditableAddressModalProps
         setOpened(false);
       }}
       title="Update Address"
-      closeOnEscape={!updateBuyerAddress.isLoading}
-      closeOnClickOutside={!updateBuyerAddress.isLoading}
+      closeOnEscape={!updateBuyerAddress.isLoading || deleteBuyerAddress.isLoading}
+      closeOnClickOutside={!updateBuyerAddress.isLoading || deleteBuyerAddress.isLoading}
     >
-      <LoadingOverlay visible={updateBuyerAddress.isLoading} radius="lg" />
+      <LoadingOverlay
+        visible={updateBuyerAddress.isLoading || deleteBuyerAddress.isLoading}
+        radius="lg"
+      />
+
       <form onSubmit={handleSubmit(addressUpdate)}>
         <Input.Wrapper label="Shipping Address" required error={errors.addressLine1?.message}>
           <Input placeholder="934 Hogwart 21st" {...register('addressLine1')} />
@@ -94,14 +111,14 @@ function EditAddressModal({ opened, setOpened, data }: EditableAddressModalProps
             />
           )}
         />
-
         <Group position="apart">
           <Button type="submit" mt="md" radius="md">
             Update Address
           </Button>
 
           <Button
-            type="submit"
+            type="button"
+            onClick={deleteAddress}
             leftIcon={<IconTrash size="15" />}
             mt="md"
             radius="md"
