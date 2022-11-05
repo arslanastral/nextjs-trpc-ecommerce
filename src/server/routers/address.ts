@@ -1,6 +1,6 @@
 import { router, protectedProcedure } from '../trpc';
 import { getBuyerId } from '@/server/functions/identity';
-import { addressInput } from '../schema';
+import { addressInput, addressInputWithId } from '../schema';
 
 export const addressRouter = router({
   create: protectedProcedure.input(addressInput).mutation(async ({ input, ctx }) => {
@@ -45,5 +45,45 @@ export const addressRouter = router({
     });
 
     return addresses;
+  }),
+  update: protectedProcedure.input(addressInputWithId).mutation(async ({ input, ctx }) => {
+    let address = await ctx.prisma.address.findUnique({
+      where: {
+        id: input.id
+      }
+    });
+
+    if (!address?.isDefault && input.isDefault) {
+      let buyerId = await getBuyerId(ctx);
+      if (!buyerId) return null;
+
+      await ctx.prisma.address.updateMany({
+        where: {
+          isDefault: true
+        },
+        data: {
+          isDefault: false
+        }
+      });
+    }
+
+    let updatedAddress = await ctx.prisma.address.update({
+      where: {
+        id: input.id
+      },
+      data: {
+        isDefault: input.isDefault,
+        unitNumber: input.unitNumber,
+        StreetNumber: input.StreetNumber,
+        addressLine1: input.addressLine1,
+        addressLine2: input.addressLine2,
+        city: input.city,
+        postalCode: input.postalCode,
+        region: input.region,
+        country: input.country
+      }
+    });
+
+    return updatedAddress;
   })
 });
