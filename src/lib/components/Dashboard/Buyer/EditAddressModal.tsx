@@ -1,4 +1,5 @@
-import { Modal, Button, Input, Grid, Checkbox, LoadingOverlay } from '@mantine/core';
+import { Modal, Button, Input, Grid, Checkbox, LoadingOverlay, Group } from '@mantine/core';
+import { IconTrash } from '@tabler/icons';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AddressWithId, addressInput } from '@/server/schema';
@@ -94,9 +95,22 @@ function EditAddressModal({ opened, setOpened, data }: EditableAddressModalProps
           )}
         />
 
-        <Button type="submit" mt="md" radius="md">
-          Update Address
-        </Button>
+        <Group position="apart">
+          <Button type="submit" mt="md" radius="md">
+            Update Address
+          </Button>
+
+          <Button
+            type="submit"
+            leftIcon={<IconTrash size="15" />}
+            mt="md"
+            radius="md"
+            variant="outline"
+            color="red"
+          >
+            Delete
+          </Button>
+        </Group>
       </form>
     </Modal>
   );
