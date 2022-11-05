@@ -3,17 +3,25 @@ import { IconPlus } from '@tabler/icons';
 import { trpc } from '@/utils/trpc';
 import { useState } from 'react';
 import AddressCard from './AddressCard';
-import { type Address } from '@/server/schema';
+import { type Address, type AddressWithId } from '@/server/schema';
 import AddressModal from './AddressModal';
+import EditAddressModal from './EditAddressModal';
 
 function Address() {
   const addresses = trpc.address.list.useQuery();
   const [opened, setOpened] = useState<boolean>(false);
+  const [openedEditModal, setOpenedEditModal] = useState<boolean>(false);
+  const [editableAddress, setEditableaddress] = useState<AddressWithId>();
 
   return (
     <div className="p-8">
       <h2 className="font-semibold text-4xl mb-7">Address Book</h2>
       <AddressModal opened={opened} setOpened={setOpened} />
+      <EditAddressModal
+        opened={openedEditModal}
+        setOpened={setOpenedEditModal}
+        data={editableAddress}
+      />
       <div className="flex gap-4 items-center flex-wrap">
         {!addresses.isLoading && (
           <div className="w-64 h-56 border-dashed border-2 border-brown-200 rounded-xl flex items-center justify-center text-brown-600">
@@ -42,6 +50,9 @@ function Address() {
           return (
             <AddressCard
               key={i}
+              openEditModal={() => setOpenedEditModal(true)}
+              setEditableaddress={setEditableaddress}
+              id={e.id}
               isDefault={e.isDefault}
               addressLine1={e.addressLine1}
               city={e.city}
