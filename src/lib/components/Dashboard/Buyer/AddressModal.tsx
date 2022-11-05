@@ -2,6 +2,7 @@ import { Modal, Button, Input, Grid, Checkbox } from '@mantine/core';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Address, addressInput } from '@/server/schema';
+import { trpc } from '@/utils/trpc';
 import { useState } from 'react';
 
 function AddressModal({
@@ -11,8 +12,7 @@ function AddressModal({
   opened: boolean;
   setOpened: (state: boolean) => void;
 }) {
-  const [checked, setChecked] = useState(false);
-  const [newAddress, setNewAddress] = useState<Address>();
+  const createBuyerAddress = trpc.address.create.useMutation();
 
   const {
     register,
@@ -27,14 +27,8 @@ function AddressModal({
     resolver: zodResolver(addressInput)
   });
 
-  // const createBuyerAddress = trpc.address.create.useMutation();
-
-  // const handleAddressCreation = async () => {
-  //   createBuyerAddress.mutate(newAddress);
-  // };
-
-  const addressSubmit = (address: Address) => {
-    console.log(address);
+  const addressSubmit = async (address: Address) => {
+    createBuyerAddress.mutate(address, { onSuccess: () => setOpened(false) });
   };
 
   return (
