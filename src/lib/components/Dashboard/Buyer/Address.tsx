@@ -30,11 +30,11 @@ function Address() {
         )}
 
         {!addresses.data && (
-          <div className="w-64 mt-7">
-            <Skeleton height={10} mt={7} width="40%" radius="xl" />
-            <Skeleton height={10} mt={7} radius="xl" />
-            <Skeleton height={10} mt={7} radius="xl" />
-            <Skeleton height={10} mt={7} width="70%" radius="xl" />
+          <div className="w-full">
+            <Skeleton height={10} mt={20} width="40%" radius="xl" />
+            <Skeleton height={10} mt={20} radius="xl" />
+            <Skeleton height={10} mt={20} radius="xl" />
+            <Skeleton height={10} mt={20} width="70%" radius="xl" />
           </div>
         )}
 
@@ -42,6 +42,7 @@ function Address() {
           return (
             <AddressCard
               key={i}
+              isDefault={e.isDefault}
               addressLine1={e.addressLine1}
               city={e.city}
               country={e.country}
