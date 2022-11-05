@@ -7,7 +7,7 @@ import { type Address, type AddressWithId } from '@/server/schema';
 import AddressModal from './AddressModal';
 import EditAddressModal from './EditAddressModal';
 
-function Address() {
+function AddressBook() {
   const addresses = trpc.address.list.useQuery();
   const [opened, setOpened] = useState<boolean>(false);
   const [openedEditModal, setOpenedEditModal] = useState<boolean>(false);
@@ -67,4 +67,4 @@ function Address() {
   );
 }
 
-export default Address;
+export default AddressBook;
