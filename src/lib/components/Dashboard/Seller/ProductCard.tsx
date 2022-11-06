@@ -25,20 +25,30 @@ function ProductCard({ title, image, description, price, status, badge }: Produc
         </Card.Section>
         <Group position="apart" mt="md" mb="xs">
           <Text
-            className=" whitespace-nowrap"
-            weight={500}
+            className="whitespace-nowrap"
             sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}
+            weight={500}
           >
             {title}
           </Text>
         </Group>
 
-        <Text size="sm" color="dimmed">
+        <Text
+          className="whitespace-nowrap"
+          sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}
+          size="sm"
+          color="dimmed"
+        >
           {description}
         </Text>
 
         <Group position="apart" mt="md" mb="xs">
-          <Text size={20} weight={500}>
+          <Text
+            className="whitespace-nowrap w-48"
+            sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}
+            size={20}
+            weight={500}
+          >
             US ${price}
           </Text>
           <Badge variant="light" color="red">
