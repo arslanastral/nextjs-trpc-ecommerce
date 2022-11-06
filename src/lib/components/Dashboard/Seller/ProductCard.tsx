@@ -1,7 +1,15 @@
 import { Button, Card, Group, Text, Badge, AspectRatio } from '@mantine/core';
 import Image from 'next/image';
 
-function ProductCard() {
+type ProductCardProps = {
+  title: string;
+  image: string;
+  description: string;
+  price: string;
+  status: string;
+};
+
+function ProductCard({ title, image, description, price, status }: ProductCardProps) {
   return (
     <Card p="lg" radius="md" withBorder className="relative">
       <Card.Section>
