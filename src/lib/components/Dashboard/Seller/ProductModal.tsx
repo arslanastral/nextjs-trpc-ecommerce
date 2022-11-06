@@ -113,7 +113,7 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
           />
         </div>
 
-        <div className="mt-2 w-[337px]">
+        <div className="mt-2">
           <Badge className="bg-black text-white mb-4">Live</Badge>
 
           <ProductCard
