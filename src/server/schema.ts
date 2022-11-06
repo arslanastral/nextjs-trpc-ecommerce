@@ -30,6 +30,23 @@ export const sellerInfoInput = z.object({
   storeEmail: z.string().optional()
 });
 
+export const productInput = z.object({
+  title: z
+    .string()
+    .min(1, { message: 'Product must have a title' })
+    .max(30, { message: 'Product title must be under 60 characters' }),
+  price: z
+    .string()
+    .min(1, { message: 'Product must have a price' })
+    .max(30, { message: 'Product price must be under 7 characters' }),
+  category: z.string().max(20, { message: 'Category name must be under 20 characters' }),
+  description: z
+    .string()
+    .min(1, { message: 'Product must have a description' })
+    .max(280, { message: 'Product description must be under 280 characters' })
+});
+
 export type SellerInfo = z.infer<typeof sellerInfoInput>;
 export type Address = z.infer<typeof addressInput>;
 export type AddressWithId = z.infer<typeof addressInputWithId>;
+export type Product = z.infer<typeof productInput>;
