@@ -7,13 +7,15 @@ type ProductCardProps = {
   description: string;
   price: string;
   status: string;
+  badge?: string;
 };
 
-function ProductCard({ title, image, description, price, status }: ProductCardProps) {
+function ProductCard({ title, image, description, price, status, badge }: ProductCardProps) {
   return (
     <Card p="lg" radius="md" withBorder className="relative">
       <Card.Section>
-        <Badge className="absolute top-2 left-3 z-40 bg-black text-white">new</Badge>
+        {badge && <Badge className="absolute top-2 left-3 z-40 bg-black text-white">{badge}</Badge>}
+
         <AspectRatio ratio={337 / 393} sx={{ maxWidth: '100%' }} className="relative">
           <Image fill={true} src={image} alt="Norway" />
         </AspectRatio>
