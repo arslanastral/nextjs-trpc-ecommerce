@@ -14,6 +14,9 @@ import {
   Group
 } from '@mantine/core';
 import ProductCard from './ProductCard';
+import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Product, productInput } from '@/server/schema';
 
 type ProductModalProps = {
   opened: boolean;
@@ -43,6 +46,22 @@ const useStyles = createStyles((theme) => ({
 
 function ProductModal({ opened, setOpened, data }: ProductModalProps) {
   const { classes } = useStyles();
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    watch,
+    reset,
+    formState: { errors }
+  } = useForm<Product>({
+    defaultValues: {
+      title: 'My cool product',
+      description: "A very nice product that's a must buy",
+      price: '20'
+    },
+    resolver: zodResolver(productInput)
+  });
 
   return (
     <Modal opened={opened} onClose={() => setOpened(false)} title="" size="auto">
