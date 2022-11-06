@@ -13,7 +13,13 @@ function MyProducts() {
       <ProductModal opened={opened} setOpened={setOpened} data={''} />
       <div className="flex gap-8 items-center flex-wrap">
         <div className="w-[337px] h-[583px] border-dashed border-2 border-brown-200 rounded-xl flex items-center justify-center text-brown-600">
-          <Button leftIcon={<IconPlus size="15px" />} variant="outline" mt="md" radius="md">
+          <Button
+            onClick={() => setOpened(true)}
+            leftIcon={<IconPlus size="15px" />}
+            variant="outline"
+            mt="md"
+            radius="md"
+          >
             New Product
           </Button>
         </div>
