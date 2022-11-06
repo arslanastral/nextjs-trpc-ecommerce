@@ -1,5 +1,11 @@
+import { Modal, Button, Input, Grid, Checkbox, LoadingOverlay, Alert } from '@mantine/core';
+
 function ProductModal() {
-  return <div>Product Modal</div>;
+  return (
+    <Modal opened={opened} onClose={() => setOpened(false)} title="Add New Product">
+      {/* Modal content */}
+    </Modal>
+  );
 }
 
 export default ProductModal;
