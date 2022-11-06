@@ -1,5 +1,6 @@
 import {
   Modal,
+  Text,
   Button,
   Input,
   Grid,
@@ -7,9 +8,12 @@ import {
   LoadingOverlay,
   Alert,
   createStyles,
+  Badge,
   Select,
-  TextInput
+  TextInput,
+  Group
 } from '@mantine/core';
+import ProductCard from './ProductCard';
 
 type ProductModalProps = {
   opened: boolean;
@@ -41,35 +45,52 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
   const { classes } = useStyles();
 
   return (
-    <Modal opened={opened} onClose={() => setOpened(false)} title="Add New Product">
-      <div>
-        <TextInput
-          size="lg"
-          label="Product Title"
-          placeholder="My cool product"
-          classNames={classes}
-          mt={15}
-        />
+    <Modal opened={opened} onClose={() => setOpened(false)} title="" size="auto">
+      <div className="flex gap-10">
+        <div>
+          <Text className="text-2xl" weight={600} mt={15}>
+            Add New Product
+          </Text>
+          <TextInput
+            size="lg"
+            label="Product Title"
+            placeholder="My cool product"
+            classNames={classes}
+            mt={15}
+          />
 
-        <TextInput
-          size="lg"
-          label="Description"
-          placeholder="It is the best damn product"
-          classNames={classes}
-          mt={15}
-        />
+          <TextInput
+            size="lg"
+            label="Description"
+            placeholder="It is the best damn product"
+            classNames={classes}
+            mt={15}
+          />
 
-        <Select
-          size="lg"
-          style={{ marginTop: 20, zIndex: 2 }}
-          data={['Fashion', 'Luxury', 'Sports', 'Others']}
-          placeholder="Fashion, Sports etc"
-          label="Product's Category"
-          classNames={classes}
-          mt={15}
-        />
+          <Select
+            size="lg"
+            style={{ marginTop: 20, zIndex: 2 }}
+            data={['Fashion', 'Luxury', 'Sports', 'Others']}
+            placeholder="Fashion, Sports etc"
+            label="Product's Category"
+            classNames={classes}
+            mt={15}
+          />
 
-        <TextInput size="lg" label="Price" placeholder="$20" classNames={classes} mt={15} />
+          <TextInput size="lg" label="Price" placeholder="$20" classNames={classes} mt={15} />
+        </div>
+
+        <div className="mt-2">
+          <Badge className="bg-black text-white mb-4">Live</Badge>
+
+          <ProductCard
+            title="Blue dress with silk cotten and smooth"
+            description="Blue floral dress with beach vibes"
+            price="20"
+            status="sold out"
+            image="https://images.unsplash.com/photo-1539008835657-9e8e9680c956?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+          />
+        </div>
       </div>
     </Modal>
   );
