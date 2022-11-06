@@ -25,18 +25,18 @@ function MyProducts() {
         </div>
 
         <ProductCard
-          title="Blue dress with silk cotten and smooth"
-          description="Blue floral dress with beach vibes"
+          title="Blue sleeveless lace dress with belt"
+          description="Perfect for beach vibes"
           price="20"
           status="sold out"
           image="https://images.unsplash.com/photo-1539008835657-9e8e9680c956?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
         />
 
         <ProductCard
-          title="Blue dress with silk cotten and smooth"
-          description="Blue floral dress with beach vibes"
-          price="20"
-          status="sold out"
+          title="Yellow lace dress with bell sleeves"
+          description="Perfect dress for summer"
+          price="30"
+          status="in stock"
           badge="new"
           image="https://images.unsplash.com/photo-1612722432474-b971cdcea546?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80"
         />
