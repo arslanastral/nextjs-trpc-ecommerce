@@ -1,8 +1,11 @@
 import { Button, Card, Group, Text, Image, Badge } from '@mantine/core';
 import { IconPlus } from '@tabler/icons';
 import ProductCard from './ProductCard';
+import { useState } from 'react';
 
 function MyProducts() {
+  const [opened, setOpened] = useState<boolean>(false);
+
   return (
     <div className="p-8">
       <h2 className="font-semibold text-4xl mb-7">My Products</h2>
