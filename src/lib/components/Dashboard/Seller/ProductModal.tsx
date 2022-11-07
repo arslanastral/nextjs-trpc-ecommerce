@@ -13,7 +13,7 @@ import {
   TextInput,
   Group
 } from '@mantine/core';
-import ProductCard from './ProductCard';
+import PreviewProductCard from './PreviewProductCard';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Product, productInput } from '@/server/schema';
@@ -116,7 +116,7 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
         <div className="mt-2">
           <Badge className="bg-black text-white mb-4">Live</Badge>
 
-          <ProductCard
+          <PreviewProductCard
             title={watch('title')}
             description={watch('description')}
             price={watch('price')}
