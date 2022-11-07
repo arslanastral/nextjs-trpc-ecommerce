@@ -57,8 +57,10 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
     formState: { errors }
   } = useForm<Product>({
     defaultValues: {
-      title: 'Blue sleeveless lace dress with belt',
-      description: 'Perfect for beach vibes',
+      image:
+        'https://images.unsplash.com/photo-1542295669297-4d352b042bca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
+      title: 'Red floral sleeveless dress',
+      description: 'Perfect for summer vibes',
       price: '20'
     },
     resolver: zodResolver(productInput)
@@ -75,6 +77,14 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
           <Text className="text-2xl" weight={600} mt={15}>
             Add New Product
           </Text>
+          <TextInput
+            {...register('image')}
+            size="lg"
+            label="Product Image"
+            placeholder="https://images.unsplash.com/"
+            classNames={classes}
+            mt={15}
+          />
           <TextInput
             {...register('title')}
             size="lg"
@@ -121,7 +131,7 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
             description={watch('description')}
             price={watch('price')}
             status="sold out"
-            image=""
+            image={watch('image')}
           />
         </div>
       </div>
