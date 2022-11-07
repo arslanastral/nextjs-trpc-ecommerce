@@ -1,5 +1,13 @@
-import { Button, Card, Group, Text, Badge, AspectRatio, Image } from '@mantine/core';
-// import Image from 'next/image';
+import {
+  Button,
+  Card,
+  Group,
+  Text,
+  Badge,
+  AspectRatio,
+  Image as MantineImage
+} from '@mantine/core';
+import Image from 'next/image';
 
 type ProductCardProps = {
   title: string;
@@ -19,15 +27,19 @@ function PreviewProductCard({ title, image, description, price, status, badge }:
             <Badge className="absolute top-2 left-3 z-40 bg-black text-white">{badge}</Badge>
           )}
 
-          <AspectRatio ratio={337 / 393} sx={{ maxWidth: '100%' }} className="relative">
-            <Image
-              width={337}
-              height={393}
-              src={null}
-              alt="Your Product image goes here"
-              withPlaceholder
-            />
-            {/* <Image fill={true} src={image} alt="Norway" /> */}
+          <AspectRatio ratio={337 / 393} sx={{ maxWidth: '100%' }}>
+            {!image && (
+              <MantineImage
+                className="relative"
+                width={337}
+                height={393}
+                src={null}
+                alt="Your Product image goes here"
+                withPlaceholder
+              />
+            )}
+
+            {image && <Image fill={true} src={image} alt="Norway" />}
           </AspectRatio>
         </Card.Section>
         <Group position="apart" mt="md" mb="xs">
