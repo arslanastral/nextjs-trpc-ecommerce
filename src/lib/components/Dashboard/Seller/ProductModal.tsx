@@ -121,7 +121,7 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
             description={watch('description')}
             price={watch('price')}
             status="sold out"
-            image="https://images.unsplash.com/photo-1539008835657-9e8e9680c956?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+            image=""
           />
         </div>
       </div>
