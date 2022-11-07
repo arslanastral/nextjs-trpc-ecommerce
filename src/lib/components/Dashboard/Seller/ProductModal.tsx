@@ -10,6 +10,7 @@ import {
   createStyles,
   Badge,
   Select,
+  FileButton,
   TextInput,
   Group
 } from '@mantine/core';
@@ -17,7 +18,8 @@ import PreviewProductCard from './PreviewProductCard';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Product, productInput } from '@/server/schema';
-import { useEffect } from 'react';
+
+import { useEffect, useState } from 'react';
 
 type ProductModalProps = {
   opened: boolean;
@@ -46,6 +48,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function ProductModal({ opened, setOpened, data }: ProductModalProps) {
+  const [file, setFile] = useState<File | null>(null);
   const { classes } = useStyles();
 
   const {
@@ -68,9 +71,10 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
     resolver: zodResolver(productInput)
   });
 
-  // useEffect(() => {
-  //   reset();
-  // }, [reset]);
+  useEffect(() => {
+    console.log(file);
+    // reset();
+  }, [file]);
 
   const productSubmit = (product: Product) => {
     // console.log(getValues('title'));
@@ -87,6 +91,21 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
           </Text>
 
           <form onSubmit={handleSubmit(productSubmit)}>
+            <Group position="left" mt={25}>
+              <FileButton onChange={setFile} accept="image/png,image/jpeg">
+                {(props) => (
+                  <Button color="" {...props}>
+                    Upload image
+                  </Button>
+                )}
+              </FileButton>
+              {file && (
+                <Text size="sm" align="center" mt="sm">
+                  Picked file: {file.name}
+                </Text>
+              )}
+            </Group>
+
             <TextInput
               size="lg"
               label="Product Image"
@@ -144,7 +163,7 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
               {...register('price')}
               error={errors.price?.message}
             />
-            <Button type="submit" mt="md" radius="md">
+            <Button type="submit" mt={20} radius="md">
               Create Product
             </Button>
           </form>
