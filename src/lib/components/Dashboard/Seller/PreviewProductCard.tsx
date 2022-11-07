@@ -39,7 +39,7 @@ function PreviewProductCard({ title, image, description, price, status, badge }:
               />
             )}
 
-            {image && <Image fill={true} src={image} alt="Norway" />}
+            {image && <Image fill={true} src={image} alt="Image goes here" />}
           </AspectRatio>
         </Card.Section>
         <Group position="apart" mt="md" mb="xs">
