@@ -57,7 +57,7 @@ function PreviewProductCard({ title, image, description, price, status, badge }:
         </Group>
 
         <Button fullWidth mt="md" radius="md">
-          Edit
+          Add To Cart
         </Button>
       </Card>
     </div>
