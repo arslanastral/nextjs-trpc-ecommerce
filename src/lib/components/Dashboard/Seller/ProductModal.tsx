@@ -22,7 +22,7 @@ import { useEffect } from 'react';
 type ProductModalProps = {
   opened: boolean;
   setOpened: (state: boolean) => void;
-  data?: {};
+  data?: Product;
 };
 
 const useStyles = createStyles((theme) => ({
@@ -51,6 +51,7 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
   const {
     register,
     handleSubmit,
+    getValues,
     control,
     watch,
     reset,
@@ -61,14 +62,21 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
         'https://images.unsplash.com/photo-1542295669297-4d352b042bca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
       title: 'Red floral sleeveless dress',
       description: 'Perfect for summer vibes',
-      price: '20'
+      price: '20',
+      category: 'Others'
     },
     resolver: zodResolver(productInput)
   });
 
-  useEffect(() => {
-    reset();
-  }, [reset]);
+  // useEffect(() => {
+  //   reset();
+  // }, [reset]);
+
+  const productSubmit = (product: Product) => {
+    // console.log(getValues('title'));
+    console.log(product);
+    // console.log(product);
+  };
 
   return (
     <Modal opened={opened} onClose={() => setOpened(false)} title="" size="auto">
@@ -77,50 +85,69 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
           <Text className="text-2xl" weight={600} mt={15}>
             Add New Product
           </Text>
-          <TextInput
-            {...register('image')}
-            size="lg"
-            label="Product Image"
-            placeholder="https://images.unsplash.com/"
-            classNames={classes}
-            mt={15}
-          />
-          <TextInput
-            {...register('title')}
-            size="lg"
-            label="Product Title"
-            placeholder="My cool product"
-            classNames={classes}
-            mt={15}
-          />
 
-          <TextInput
-            {...register('description')}
-            size="lg"
-            label="Description"
-            placeholder="It is the best damn product"
-            classNames={classes}
-            mt={15}
-          />
+          <form onSubmit={handleSubmit(productSubmit)}>
+            <TextInput
+              size="lg"
+              label="Product Image"
+              placeholder="https://images.unsplash.com/"
+              classNames={classes}
+              mt={15}
+              error={errors.image?.message}
+              {...register('image')}
+            />
+            <TextInput
+              size="lg"
+              label="Product Title"
+              placeholder="My cool product"
+              classNames={classes}
+              mt={15}
+              {...register('title')}
+              error={errors.title?.message}
+            />
 
-          <Select
-            size="lg"
-            style={{ marginTop: 20, zIndex: 2 }}
-            data={['Fashion', 'Luxury', 'Sports', 'Others']}
-            placeholder="Fashion, Sports etc"
-            label="Product's Category"
-            classNames={classes}
-            mt={15}
-          />
+            <TextInput
+              size="lg"
+              label="Description"
+              placeholder="It is the best damn product"
+              classNames={classes}
+              mt={15}
+              {...register('description')}
+              error={errors.description?.message}
+            />
 
-          <TextInput
-            {...register('price')}
-            size="lg"
-            label="Price"
-            placeholder="$20"
-            classNames={classes}
-            mt={15}
-          />
+            <Controller
+              name="category"
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <Select
+                  value={field.value}
+                  onChange={field.onChange}
+                  size="lg"
+                  style={{ marginTop: 20, zIndex: 2 }}
+                  data={['Fashion', 'Luxury', 'Sports', 'Others']}
+                  placeholder="Fashion, Sports etc"
+                  label="Product's Category"
+                  classNames={classes}
+                  mt={15}
+                />
+              )}
+            />
+
+            <TextInput
+              size="lg"
+              label="Price"
+              placeholder="$20"
+              classNames={classes}
+              mt={15}
+              {...register('price')}
+              error={errors.price?.message}
+            />
+            <Button type="submit" mt="md" radius="md">
+              Create Product
+            </Button>
+          </form>
         </div>
 
         <div className="mt-2">
