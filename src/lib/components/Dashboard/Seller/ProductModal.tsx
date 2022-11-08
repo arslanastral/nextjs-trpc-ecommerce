@@ -187,7 +187,7 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
 
         <div className="mt-2">
           <button onClick={() => setEditMode(!editMode)}>Toggle Edit</button>
-          <Badge className="bg-black text-white mb-4">Live</Badge>
+          <Badge className="bg-black text-white mb-4">live preview</Badge>
 
           <PreviewProductCard
             title={watch('title')}
