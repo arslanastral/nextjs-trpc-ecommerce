@@ -18,13 +18,6 @@ const useStyles = createStyles((theme) => ({
 
   icon: {
     color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
-  },
-
-  control: {
-    position: 'absolute',
-    width: 250,
-    left: 'calc(50% - 125px)',
-    bottom: -20
   }
 }));
 
@@ -81,16 +74,6 @@ export function DropzoneButton({ onDrop }: DropZoneProp) {
           </Text>
         </div>
       </Dropzone>
-
-      <Button
-        className={classes.control}
-        color="blue"
-        size="md"
-        radius="xl"
-        onClick={() => openRef.current?.()}
-      >
-        Select Image
-      </Button>
     </div>
   );
 }
