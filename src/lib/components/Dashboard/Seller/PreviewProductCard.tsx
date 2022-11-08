@@ -3,7 +3,7 @@ import {
   Card,
   Group,
   Text,
-  ActionIcon,
+  LoadingOverlay,
   Badge,
   AspectRatio,
   Image as MantineImage
@@ -38,24 +38,25 @@ function PreviewProductCard({
   setImageEditMode
 }: ProductCardProps) {
   const [cropSrc, setCropSrc] = useState<any>(null);
-
+  const [isCropping, setIsCropping] = useState<boolean>(false);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
 
   const onCropComplete = useCallback((croppedArea: any, croppedAreaPixels: any) => {
-    // console.log(croppedAreaPixels);
     setCroppedAreaPixels(croppedAreaPixels);
   }, []);
 
   const showCroppedImage = useCallback(async () => {
     try {
+      setIsCropping(true);
       const croppedImage = await getCroppedImg(src, croppedAreaPixels, rotation);
-      // console.log('donee', { croppedImage });
-      setImageEditMode(false);
       setCropSrc(croppedImage);
+      setImageEditMode(false);
+      setIsCropping(false);
     } catch (e) {
+      setIsCropping(false);
       console.error(e);
     }
   }, [croppedAreaPixels, rotation, src, setCropSrc, setImageEditMode]);
@@ -85,6 +86,7 @@ function PreviewProductCard({
 
           {src && imageEditMode && (
             <Button
+              disabled={isCropping}
               className="font-thin bg-black hover:bg-black"
               leftIcon={<IconCrop size={16} />}
               onClick={showCroppedImage}
@@ -104,6 +106,7 @@ function PreviewProductCard({
             )}
 
             <AspectRatio ratio={337 / 393} sx={{ maxWidth: '100%' }}>
+              <LoadingOverlay visible={isCropping} overlayBlur={1} />
               {imageEditMode && (
                 <Cropper
                   objectFit="horizontal-cover"
