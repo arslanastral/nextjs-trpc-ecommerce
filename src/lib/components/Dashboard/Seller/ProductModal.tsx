@@ -2,6 +2,7 @@ import {
   Modal,
   Text,
   Button,
+  ActionIcon,
   Input,
   Grid,
   Checkbox,
@@ -47,10 +48,8 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function ProductModal({ opened, setOpened, data }: ProductModalProps) {
-  const [editMode, setEditMode] = useState<boolean>(false);
-  const [originalSrc, setOriginalSrc] = useState<any>(null);
-  const [cropSrc, setCropSrc] = useState<any>(null);
-
+  const [imageEditMode, setImageEditMode] = useState<boolean>(false);
+  const [src, setSrc] = useState<any>(null);
   const [file, setFile] = useState<File | null>(null);
   const { classes } = useStyles();
 
@@ -75,9 +74,10 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
   });
 
   const handleImageUpload = async (file: File) => {
+    setFile(file);
     let imageDataUrl = await readFile(file);
-    setOriginalSrc(imageDataUrl);
-    setEditMode(true);
+    setSrc(imageDataUrl);
+    // setImageEditMode(true)
   };
 
   // useEffect(() => {
@@ -186,19 +186,15 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
         </div>
 
         <div className="mt-2">
-          <button onClick={() => setEditMode(!editMode)}>Toggle Edit</button>
-          <Badge className="bg-black text-white mb-4">live preview</Badge>
-
           <PreviewProductCard
             title={watch('title')}
             description={watch('description')}
             price={watch('price')}
             status="sold out"
             image={''}
-            src={cropSrc ? cropSrc : originalSrc}
-            originalSrc={originalSrc}
-            editMode={editMode}
-            setCropSrc={setCropSrc}
+            src={src}
+            imageEditMode={imageEditMode}
+            setImageEditMode={setImageEditMode}
           />
         </div>
       </div>
