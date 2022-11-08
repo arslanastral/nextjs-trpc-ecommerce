@@ -71,7 +71,7 @@ function PreviewProductCard({
         <Badge className="bg-black text-white">live preview</Badge>
 
         <div className="flex gap-2">
-          {!imageEditMode && (
+          {src && !imageEditMode && (
             <Button
               className="font-thin bg-black hover:bg-black"
               leftIcon={<IconCrop size={16} />}
@@ -83,7 +83,7 @@ function PreviewProductCard({
             </Button>
           )}
 
-          {imageEditMode && (
+          {src && imageEditMode && (
             <Button
               className="font-thin bg-black hover:bg-black"
               leftIcon={<IconCrop size={16} />}
