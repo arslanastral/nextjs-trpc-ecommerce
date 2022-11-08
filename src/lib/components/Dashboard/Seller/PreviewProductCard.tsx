@@ -165,7 +165,7 @@ function PreviewProductCard({
             </Badge>
           </Group>
 
-          <Button fullWidth mt="md" radius="md">
+          <Button fullWidth mt="md" radius="md" variant="outline">
             Add To Cart
           </Button>
         </Card>
