@@ -32,6 +32,7 @@ specifiers:
   prisma: ^4.5.0
   react: 18.2.0
   react-dom: 18.2.0
+  react-easy-crop: ^4.6.1
   react-hook-form: ^7.38.0
   tailwindcss: ^3.2.1
   typescript: 4.8.4
@@ -59,6 +60,7 @@ dependencies:
   next-auth: 4.15.0_r5sq4deac3rmm2d5onhwvomqve
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-easy-crop: 4.6.1_biqbaboplfbrettd7655fr4n2y
   react-hook-form: 7.38.0_react@18.2.0
   zod: 3.19.1
 
@@ -2870,6 +2872,10 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
+  /normalize-wheel/1.0.1:
+    resolution: {integrity: sha512-1OnlAPZ3zgrk8B91HyRj+eVv+kS5u+Z0SCsak6Xil/kmgEia50ga7zfkumayonZrImffAxPU/5WcyGhzetHNPA==}
+    dev: false
+
   /npmlog/5.0.1:
     resolution: {integrity: sha512-AqZtDUWOMKs1G/8lwylVjrdYgqA4d9nu8hc+0gzRxlDb1I10+FHBGMXs6aiQHFdCUUlqH99MUMuLfzWDNDtfxw==}
     dependencies:
@@ -3198,6 +3204,18 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-easy-crop/4.6.1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-/3Y7fScuNosFyKGVEotI6Jef1s4nSZLeeeMM38ubexWHRhyvZJAsmqoXoEj5WPvmM6/Ugy32SymJQwVa4t3S9w==}
+    peerDependencies:
+      react: '>=16.4.0'
+      react-dom: '>=16.4.0'
+    dependencies:
+      normalize-wheel: 1.0.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      tslib: 2.0.1
     dev: false
 
   /react-hook-form/7.38.0_react@18.2.0:
@@ -3629,6 +3647,10 @@ packages:
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
     dev: true
+
+  /tslib/2.0.1:
+    resolution: {integrity: sha512-SgIkNheinmEBgx1IUNirK0TUD4X9yjjBRTqqjggWCU3pUEqIk3/Uwl3yRixYKT6WjQuGiwDv4NomL3wqRCj+CQ==}
+    dev: false
 
   /tslib/2.4.0:
     resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
