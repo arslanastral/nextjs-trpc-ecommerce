@@ -7,8 +7,7 @@ import { useState } from 'react';
 const useStyles = createStyles((theme) => ({
   wrapper: {
     position: 'relative',
-    marginTop: 10,
-    marginBottom: 50
+    marginTop: 10
   },
 
   dropzone: {
