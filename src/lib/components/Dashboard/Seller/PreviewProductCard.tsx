@@ -72,13 +72,15 @@ function PreviewProductCard({
 
         <div className="flex gap-2">
           {!imageEditMode && (
-            <ActionIcon
-              className="bg-black text-white hover:bg-black"
+            <Button
+              className="font-thin bg-black hover:bg-black"
+              leftIcon={<IconCrop size={16} />}
               onClick={() => setImageEditMode(true)}
-              // variant="default"
+              compact
+              radius="md"
             >
-              <IconCrop size={16} />
-            </ActionIcon>
+              Crop
+            </Button>
           )}
 
           {imageEditMode && (
@@ -89,7 +91,7 @@ function PreviewProductCard({
               compact
               radius="md"
             >
-              Finish
+              Save
             </Button>
           )}
         </div>
