@@ -65,17 +65,6 @@ function PreviewProductCard({
           )}
 
           <AspectRatio ratio={337 / 393} sx={{ maxWidth: '100%' }}>
-            {/* {editMode && (
-              <MantineImage
-                className="relative"
-                width={337}
-                height={393}
-                src={src ? src : null}
-                alt="Your Product image goes here"
-                withPlaceholder
-              />
-            )} */}
-
             {!editMode && (
               <MantineImage
                 className="relative"
