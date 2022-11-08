@@ -83,7 +83,7 @@ function PreviewProductCard({
 
           {imageEditMode && (
             <Button
-              className="font-thin bg-black"
+              className="font-thin bg-black hover:bg-black"
               leftIcon={<IconCrop size={16} />}
               onClick={showCroppedImage}
               compact
