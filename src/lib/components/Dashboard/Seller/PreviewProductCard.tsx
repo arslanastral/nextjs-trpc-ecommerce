@@ -61,7 +61,7 @@ function PreviewProductCard({
   }, [croppedAreaPixels, rotation, src, setCropSrc, setImageEditMode]);
 
   return (
-    <>
+    <div className="bg-brown-50 p-8">
       <div className="flex items-center mb-4 justify-between">
         <Badge className="bg-black text-white">live preview</Badge>
 
@@ -163,7 +163,7 @@ function PreviewProductCard({
           </Button>
         </Card>
       </div>
-    </>
+    </div>
   );
 }
 
