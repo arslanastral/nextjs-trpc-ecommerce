@@ -49,6 +49,10 @@ const useStyles = createStyles((theme) => ({
     paddingLeft: theme.spacing.sm,
     paddingTop: theme.spacing.sm / 2,
     zIndex: 1
+  },
+
+  create: {
+    width: 250
   }
 }));
 
@@ -161,7 +165,7 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
               {...register('price')}
               error={errors.price?.message}
             />
-            <Button type="submit" mt={20} radius="md">
+            <Button className={classes.create} size="md" radius="xl" mt={15}>
               Create Product
             </Button>
           </form>
