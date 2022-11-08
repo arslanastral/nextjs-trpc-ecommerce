@@ -20,6 +20,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Product, productInput } from '@/server/schema';
 import { useEffect, useState } from 'react';
+import { DropzoneButton } from './Dropzone';
 
 type ProductModalProps = {
   opened: boolean;
@@ -108,7 +109,7 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
 
           <form onSubmit={handleSubmit(productSubmit)}>
             <Group position="left" mt={25}>
-              <FileButton onChange={handleImageUpload} accept="image/png,image/jpeg">
+              {/* <FileButton onChange={handleImageUpload} accept="image/png,image/jpeg">
                 {(props) => (
                   <Button color="" {...props}>
                     Upload image
@@ -119,7 +120,8 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
                 <Text size="sm" align="center" mt="sm">
                   Picked file: {file.name}
                 </Text>
-              )}
+              )} */}
+              <DropzoneButton />
             </Group>
 
             <TextInput
