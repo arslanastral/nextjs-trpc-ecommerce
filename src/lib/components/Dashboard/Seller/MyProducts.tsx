@@ -10,7 +10,7 @@ function MyProducts() {
   return (
     <div className="p-8">
       <h2 className="font-semibold text-4xl mb-7">My Products</h2>
-      <ProductModal opened={opened} setOpened={setOpened} data={''} />
+      <ProductModal opened={opened} setOpened={setOpened} />
       <div className="flex gap-8 items-center flex-wrap">
         <div className="w-[337px] h-[583px] border-dashed border-2 border-brown-200 rounded-xl flex items-center justify-center text-brown-600">
           <Button
