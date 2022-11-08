@@ -18,7 +18,6 @@ import PreviewProductCard from './PreviewProductCard';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Product, productInput } from '@/server/schema';
-
 import { useEffect, useState } from 'react';
 
 type ProductModalProps = {
@@ -48,6 +47,10 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function ProductModal({ opened, setOpened, data }: ProductModalProps) {
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [originalSrc, setOriginalSrc] = useState<any>(null);
+  const [cropSrc, setCropSrc] = useState<any>(null);
+
   const [file, setFile] = useState<File | null>(null);
   const { classes } = useStyles();
 
@@ -71,10 +74,23 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
     resolver: zodResolver(productInput)
   });
 
-  useEffect(() => {
-    console.log(file);
-    // reset();
-  }, [file]);
+  const handleImageUpload = async (file: File) => {
+    let imageDataUrl = await readFile(file);
+    setOriginalSrc(imageDataUrl);
+    setEditMode(true);
+  };
+
+  // useEffect(() => {
+  //   // reset();
+  // }, [reset]);
+
+  function readFile(file: File) {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => resolve(reader.result), false);
+      reader.readAsDataURL(file);
+    });
+  }
 
   const productSubmit = (product: Product) => {
     // console.log(getValues('title'));
@@ -92,7 +108,7 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
 
           <form onSubmit={handleSubmit(productSubmit)}>
             <Group position="left" mt={25}>
-              <FileButton onChange={setFile} accept="image/png,image/jpeg">
+              <FileButton onChange={handleImageUpload} accept="image/png,image/jpeg">
                 {(props) => (
                   <Button color="" {...props}>
                     Upload image
@@ -170,6 +186,7 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
         </div>
 
         <div className="mt-2">
+          <button onClick={() => setEditMode(!editMode)}>Toggle Edit</button>
           <Badge className="bg-black text-white mb-4">Live</Badge>
 
           <PreviewProductCard
@@ -177,7 +194,6 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
             description={watch('description')}
             price={watch('price')}
             status="sold out"
-            image={watch('image')}
           />
         </div>
       </div>
