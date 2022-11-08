@@ -49,10 +49,6 @@ const useStyles = createStyles((theme) => ({
     paddingLeft: theme.spacing.sm,
     paddingTop: theme.spacing.sm / 2,
     zIndex: 1
-  },
-
-  create: {
-    width: 250
   }
 }));
 
@@ -106,8 +102,6 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
       <div className="flex gap-10">
         <div>
           <form onSubmit={handleSubmit(productSubmit)}>
-            <DropzoneButton onDrop={handleImageUpload} />
-
             <TextInput
               size="lg"
               label="Product Image"
@@ -165,7 +159,8 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
               {...register('price')}
               error={errors.price?.message}
             />
-            <Button className={classes.create} size="md" radius="xl" mt={15}>
+            <DropzoneButton onDrop={handleImageUpload} />
+            <Button type="submit" fullWidth size="md" radius="md" mt={15}>
               Create Product
             </Button>
           </form>
