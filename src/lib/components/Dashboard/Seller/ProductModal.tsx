@@ -74,29 +74,17 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
     resolver: zodResolver(productInput)
   });
 
-  const handleImageUpload = async (file: File) => {
-    setFile(file);
-    let imageDataUrl = await readFile(file);
-    setSrc(imageDataUrl);
-    // setImageEditMode(true)
+  const handleImageUpload = async (file: string) => {
+    setSrc(file);
+    setImageEditMode(true);
   };
 
   // useEffect(() => {
   //   // reset();
   // }, [reset]);
 
-  function readFile(file: File) {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.addEventListener('load', () => resolve(reader.result), false);
-      reader.readAsDataURL(file);
-    });
-  }
-
   const productSubmit = (product: Product) => {
-    // console.log(getValues('title'));
     console.log(product);
-    // console.log(product);
   };
 
   return (
@@ -109,19 +97,7 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
 
           <form onSubmit={handleSubmit(productSubmit)}>
             <Group position="left" mt={25}>
-              {/* <FileButton onChange={handleImageUpload} accept="image/png,image/jpeg">
-                {(props) => (
-                  <Button color="" {...props}>
-                    Upload image
-                  </Button>
-                )}
-              </FileButton>
-              {file && (
-                <Text size="sm" align="center" mt="sm">
-                  Picked file: {file.name}
-                </Text>
-              )} */}
-              <DropzoneButton />
+              <DropzoneButton onDrop={handleImageUpload} />
             </Group>
 
             <TextInput
