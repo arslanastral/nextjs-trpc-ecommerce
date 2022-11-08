@@ -8,17 +8,54 @@ import {
   Image as MantineImage
 } from '@mantine/core';
 import Image from 'next/image';
+import Cropper from 'react-easy-crop';
+import getCroppedImg from './cropImage';
+import { useState, useCallback } from 'react';
 
 type ProductCardProps = {
   title: string;
-  image: string;
+  image?: string;
   description: string;
   price: string;
   status: string;
   badge?: string;
+  src?: string;
+  originalSrc?: string;
+  editMode: boolean;
+  setCropSrc: (src: string | null) => void;
 };
 
-function PreviewProductCard({ title, image, description, price, status, badge }: ProductCardProps) {
+function PreviewProductCard({
+  title,
+  image,
+  description,
+  price,
+  status,
+  badge,
+  src, //originalSrc || cropSrc
+  originalSrc,
+  editMode,
+  setCropSrc
+}: ProductCardProps) {
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [rotation, setRotation] = useState(0);
+  const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+
+  const onCropComplete = useCallback((croppedArea: any, croppedAreaPixels: any) => {
+    setCroppedAreaPixels(croppedAreaPixels);
+  }, []);
+
+  const showCroppedImage = useCallback(async () => {
+    try {
+      const croppedImage = await getCroppedImg(originalSrc, croppedAreaPixels, rotation);
+      console.log('donee', { croppedImage });
+      setCropSrc(croppedImage);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [croppedAreaPixels, rotation, originalSrc, setCropSrc]);
+
   return (
     <div className="w-[337px]">
       <Card p="lg" radius="md" withBorder className="relative">
@@ -28,18 +65,44 @@ function PreviewProductCard({ title, image, description, price, status, badge }:
           )}
 
           <AspectRatio ratio={337 / 393} sx={{ maxWidth: '100%' }}>
-            {!image && (
+            {/* {editMode && (
               <MantineImage
                 className="relative"
                 width={337}
                 height={393}
-                src={null}
+                src={src ? src : null}
+                alt="Your Product image goes here"
+                withPlaceholder
+              />
+            )} */}
+
+            {!editMode && (
+              <MantineImage
+                className="relative"
+                width={337}
+                height={393}
+                src={src}
                 alt="Your Product image goes here"
                 withPlaceholder
               />
             )}
 
-            {image && <Image fill={true} src={image} alt="Image goes here" />}
+            {image && !editMode && <Image fill={true} src={image} alt="Image goes here" />}
+
+            {editMode && (
+              <Cropper
+                objectFit="horizontal-cover"
+                image={originalSrc}
+                crop={crop}
+                rotation={rotation}
+                zoom={zoom}
+                aspect={337 / 393}
+                onCropChange={setCrop}
+                onRotationChange={setRotation}
+                onZoomChange={setZoom}
+                onCropComplete={onCropComplete}
+              />
+            )}
           </AspectRatio>
         </Card.Section>
         <Group position="apart" mt="md" mb="xs">
@@ -75,7 +138,7 @@ function PreviewProductCard({ title, image, description, price, status, badge }:
           </Badge>
         </Group>
 
-        <Button fullWidth mt="md" radius="md">
+        <Button onClick={showCroppedImage} fullWidth mt="md" radius="md">
           Add To Cart
         </Button>
       </Card>
