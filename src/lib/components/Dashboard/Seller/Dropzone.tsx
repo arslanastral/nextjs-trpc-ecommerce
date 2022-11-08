@@ -29,7 +29,9 @@ export function DropzoneButton({ onDrop }: DropZoneProp) {
   const { classes, theme } = useStyles();
   const openRef = useRef<() => void>(null);
 
-  const handleImageUpload = (file: Blob) => {
+  const handleImageUpload = (file: File) => {
+    setFileName(file.name);
+    console.log(fileName);
     let imageDataUrl = URL.createObjectURL(file);
     onDrop(imageDataUrl);
   };
@@ -44,7 +46,7 @@ export function DropzoneButton({ onDrop }: DropZoneProp) {
         className={classes.dropzone}
         radius="md"
         accept={IMAGE_MIME_TYPE}
-        maxSize={40 * 1024 ** 2}
+        maxSize={25 * 1024 ** 2}
       >
         <div style={{ pointerEvents: 'none' }}>
           <Group position="center">
@@ -66,10 +68,21 @@ export function DropzoneButton({ onDrop }: DropZoneProp) {
           <Text align="center" weight={700} size="lg" mt="xl">
             <Dropzone.Accept>Drop files here</Dropzone.Accept>
             <Dropzone.Reject>Image file less than 5mb</Dropzone.Reject>
-            <Dropzone.Idle>Upload product image</Dropzone.Idle>
+            <Dropzone.Idle>
+              {fileName && (
+                <Text
+                  className="whitespace-nowrap max-w-[300px]"
+                  sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}
+                >
+                  {fileName}
+                </Text>
+              )}
+              {!fileName && <>Upload product image</>}
+            </Dropzone.Idle>
           </Text>
           <Text align="center" size="sm" mt="xs" color="dimmed">
-            Drag&apos;n&apos;drop you image here to upload. Max size allowed is 5mb.
+            {fileName && <>Image Added! To change drop another.</>}
+            {!fileName && <>Drag&apos;n&apos;drop or click here to add image.</>}
           </Text>
         </div>
       </Dropzone>
