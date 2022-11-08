@@ -33,6 +33,10 @@ const useStyles = createStyles((theme) => ({
     position: 'relative'
   },
 
+  title: {
+    fontSize: '30px'
+  },
+
   input: {
     height: 'auto',
     paddingTop: 18
@@ -88,17 +92,17 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
   };
 
   return (
-    <Modal opened={opened} onClose={() => setOpened(false)} title="" size="auto">
+    <Modal
+      classNames={{ title: classes.title }}
+      opened={opened}
+      onClose={() => setOpened(false)}
+      title="Create Your Product"
+      size="auto"
+    >
       <div className="flex gap-10">
         <div>
-          <Text className="text-2xl" weight={600} mt={15}>
-            Add New Product
-          </Text>
-
           <form onSubmit={handleSubmit(productSubmit)}>
-            <Group position="left" mt={25}>
-              <DropzoneButton onDrop={handleImageUpload} />
-            </Group>
+            <DropzoneButton onDrop={handleImageUpload} />
 
             <TextInput
               size="lg"
