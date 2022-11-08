@@ -51,7 +51,7 @@ function Products() {
               <p className="mr-auto">Seller name</p>
               <p className="mr-1">Listed on: 11-1-2022</p>
             </div>
-            <h1 className="text-xl font-bold text-zinc-600">{product.title}</h1>
+            <h1 className="text-xl font-bold text-zinc-600 max-w-3xl">{product.title}</h1>
             <p className="capitalize text-zinc-500">{product.category}</p>
             <p className="my-10 order-4 lg:order-5 lg:max-w-3xl">
               {!isMaxCharacters && <>{product.description}</>}
