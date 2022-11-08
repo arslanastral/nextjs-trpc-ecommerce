@@ -194,6 +194,11 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
             description={watch('description')}
             price={watch('price')}
             status="sold out"
+            image={''}
+            src={cropSrc ? cropSrc : originalSrc}
+            originalSrc={originalSrc}
+            editMode={editMode}
+            setCropSrc={setCropSrc}
           />
         </div>
       </div>
