@@ -55,21 +55,17 @@ const useStyles = createStyles((theme) => ({
 function ProductModal({ opened, setOpened, data }: ProductModalProps) {
   const [imageEditMode, setImageEditMode] = useState<boolean>(false);
   const [src, setSrc] = useState<any>(null);
-  const [file, setFile] = useState<File | null>(null);
   const { classes } = useStyles();
 
   const {
     register,
     handleSubmit,
-    getValues,
     control,
     watch,
     reset,
     formState: { errors }
   } = useForm<Product>({
     defaultValues: {
-      image:
-        'https://images.unsplash.com/photo-1542295669297-4d352b042bca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
       title: 'Red floral sleeveless dress',
       description: 'Perfect for summer vibes',
       price: '20',
@@ -99,18 +95,9 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
       title="Create Your Product"
       size="auto"
     >
-      <div className="flex gap-10">
+      <div className="flex gap-10 ">
         <div>
           <form onSubmit={handleSubmit(productSubmit)}>
-            <TextInput
-              size="lg"
-              label="Product Image"
-              placeholder="https://images.unsplash.com/"
-              classNames={classes}
-              mt={15}
-              error={errors.image?.message}
-              {...register('image')}
-            />
             <TextInput
               size="lg"
               label="Product Title"
@@ -160,6 +147,7 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
               error={errors.price?.message}
             />
             <DropzoneButton onDrop={handleImageUpload} />
+
             <Button type="submit" fullWidth size="md" radius="md" mt={15}>
               Create Product
             </Button>
