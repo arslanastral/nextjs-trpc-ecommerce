@@ -60,6 +60,11 @@ function PreviewProductCard({
     }
   }, [croppedAreaPixels, rotation, src, setCropSrc, setImageEditMode]);
 
+  useEffect(() => {
+    setCroppedAreaPixels(null);
+    setCropSrc(null);
+  }, [src]);
+
   return (
     <div className="bg-brown-50 p-8">
       <div className="flex items-center mb-4 justify-between">
