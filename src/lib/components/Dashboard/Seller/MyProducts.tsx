@@ -3,8 +3,10 @@ import { IconPlus } from '@tabler/icons';
 import ProductCard from './ProductCard';
 import ProductModal from './ProductModal';
 import { useState } from 'react';
+import { trpc } from '@/utils/trpc';
 
 function MyProducts() {
+  const productList = trpc.product.list.useQuery();
   const [opened, setOpened] = useState<boolean>(false);
 
   return (
@@ -24,22 +26,18 @@ function MyProducts() {
           </Button>
         </div>
 
-        <ProductCard
-          title="Blue sleeveless lace dress with belt"
-          description="Perfect for beach vibes"
-          price="20"
-          status="sold out"
-          image="https://images.unsplash.com/photo-1539008835657-9e8e9680c956?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-        />
-
-        <ProductCard
-          title="Yellow lace dress with bell sleeves"
-          description="Perfect dress for summer"
-          price="30"
-          status="in stock"
-          badge="new"
-          image="https://images.unsplash.com/photo-1612722432474-b971cdcea546?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80"
-        />
+        {productList.data?.map((e, i) => {
+          return (
+            <ProductCard
+              key={i}
+              title={e.title}
+              description={e.description}
+              price={(+e.priceInCents / 100).toString()}
+              status="In Stock"
+              image={`https://res.cloudinary.com/dv9wpbflv/image/upload/v1668011420/${e.image}.jpg`}
+            />
+          );
+        })}
       </div>
     </div>
   );
