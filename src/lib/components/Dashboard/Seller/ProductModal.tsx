@@ -77,7 +77,7 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
       title: 'Red floral sleeveless dress',
       description: 'Perfect for summer vibes',
       price: 20,
-      category: 'Others'
+      category: '7'
     },
     resolver: zodResolver(productInput)
   });
@@ -158,7 +158,15 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
                   onChange={field.onChange}
                   size="lg"
                   style={{ marginTop: 20, zIndex: 2 }}
-                  data={['Fashion', 'Luxury', 'Sports', 'Others']}
+                  data={[
+                    { label: 'Health & Beauty', value: '1' },
+                    { label: `Women's Fashion`, value: '2' },
+                    { label: `Men's Fashion`, value: '3' },
+                    { label: 'Luxury', value: '4' },
+                    { label: 'Electronics', value: '5' },
+                    { label: 'Sports', value: '6' },
+                    { label: 'Other', value: '7' }
+                  ]}
                   placeholder="Fashion, Sports etc"
                   label="Product's Category"
                   classNames={classes}
