@@ -100,6 +100,10 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
   }, [register, cropSrc, setValue]);
 
   const productSubmit = async (product: Product) => {
+    if (createProduct.isLoading) {
+      return;
+    }
+
     if (product) {
       createProduct.mutate(product, {
         onSuccess: () => {
