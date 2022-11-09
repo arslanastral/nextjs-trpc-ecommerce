@@ -24,6 +24,8 @@ type PreviewProductCardProps = {
   src?: string;
   imageEditMode?: boolean;
   setImageEditMode: (state: boolean) => void;
+  cropSrc?: string;
+  setCropSrc: (file: string | null) => void;
 };
 
 function PreviewProductCard({
@@ -35,7 +37,9 @@ function PreviewProductCard({
   badge,
   src,
   imageEditMode,
-  setImageEditMode
+  setImageEditMode,
+  cropSrc,
+  setCropSrc
 }: PreviewProductCardProps) {
   const [isCropping, setIsCropping] = useState<boolean>(false);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -65,7 +69,7 @@ function PreviewProductCard({
   useEffect(() => {
     resetCropState();
     setCropSrc(null);
-  }, [src]);
+  }, [src, setCropSrc]);
 
   const resetCropState = () => {
     setRotation(0);
