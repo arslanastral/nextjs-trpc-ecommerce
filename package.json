@@ -9,6 +9,9 @@
     "lint": "next lint",
     "netlify-build": "prisma generate && prisma migrate deploy && next build"
   },
+  "prisma": {
+    "seed": "node --loader ts-node/esm 'prisma/seed.ts'"
+  },
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/server": "^11.10.0",
