@@ -180,6 +180,9 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
             />
 
             <DropzoneButton onDrop={handleImageUpload} />
+            <Text color={src ? 'green' : 'red'} size="md" mt={15}>
+              {errors.image?.message && !src && <>Product must have an image</>}
+            </Text>
 
             <Button type="submit" fullWidth size="md" radius="md" mt={15}>
               Create Product
