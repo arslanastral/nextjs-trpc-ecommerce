@@ -55,18 +55,24 @@ function PreviewProductCard({
       setCropSrc(croppedImage);
       setImageEditMode(false);
       setIsCropping(false);
+      resetCropState();
     } catch (e) {
       setIsCropping(false);
+      resetCropState();
       console.error(e);
     }
   }, [croppedAreaPixels, rotation, src, setCropSrc, setImageEditMode]);
 
   useEffect(() => {
+    resetCropState();
+    setCropSrc(null);
+  }, [src]);
+
+  const resetCropState = () => {
     setRotation(0);
     setZoom(1);
     setCroppedAreaPixels(null);
-    setCropSrc(null);
-  }, [src]);
+  };
 
   return (
     <div className="bg-brown-50 p-8">
