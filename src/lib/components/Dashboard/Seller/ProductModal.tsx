@@ -13,6 +13,7 @@ import {
   Select,
   FileButton,
   TextInput,
+  NumberInput,
   Group
 } from '@mantine/core';
 import PreviewProductCard from './PreviewProductCard';
@@ -73,7 +74,7 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
     defaultValues: {
       title: 'Red floral sleeveless dress',
       description: 'Perfect for summer vibes',
-      price: '20',
+      price: 20,
       category: 'Others'
     },
     resolver: zodResolver(productInput)
@@ -157,15 +158,26 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
               )}
             />
 
-            <TextInput
-              size="lg"
-              label="Price"
-              placeholder="$20"
-              classNames={classes}
-              mt={15}
-              {...register('price')}
-              error={errors.price?.message}
+            <Controller
+              name="price"
+              control={control}
+              rules={{ required: true, min: 1 }}
+              render={({ field }) => (
+                <NumberInput
+                  // min={1}
+                  value={field.value}
+                  onChange={field.onChange}
+                  size="lg"
+                  label="Price"
+                  placeholder="$20"
+                  classNames={classes}
+                  mt={15}
+                  hideControls
+                  error={errors.price?.message}
+                />
+              )}
             />
+
             <DropzoneButton onDrop={handleImageUpload} />
 
             <Button type="submit" fullWidth size="md" radius="md" mt={15}>
