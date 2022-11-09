@@ -27,6 +27,7 @@
     "@trpc/react-query": "10.0.0-proxy-beta.26",
     "@trpc/server": "10.0.0-proxy-beta.26",
     "argon2": "^0.30.1",
+    "cloudinary": "^1.32.0",
     "cookies": "^0.8.0",
     "next": "13.0.0",
     "next-auth": "^4.15.0",
