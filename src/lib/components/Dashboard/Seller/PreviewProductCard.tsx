@@ -14,7 +14,7 @@ import getCroppedImg from './cropImage';
 import { IconCrop } from '@tabler/icons';
 import { useEffect, useState, useCallback } from 'react';
 
-type ProductCardProps = {
+type PreviewProductCardProps = {
   title: string;
   image?: string;
   description: string;
@@ -36,7 +36,7 @@ function PreviewProductCard({
   src,
   imageEditMode,
   setImageEditMode
-}: ProductCardProps) {
+}: PreviewProductCardProps) {
   const [cropSrc, setCropSrc] = useState<any>(null);
   const [isCropping, setIsCropping] = useState<boolean>(false);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
