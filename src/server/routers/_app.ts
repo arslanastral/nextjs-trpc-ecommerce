@@ -6,7 +6,7 @@ import { productRouter } from './product';
 export const appRouter = router({
   address: addressRouter,
   identity: identityRouter,
-  productRouter: productRouter
+  product: productRouter
 });
 
 // export type definition of API
