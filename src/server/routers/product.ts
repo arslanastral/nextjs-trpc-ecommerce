@@ -30,7 +30,23 @@ export const productRouter = router({
     return product;
   }),
 
-  read: protectedProcedure.query(async ({ ctx }) => {}),
+  list: protectedProcedure.query(async ({ ctx }) => {
+    let sellerId = await getSellerId(ctx);
+    if (!sellerId) return null;
+
+    let products = await ctx.prisma.product.findMany({
+      where: {
+        sellerId: sellerId
+      },
+      select: {
+        id: true,
+        priceInCents: true,
+        title: true,
+        image: true,
+        description: true
+      }
+    });
+  }),
 
   update: protectedProcedure.input(productInputWithId).mutation(async ({ input, ctx }) => {}),
   delete: protectedProcedure.input(productInputWithId).mutation(async ({ input, ctx }) => {})
