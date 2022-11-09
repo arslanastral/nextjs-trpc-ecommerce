@@ -47,7 +47,12 @@ export const productInput = z.object({
   image: z.string().startsWith('data:image')
 });
 
+export const productInputWithId = productInput.extend({
+  id: z.string()
+});
+
 export type SellerInfo = z.infer<typeof sellerInfoInput>;
 export type Address = z.infer<typeof addressInput>;
 export type AddressWithId = z.infer<typeof addressInputWithId>;
 export type Product = z.infer<typeof productInput>;
+export type ProductWithId = z.infer<typeof productInputWithId>;
