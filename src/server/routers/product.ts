@@ -46,6 +46,8 @@ export const productRouter = router({
         description: true
       }
     });
+
+    return products;
   }),
 
   update: protectedProcedure.input(productInputWithId).mutation(async ({ input, ctx }) => {}),
