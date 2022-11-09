@@ -44,7 +44,7 @@ export const productInput = z.object({
     .string()
     .min(1, { message: 'Product must have a description' })
     .max(280, { message: 'Product description must be under 280 characters' }),
-  image: z.string().url().startsWith('https://images.unsplash.com/')
+  image: z.string().startsWith('data:image')
 });
 
 export type SellerInfo = z.infer<typeof sellerInfoInput>;
