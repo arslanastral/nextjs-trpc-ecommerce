@@ -161,7 +161,7 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
             <Controller
               name="price"
               control={control}
-              rules={{ required: true, min: 1 }}
+              rules={{ required: true }}
               render={({ field }) => (
                 <NumberInput
                   // min={1}
@@ -170,6 +170,7 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
                   size="lg"
                   label="Price"
                   placeholder="$20"
+                  precision={2}
                   classNames={classes}
                   mt={15}
                   hideControls
