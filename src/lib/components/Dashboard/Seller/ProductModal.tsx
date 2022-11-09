@@ -21,6 +21,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Product, productInput } from '@/server/schema';
 import { useEffect, useState } from 'react';
 import { DropzoneButton } from './Dropzone';
+import { getBase64FromBlobURI } from '@/utils/client/getBase64FromBlobURI';
 
 type ProductModalProps = {
   opened: boolean;
@@ -63,6 +64,8 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
     register,
     handleSubmit,
     control,
+    setValue,
+    getValues,
     watch,
     reset,
     formState: { errors }
@@ -85,7 +88,26 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
   //   // reset();
   // }, [reset]);
 
-  const productSubmit = (product: Product) => {
+  useEffect(() => {
+    register('image');
+  }, [register]);
+
+  const setImageValue = async () => {
+    let base64;
+    if (cropSrc) {
+      base64 = (await getBase64FromBlobURI(cropSrc)) as string;
+      setValue('image', base64);
+      return;
+    }
+    base64 = (await getBase64FromBlobURI(src)) as string;
+    setValue('image', base64);
+  };
+
+  const productSubmit = async (product: Product) => {
+    // console.log(getValues('title'));
+    // if (cropSrc) {
+    //   const base64 = await getBase64FromBlobURI(cropSrc);
+    // }
     console.log(product);
   };
 
@@ -168,6 +190,7 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
             setImageEditMode={setImageEditMode}
             cropSrc={cropSrc}
             setCropSrc={setCropSrc}
+            setImageValue={setImageValue}
           />
         </div>
       </div>
