@@ -55,6 +55,8 @@ const useStyles = createStyles((theme) => ({
 function ProductModal({ opened, setOpened, data }: ProductModalProps) {
   const [imageEditMode, setImageEditMode] = useState<boolean>(false);
   const [src, setSrc] = useState<any>(null);
+  const [cropSrc, setCropSrc] = useState<any>(null);
+
   const { classes } = useStyles();
 
   const {
@@ -164,6 +166,8 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
             src={src}
             imageEditMode={imageEditMode}
             setImageEditMode={setImageEditMode}
+            cropSrc={cropSrc}
+            setCropSrc={setCropSrc}
           />
         </div>
       </div>

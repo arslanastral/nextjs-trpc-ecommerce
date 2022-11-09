@@ -37,7 +37,6 @@ function PreviewProductCard({
   imageEditMode,
   setImageEditMode
 }: PreviewProductCardProps) {
-  const [cropSrc, setCropSrc] = useState<any>(null);
   const [isCropping, setIsCropping] = useState<boolean>(false);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
