@@ -23,6 +23,7 @@ import { Product, productInput } from '@/server/schema';
 import { useEffect, useState } from 'react';
 import { DropzoneButton } from './Dropzone';
 import { getBase64FromBlobURI } from '@/utils/client/getBase64FromBlobURI';
+import { trpc } from '@/utils/trpc';
 
 type ProductModalProps = {
   opened: boolean;
@@ -55,6 +56,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function ProductModal({ opened, setOpened, data }: ProductModalProps) {
+  const createProduct = trpc.product.create.useMutation();
   const [imageEditMode, setImageEditMode] = useState<boolean>(false);
   const [src, setSrc] = useState<any>(null);
   const [cropSrc, setCropSrc] = useState<any>(null);
@@ -87,25 +89,27 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
 
   useEffect(() => {
     register('image');
-  }, [register]);
-
-  const setImageValue = async () => {
-    let base64;
-    if (cropSrc) {
-      base64 = (await getBase64FromBlobURI(cropSrc)) as string;
-      setValue('image', base64);
-      return;
-    }
-    base64 = (await getBase64FromBlobURI(src)) as string;
-    setValue('image', base64);
-  };
+    const setImageValue = async () => {
+      if (cropSrc) {
+        let base64 = (await getBase64FromBlobURI(cropSrc)) as string;
+        setValue('image', base64);
+        return;
+      }
+    };
+    setImageValue();
+  }, [register, cropSrc, setValue]);
 
   const productSubmit = async (product: Product) => {
-    // console.log(getValues('title'));
-    // if (cropSrc) {
-    //   const base64 = await getBase64FromBlobURI(cropSrc);
-    // }
-    console.log(product);
+    if (product) {
+      createProduct.mutate(product, {
+        onSuccess: () => {
+          reset();
+          setSrc(null);
+          setCropSrc(null);
+          setOpened(false);
+        }
+      });
+    }
   };
 
   return (
@@ -202,7 +206,6 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
             setImageEditMode={setImageEditMode}
             cropSrc={cropSrc}
             setCropSrc={setCropSrc}
-            setImageValue={setImageValue}
           />
         </div>
       </div>
