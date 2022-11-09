@@ -62,6 +62,7 @@ function PreviewProductCard({
   }, [croppedAreaPixels, rotation, src, setCropSrc, setImageEditMode]);
 
   useEffect(() => {
+    setRotation(0);
     setZoom(1);
     setCroppedAreaPixels(null);
     setCropSrc(null);
