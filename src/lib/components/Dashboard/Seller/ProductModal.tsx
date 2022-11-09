@@ -84,10 +84,6 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
     setImageEditMode(true);
   };
 
-  // useEffect(() => {
-  //   // reset();
-  // }, [reset]);
-
   useEffect(() => {
     register('image');
   }, [register]);
