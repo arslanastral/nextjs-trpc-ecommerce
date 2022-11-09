@@ -18,7 +18,7 @@ type PreviewProductCardProps = {
   title: string;
   image?: string;
   description: string;
-  price: string;
+  price: number;
   status: string;
   badge?: string;
   src?: string;
