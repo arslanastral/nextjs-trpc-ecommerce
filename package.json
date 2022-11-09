@@ -10,7 +10,7 @@
     "netlify-build": "prisma generate && prisma migrate deploy && next build"
   },
   "prisma": {
-    "seed": "node --loader ts-node/esm 'prisma/seed.ts'"
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.10.4",
@@ -38,6 +38,7 @@
     "react-dom": "18.2.0",
     "react-easy-crop": "^4.6.1",
     "react-hook-form": "^7.38.0",
+    "ts-node": "^10.9.1",
     "zod": "^3.19.1"
   },
   "devDependencies": {
@@ -52,6 +53,7 @@
     "prettier": "2.7.1",
     "prisma": "^4.5.0",
     "tailwindcss": "^3.2.1",
+    "tsx": "^3.11.0",
     "typescript": "4.8.4"
   }
 }
