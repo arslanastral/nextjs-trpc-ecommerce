@@ -120,6 +120,7 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
       title="Create Your Product"
       size="auto"
     >
+      <LoadingOverlay visible={createProduct.isLoading} radius="lg" />
       <div className="flex gap-10 ">
         <div>
           <form onSubmit={handleSubmit(productSubmit)}>
