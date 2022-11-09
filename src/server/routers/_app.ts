@@ -1,11 +1,12 @@
-import { z } from 'zod';
 import { publicProcedure, router } from '../trpc';
 import { addressRouter } from './address';
 import { identityRouter } from './identity';
+import { productRouter } from './product';
 
 export const appRouter = router({
   address: addressRouter,
-  identity: identityRouter
+  identity: identityRouter,
+  product: productRouter
 });
 
 // export type definition of API

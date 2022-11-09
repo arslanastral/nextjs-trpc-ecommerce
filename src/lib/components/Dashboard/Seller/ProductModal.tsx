@@ -13,6 +13,7 @@ import {
   Select,
   FileButton,
   TextInput,
+  NumberInput,
   Group
 } from '@mantine/core';
 import PreviewProductCard from './PreviewProductCard';
@@ -21,6 +22,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Product, productInput } from '@/server/schema';
 import { useEffect, useState } from 'react';
 import { DropzoneButton } from './Dropzone';
+import { getBase64FromBlobURI } from '@/utils/client/getBase64FromBlobURI';
+import { trpc } from '@/utils/trpc';
 
 type ProductModalProps = {
   opened: boolean;
@@ -53,14 +56,19 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function ProductModal({ opened, setOpened, data }: ProductModalProps) {
+  const createProduct = trpc.product.create.useMutation();
   const [imageEditMode, setImageEditMode] = useState<boolean>(false);
   const [src, setSrc] = useState<any>(null);
+  const [cropSrc, setCropSrc] = useState<any>(null);
+
   const { classes } = useStyles();
 
   const {
     register,
     handleSubmit,
     control,
+    setValue,
+    getValues,
     watch,
     reset,
     formState: { errors }
@@ -68,8 +76,8 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
     defaultValues: {
       title: 'Red floral sleeveless dress',
       description: 'Perfect for summer vibes',
-      price: '20',
-      category: 'Others'
+      price: 20,
+      category: '7'
     },
     resolver: zodResolver(productInput)
   });
@@ -79,12 +87,33 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
     setImageEditMode(true);
   };
 
-  // useEffect(() => {
-  //   // reset();
-  // }, [reset]);
+  useEffect(() => {
+    register('image');
+    const setImageValue = async () => {
+      if (cropSrc) {
+        let base64 = (await getBase64FromBlobURI(cropSrc)) as string;
+        setValue('image', base64);
+        return;
+      }
+    };
+    setImageValue();
+  }, [register, cropSrc, setValue]);
 
-  const productSubmit = (product: Product) => {
-    console.log(product);
+  const productSubmit = async (product: Product) => {
+    if (createProduct.isLoading) {
+      return;
+    }
+
+    if (product) {
+      createProduct.mutate(product, {
+        onSuccess: () => {
+          reset();
+          setSrc(null);
+          setCropSrc(null);
+          setOpened(false);
+        }
+      });
+    }
   };
 
   return (
@@ -95,6 +124,7 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
       title="Create Your Product"
       size="auto"
     >
+      <LoadingOverlay visible={createProduct.isLoading} radius="lg" />
       <div className="flex gap-10 ">
         <div>
           <form onSubmit={handleSubmit(productSubmit)}>
@@ -128,7 +158,15 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
                   onChange={field.onChange}
                   size="lg"
                   style={{ marginTop: 20, zIndex: 2 }}
-                  data={['Fashion', 'Luxury', 'Sports', 'Others']}
+                  data={[
+                    { label: 'Health & Beauty', value: '1' },
+                    { label: `Women's Fashion`, value: '2' },
+                    { label: `Men's Fashion`, value: '3' },
+                    { label: 'Luxury', value: '4' },
+                    { label: 'Electronics', value: '5' },
+                    { label: 'Sports', value: '6' },
+                    { label: 'Other', value: '7' }
+                  ]}
                   placeholder="Fashion, Sports etc"
                   label="Product's Category"
                   classNames={classes}
@@ -137,16 +175,31 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
               )}
             />
 
-            <TextInput
-              size="lg"
-              label="Price"
-              placeholder="$20"
-              classNames={classes}
-              mt={15}
-              {...register('price')}
-              error={errors.price?.message}
+            <Controller
+              name="price"
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <NumberInput
+                  // min={1}
+                  value={field.value}
+                  onChange={field.onChange}
+                  size="lg"
+                  label="Price"
+                  placeholder="$20"
+                  precision={2}
+                  classNames={classes}
+                  mt={15}
+                  hideControls
+                  error={errors.price?.message}
+                />
+              )}
             />
+
             <DropzoneButton onDrop={handleImageUpload} />
+            <Text color={src ? 'green' : 'red'} size="md" mt={15}>
+              {errors.image?.message && !src && <>Product must have an image</>}
+            </Text>
 
             <Button type="submit" fullWidth size="md" radius="md" mt={15}>
               Create Product
@@ -164,6 +217,8 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
             src={src}
             imageEditMode={imageEditMode}
             setImageEditMode={setImageEditMode}
+            cropSrc={cropSrc}
+            setCropSrc={setCropSrc}
           />
         </div>
       </div>

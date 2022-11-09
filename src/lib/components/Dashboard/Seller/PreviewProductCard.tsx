@@ -14,16 +14,18 @@ import getCroppedImg from './cropImage';
 import { IconCrop } from '@tabler/icons';
 import { useEffect, useState, useCallback } from 'react';
 
-type ProductCardProps = {
+type PreviewProductCardProps = {
   title: string;
   image?: string;
   description: string;
-  price: string;
+  price: number;
   status: string;
   badge?: string;
   src?: string;
   imageEditMode?: boolean;
   setImageEditMode: (state: boolean) => void;
+  cropSrc?: string;
+  setCropSrc: (file: string | null) => void;
 };
 
 function PreviewProductCard({
@@ -35,9 +37,10 @@ function PreviewProductCard({
   badge,
   src,
   imageEditMode,
-  setImageEditMode
-}: ProductCardProps) {
-  const [cropSrc, setCropSrc] = useState<any>(null);
+  setImageEditMode,
+  cropSrc,
+  setCropSrc
+}: PreviewProductCardProps) {
   const [isCropping, setIsCropping] = useState<boolean>(false);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
@@ -55,16 +58,23 @@ function PreviewProductCard({
       setCropSrc(croppedImage);
       setImageEditMode(false);
       setIsCropping(false);
+      resetCropState();
     } catch (e) {
       setIsCropping(false);
+      resetCropState();
       console.error(e);
     }
   }, [croppedAreaPixels, rotation, src, setCropSrc, setImageEditMode]);
 
   useEffect(() => {
-    setCroppedAreaPixels(null);
-    setCropSrc(null);
+    resetCropState();
   }, [src]);
+
+  const resetCropState = () => {
+    setRotation(0);
+    setZoom(1);
+    setCroppedAreaPixels(null);
+  };
 
   return (
     <div className="bg-brown-50 p-8">

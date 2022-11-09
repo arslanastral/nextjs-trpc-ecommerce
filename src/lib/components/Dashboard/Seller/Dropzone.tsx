@@ -46,7 +46,7 @@ export function DropzoneButton({ onDrop }: DropZoneProp) {
         className={classes.dropzone}
         radius="md"
         accept={IMAGE_MIME_TYPE}
-        maxSize={25 * 1024 ** 2}
+        maxSize={10 * 1024 ** 2}
       >
         <div style={{ pointerEvents: 'none' }}>
           <Group position="center">

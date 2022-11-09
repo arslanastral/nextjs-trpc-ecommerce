@@ -36,18 +36,29 @@ export const productInput = z.object({
     .min(1, { message: 'Product must have a title' })
     .max(30, { message: 'Product title must be under 60 characters' }),
   price: z
-    .string()
+    .number()
     .min(1, { message: 'Product must have a price' })
     .max(30, { message: 'Product price must be under 7 characters' }),
-  category: z.string().max(20, { message: 'Category name must be under 20 characters' }),
+  category: z
+    .string()
+    .min(1, { message: 'Product must have a category' })
+    .max(1, { message: 'Uknown Product category' }),
   description: z
     .string()
     .min(1, { message: 'Product must have a description' })
     .max(280, { message: 'Product description must be under 280 characters' }),
-  image: z.string().url().startsWith('https://images.unsplash.com/')
+  image: z
+    .string()
+    .min(1, { message: 'Product must have a image' })
+    .startsWith('data:image', { message: 'Must be a Base64 encoded image' })
+});
+
+export const productInputWithId = productInput.extend({
+  id: z.string()
 });
 
 export type SellerInfo = z.infer<typeof sellerInfoInput>;
 export type Address = z.infer<typeof addressInput>;
 export type AddressWithId = z.infer<typeof addressInputWithId>;
 export type Product = z.infer<typeof productInput>;
+export type ProductWithId = z.infer<typeof productInputWithId>;
