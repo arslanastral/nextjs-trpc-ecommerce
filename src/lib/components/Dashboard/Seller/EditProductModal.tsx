@@ -165,8 +165,8 @@ function EditProductModal({ opened, setOpened, data }: EditProductModalProps) {
         <div className="w-full md:w-auto">
           <form onSubmit={handleSubmit(productUpdate)}>
             {imageEditMode && src && (
-              <Alert icon={<IconAlertCircle size={16} />} title="Edit Mode" color="green">
-                In edit mode, save to continue
+              <Alert icon={<IconAlertCircle size={16} />} title="Image Crop Mode" color="green">
+                In crop mode, save to continue or discard by closing
               </Alert>
             )}
             <TextInput
