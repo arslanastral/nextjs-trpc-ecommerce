@@ -70,17 +70,10 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
     handleSubmit,
     control,
     setValue,
-    getValues,
     watch,
     reset,
     formState: { errors }
   } = useForm<Product>({
-    defaultValues: {
-      // title: 'Red floral sleeveless dress',
-      // description: 'Perfect for summer vibes',
-      // price: 20,
-      // category: '7'
-    },
     resolver: zodResolver(productInput)
   });
 
@@ -185,7 +178,6 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
               rules={{ required: true }}
               render={({ field }) => (
                 <NumberInput
-                  // min={1}
                   value={field.value}
                   onChange={field.onChange}
                   size="lg"
