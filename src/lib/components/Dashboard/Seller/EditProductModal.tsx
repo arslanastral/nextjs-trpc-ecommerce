@@ -108,7 +108,10 @@ function EditProductModal({ opened, setOpened, data }: EditProductModalProps) {
   }, [reset, data]);
 
   const productUpdate = async (product: ProductWithId) => {
-    console.log(product);
+    if (imageEditMode) {
+      return;
+    }
+
     if (updateProduct.isLoading || deleteProduct.isLoading) {
       return;
     }
