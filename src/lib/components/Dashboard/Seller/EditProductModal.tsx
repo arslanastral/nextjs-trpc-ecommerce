@@ -108,16 +108,21 @@ function EditProductModal({ opened, setOpened, data }: EditProductModalProps) {
   }, [reset, data]);
 
   const productUpdate = async (product: ProductWithId) => {
-    if (imageEditMode) {
-      return;
-    }
-
     if (updateProduct.isLoading || deleteProduct.isLoading) {
       return;
     }
 
-    if (product) {
-      updateProduct.mutate(product, {
+    if (imageEditMode) {
+      return;
+    }
+
+    if (data) {
+      let productWithId = {
+        ...product,
+        id: data.id,
+        imageId: data.imageId
+      };
+      updateProduct.mutate(productWithId, {
         onSuccess: () => {
           reset();
           setSrc(null);
@@ -135,7 +140,7 @@ function EditProductModal({ opened, setOpened, data }: EditProductModalProps) {
 
     if (data) {
       deleteProduct.mutate(
-        { id: data.id },
+        { id: data.id, imageId: data.imageId },
         {
           onSuccess: () => {
             reset();
