@@ -148,7 +148,10 @@ function EditProductModal({ opened, setOpened, data }: EditProductModalProps) {
     <Modal
       classNames={{ title: classes.title }}
       opened={opened}
-      onClose={() => setOpened(false)}
+      onClose={() => {
+        setImageEditMode(false);
+        setOpened(false);
+      }}
       title="Update Your Product"
       size="auto"
       fullScreen={isMobile}
