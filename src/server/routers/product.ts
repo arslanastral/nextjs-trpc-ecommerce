@@ -3,6 +3,7 @@ import { getBuyerId, getSellerId } from '@/server/functions/identity';
 import { productInput, productInputWithId } from '../schema';
 import { uploadToCloudinary, deleteFromCloudinary } from '../functions/image';
 import { z } from 'zod';
+import cloudinary from '@/utils/cloudinary';
 
 export const productRouter = router({
   create: protectedProcedure.input(productInput).mutation(async ({ input, ctx }) => {
@@ -52,7 +53,31 @@ export const productRouter = router({
     return products;
   }),
 
-  update: protectedProcedure.input(productInputWithId).mutation(async ({ input, ctx }) => {}),
+  update: protectedProcedure.input(productInputWithId).mutation(async ({ input, ctx }) => {
+    let sellerId = await getSellerId(ctx);
+    if (!sellerId) return null;
+
+    if (!input.image.includes(input.imageId)) {
+      let public_id = input.imageId.split('/')[1];
+      await uploadToCloudinary(input.image, public_id);
+    }
+
+    let priceInCents = (input.price * 100).toString();
+
+    let updatedProduct = await ctx.prisma.product.updateMany({
+      where: {
+        id: input.id,
+        sellerId: sellerId
+      },
+      data: {
+        title: input.title,
+        priceInCents: priceInCents,
+        description: input.description
+      }
+    });
+
+    return updatedProduct;
+  }),
   delete: protectedProcedure
     .input(z.object({ id: z.string(), imageId: z.string() }))
     .mutation(async ({ input, ctx }) => {
