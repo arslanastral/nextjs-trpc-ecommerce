@@ -99,7 +99,15 @@ function EditProductModal({ opened, setOpened, data }: EditProductModalProps) {
     setImageValue();
   }, [register, cropSrc, setValue]);
 
+  useEffect(() => {
+    reset(data);
+    if (data) {
+      setSrc(data.image);
+    }
+  }, [reset, data]);
+
   const productUpdate = async (product: ProductWithId) => {
+    console.log(product);
     if (updateProduct.isLoading || deleteProduct.isLoading) {
       return;
     }
@@ -148,7 +156,7 @@ function EditProductModal({ opened, setOpened, data }: EditProductModalProps) {
       <LoadingOverlay visible={updateProduct.isLoading || deleteProduct.isLoading} radius="lg" />
       <div className="flex gap-10 flex-wrap justify-center">
         <div className="w-full md:w-auto">
-          <form onSubmit={handleSubmit(updateProduct)}>
+          <form onSubmit={handleSubmit(productUpdate)}>
             <TextInput
               size="lg"
               label="Product Title"
