@@ -11,6 +11,7 @@ type ProductCardProps = {
   category: string;
   status?: string;
   badge?: string;
+  imageId?: string;
   openEditModal: () => void;
   setEditableProduct: (state: ProductWithId) => void;
 };
@@ -25,7 +26,8 @@ function ProductCard({
   status,
   badge,
   openEditModal,
-  setEditableProduct
+  setEditableProduct,
+  imageId
 }: ProductCardProps) {
   const handleEditModal = () => {
     let product = {
@@ -34,7 +36,8 @@ function ProductCard({
       image,
       description,
       price: +price,
-      category
+      category,
+      imageId
     };
 
     setEditableProduct(product);

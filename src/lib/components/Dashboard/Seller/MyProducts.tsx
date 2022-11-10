@@ -48,6 +48,7 @@ function MyProducts() {
               category={e.category[0].id.toString()}
               openEditModal={() => setOpenProductModal(true)}
               setEditableProduct={setEditableProduct}
+              imageId={e.image}
             />
           );
         })}
