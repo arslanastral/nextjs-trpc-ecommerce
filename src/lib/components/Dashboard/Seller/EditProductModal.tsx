@@ -16,6 +16,7 @@ import {
   NumberInput,
   Group
 } from '@mantine/core';
+import { openConfirmModal } from '@mantine/modals';
 import { useMediaQuery } from '@mantine/hooks';
 import PreviewProductCard from './PreviewProductCard';
 import { useForm, Controller } from 'react-hook-form';
@@ -153,6 +154,23 @@ function EditProductModal({ opened, setOpened, data }: EditProductModalProps) {
     }
   };
 
+  const openDeleteModal = () =>
+    openConfirmModal({
+      zIndex: 1000,
+      title: 'Delete my product',
+      centered: true,
+      children: (
+        <Text size="sm">
+          Are you sure you want to delete your product? This action is destructive and will remove
+          your product fom zavy&apos;s marketplace.
+        </Text>
+      ),
+      labels: { confirm: 'Delete Product', cancel: "No don't delete it" },
+      confirmProps: { color: 'red' },
+      onCancel: () => setOpened(false),
+      onConfirm: () => productDelete()
+    });
+
   return (
     <Modal
       classNames={{ title: classes.title }}
@@ -252,6 +270,7 @@ function EditProductModal({ opened, setOpened, data }: EditProductModalProps) {
                 Update Product
               </Button>
               <Button
+                onClick={openDeleteModal}
                 leftIcon={<IconTrash size={16} />}
                 type="button"
                 fullWidth
