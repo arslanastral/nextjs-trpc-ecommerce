@@ -15,3 +15,12 @@ export async function uploadToCloudinary(image: string) {
     return null;
   }
 }
+
+export async function deleteFromCloudinary(public_id: string) {
+  try {
+    const result = await cloudinary.uploader.destroy(public_id);
+    return result;
+  } catch (error) {
+    return null;
+  }
+}
