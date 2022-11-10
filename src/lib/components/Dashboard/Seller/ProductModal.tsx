@@ -76,10 +76,10 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
     formState: { errors }
   } = useForm<Product>({
     defaultValues: {
-      title: 'Red floral sleeveless dress',
-      description: 'Perfect for summer vibes',
-      price: 20,
-      category: '7'
+      // title: 'Red floral sleeveless dress',
+      // description: 'Perfect for summer vibes',
+      // price: 20,
+      // category: '7'
     },
     resolver: zodResolver(productInput)
   });
@@ -134,7 +134,7 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
             <TextInput
               size="lg"
               label="Product Title"
-              placeholder="My cool product"
+              placeholder="Your Product's Name"
               classNames={classes}
               mt={15}
               {...register('title')}
@@ -144,7 +144,7 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
             <TextInput
               size="lg"
               label="Description"
-              placeholder="It is the best damn product"
+              placeholder="Describe Your Product"
               classNames={classes}
               mt={15}
               {...register('description')}
@@ -174,6 +174,7 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
                   label="Product's Category"
                   classNames={classes}
                   mt={15}
+                  error={errors.category?.message}
                 />
               )}
             />
