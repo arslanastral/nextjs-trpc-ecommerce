@@ -29,7 +29,6 @@ import { trpc } from '@/utils/trpc';
 type ProductModalProps = {
   opened: boolean;
   setOpened: (state: boolean) => void;
-  data?: Product;
 };
 
 const useStyles = createStyles((theme) => ({
@@ -56,7 +55,7 @@ const useStyles = createStyles((theme) => ({
   }
 }));
 
-function ProductModal({ opened, setOpened, data }: ProductModalProps) {
+function ProductModal({ opened, setOpened }: ProductModalProps) {
   const createProduct = trpc.product.create.useMutation();
   const [imageEditMode, setImageEditMode] = useState<boolean>(false);
   const [src, setSrc] = useState<any>(null);
