@@ -133,7 +133,7 @@ function EditProductModal({ opened, setOpened, data }: EditProductModalProps) {
     }
   };
 
-  const productDelete = async (product: ProductWithId) => {
+  const productDelete = async () => {
     if (updateProduct.isLoading || deleteProduct.isLoading) {
       return;
     }
