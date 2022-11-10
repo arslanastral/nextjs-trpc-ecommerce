@@ -2,6 +2,7 @@ import '@/lib/styles/globals.css';
 import { SessionProvider } from 'next-auth/react';
 import { Session } from 'next-auth';
 import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
 import { RouterTransition } from '@/lib/components/UX/RouterTransition';
 import type { AppProps } from 'next/app';
 import { ReactNode, useState } from 'react';
@@ -63,10 +64,12 @@ function App({ Component, pageProps: { session, ...pageProps } }: Props) {
           })
         }}
       >
-        <RouterTransition />
-        <SessionProvider session={session}>
-          {getLayout(<Component {...pageProps} />)}
-        </SessionProvider>
+        <ModalsProvider>
+          <RouterTransition />
+          <SessionProvider session={session}>
+            {getLayout(<Component {...pageProps} />)}
+          </SessionProvider>
+        </ModalsProvider>
       </MantineProvider>
     </ColorSchemeProvider>
   );
