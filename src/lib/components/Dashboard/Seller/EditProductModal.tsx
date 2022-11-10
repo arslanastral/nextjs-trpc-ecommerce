@@ -23,7 +23,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ProductWithId, productInput } from '@/server/schema';
 import { useEffect, useState } from 'react';
 import { DropzoneButton } from './Dropzone';
-import { IconAlertCircle } from '@tabler/icons';
+import { IconAlertCircle, IconTrash } from '@tabler/icons';
 import { getBase64FromBlobURI } from '@/utils/client/getBase64FromBlobURI';
 import { trpc } from '@/utils/trpc';
 
@@ -247,9 +247,23 @@ function EditProductModal({ opened, setOpened, data }: EditProductModalProps) {
               {errors.image?.message && !src && <>Product must have an image</>}
             </Text>
 
-            <Button type="submit" fullWidth size="md" radius="md" mt={15}>
-              Create Product
-            </Button>
+            <Group>
+              <Button type="submit" fullWidth size="md" radius="md" mt={15}>
+                Create Product
+              </Button>
+              <Button
+                leftIcon={<IconTrash size={16} />}
+                type="button"
+                fullWidth
+                size="md"
+                variant="outline"
+                color="red"
+                radius="md"
+                mt={15}
+              >
+                Delete Product
+              </Button>
+            </Group>
           </form>
         </div>
 
