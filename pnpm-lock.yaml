@@ -7,6 +7,7 @@ specifiers:
   '@mantine/core': ^5.6.2
   '@mantine/dropzone': ^5.7.1
   '@mantine/hooks': ^5.6.2
+  '@mantine/modals': ^5.7.1
   '@mantine/next': ^5.6.2
   '@mantine/nprogress': ^5.6.2
   '@next-auth/prisma-adapter': ^1.0.5
@@ -49,6 +50,7 @@ dependencies:
   '@mantine/core': 5.6.2_lngwrt6bikluxxndr5vqlr57ty
   '@mantine/dropzone': 5.7.1_flpsrn4ztwxtwu74zpyotzqome
   '@mantine/hooks': 5.6.2_react@18.2.0
+  '@mantine/modals': 5.7.1_flpsrn4ztwxtwu74zpyotzqome
   '@mantine/next': 5.6.2_onxdffetnfmpdxwcgp3zfqmiie
   '@mantine/nprogress': 5.6.2_flpsrn4ztwxtwu74zpyotzqome
   '@next-auth/prisma-adapter': 1.0.5_lbkeu45xi35sokilhivpvmhs3m
@@ -638,6 +640,21 @@ packages:
       react: '>=16.8.0'
     dependencies:
       react: 18.2.0
+    dev: false
+
+  /@mantine/modals/5.7.1_flpsrn4ztwxtwu74zpyotzqome:
+    resolution: {integrity: sha512-5hBdLiSE9dCscxLXCy9ovqfOrdzfaBZsoKdtKvCOjwZu9hCwrzlL6xi6R7xkHc3YYEmzH8BATRAfVS50GyNsYw==}
+    peerDependencies:
+      '@mantine/core': 5.7.1
+      '@mantine/hooks': 5.7.1
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      '@mantine/core': 5.6.2_lngwrt6bikluxxndr5vqlr57ty
+      '@mantine/hooks': 5.6.2_react@18.2.0
+      '@mantine/utils': 5.7.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /@mantine/next/5.6.2_onxdffetnfmpdxwcgp3zfqmiie:
