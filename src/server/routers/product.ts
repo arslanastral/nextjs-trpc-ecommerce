@@ -1,7 +1,7 @@
 import { router, protectedProcedure } from '../trpc';
 import { getBuyerId, getSellerId } from '@/server/functions/identity';
 import { productInput, productInputWithId } from '../schema';
-import { uploadToCloudinary } from '../functions/image';
+import { uploadToCloudinary, deleteFromCloudinary } from '../functions/image';
 import { z } from 'zod';
 
 export const productRouter = router({
@@ -55,5 +55,19 @@ export const productRouter = router({
   update: protectedProcedure.input(productInputWithId).mutation(async ({ input, ctx }) => {}),
   delete: protectedProcedure
     .input(z.object({ id: z.string(), imageId: z.string() }))
-    .mutation(async ({ input, ctx }) => {})
+    .mutation(async ({ input, ctx }) => {
+      let sellerId = await getSellerId(ctx);
+      if (!sellerId) return null;
+
+      let deletedProduct = await ctx.prisma.product.deleteMany({
+        where: {
+          id: input.id,
+          sellerId: sellerId
+        }
+      });
+
+      await deleteFromCloudinary(input.imageId);
+
+      return deletedProduct;
+    })
 });
