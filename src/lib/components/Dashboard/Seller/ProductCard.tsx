@@ -1,16 +1,46 @@
+import { ProductWithId } from '@/server/schema';
 import { Button, Card, Group, Text, Badge, AspectRatio } from '@mantine/core';
 import Image from 'next/image';
 
 type ProductCardProps = {
+  id: string;
   title: string;
   image: string;
   description: string;
   price: string;
+  category: string;
   status?: string;
   badge?: string;
+  openEditModal: () => void;
+  setEditableProduct: (state: ProductWithId) => void;
 };
 
-function ProductCard({ title, image, description, price, status, badge }: ProductCardProps) {
+function ProductCard({
+  id,
+  title,
+  image,
+  description,
+  category,
+  price,
+  status,
+  badge,
+  openEditModal,
+  setEditableProduct
+}: ProductCardProps) {
+  const handleEditModal = () => {
+    let product = {
+      id,
+      title,
+      image,
+      description,
+      price: +price,
+      category
+    };
+
+    setEditableProduct(product);
+    openEditModal();
+  };
+
   return (
     <div className="w-[337px]">
       <Card p="lg" radius="md" withBorder className="relative">
@@ -56,7 +86,7 @@ function ProductCard({ title, image, description, price, status, badge }: Produc
           </Badge>
         </Group>
 
-        <Button fullWidth mt="md" radius="md">
+        <Button onClick={() => handleEditModal()} fullWidth mt="md" radius="md">
           Edit
         </Button>
       </Card>

@@ -4,10 +4,13 @@ import ProductCard from './ProductCard';
 import ProductModal from './ProductModal';
 import { useState } from 'react';
 import { trpc } from '@/utils/trpc';
+import { ProductWithId } from '@/server/schema';
 
 function MyProducts() {
   const productList = trpc.product.list.useQuery();
   const [opened, setOpened] = useState<boolean>(false);
+  const [editableProduct, setEditableProduct] = useState<ProductWithId>();
+  const [openProductModal, setOpenProductModal] = useState<boolean>(false);
 
   return (
     <div className="p-8">
@@ -30,11 +33,15 @@ function MyProducts() {
           return (
             <ProductCard
               key={i}
+              id={e.id}
               title={e.title}
               description={e.description}
               price={(+e.priceInCents / 100).toString()}
               status="In Stock"
               image={`https://res.cloudinary.com/dv9wpbflv/image/upload/v1668011420/${e.image}.jpg`}
+              category={e.category[0].id.toString()}
+              openEditModal={() => setOpenProductModal(true)}
+              setEditableProduct={setEditableProduct}
             />
           );
         })}
