@@ -6,7 +6,7 @@ type ProductCardProps = {
   image: string;
   description: string;
   price: string;
-  status: string;
+  status?: string;
   badge?: string;
 };
 
