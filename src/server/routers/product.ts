@@ -2,6 +2,7 @@ import { router, protectedProcedure } from '../trpc';
 import { getBuyerId, getSellerId } from '@/server/functions/identity';
 import { productInput, productInputWithId } from '../schema';
 import { uploadToCloudinary } from '../functions/image';
+import { z } from 'zod';
 
 export const productRouter = router({
   create: protectedProcedure.input(productInput).mutation(async ({ input, ctx }) => {
@@ -52,5 +53,7 @@ export const productRouter = router({
   }),
 
   update: protectedProcedure.input(productInputWithId).mutation(async ({ input, ctx }) => {}),
-  delete: protectedProcedure.input(productInputWithId).mutation(async ({ input, ctx }) => {})
+  delete: protectedProcedure
+    .input(z.object({ id: z.string(), imageId: z.string() }))
+    .mutation(async ({ input, ctx }) => {})
 });
