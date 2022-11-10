@@ -11,7 +11,7 @@ type ProductCardProps = {
   category: string;
   status?: string;
   badge?: string;
-  imageId?: string;
+  imageId: string;
   openEditModal: () => void;
   setEditableProduct: (state: ProductWithId) => void;
 };
