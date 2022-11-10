@@ -16,19 +16,22 @@ import {
   NumberInput,
   Group
 } from '@mantine/core';
+import { openConfirmModal } from '@mantine/modals';
 import { useMediaQuery } from '@mantine/hooks';
 import PreviewProductCard from './PreviewProductCard';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Product, productInput } from '@/server/schema';
+import { ProductWithId, productInput } from '@/server/schema';
 import { useEffect, useState } from 'react';
 import { DropzoneButton } from './Dropzone';
+import { IconAlertCircle, IconTrash } from '@tabler/icons';
 import { getBase64FromBlobURI } from '@/utils/client/getBase64FromBlobURI';
 import { trpc } from '@/utils/trpc';
 
-type ProductModalProps = {
+type EditProductModalProps = {
   opened: boolean;
   setOpened: (state: boolean) => void;
+  data?: ProductWithId;
 };
 
 const useStyles = createStyles((theme) => ({
@@ -55,8 +58,10 @@ const useStyles = createStyles((theme) => ({
   }
 }));
 
-function ProductModal({ opened, setOpened }: ProductModalProps) {
-  const createProduct = trpc.product.create.useMutation();
+function EditProductModal({ opened, setOpened, data }: EditProductModalProps) {
+  const updateProduct = trpc.product.update.useMutation();
+  const deleteProduct = trpc.product.delete.useMutation();
+
   const [imageEditMode, setImageEditMode] = useState<boolean>(false);
   const [src, setSrc] = useState<any>(null);
   const [cropSrc, setCropSrc] = useState<any>(null);
@@ -72,7 +77,10 @@ function ProductModal({ opened, setOpened }: ProductModalProps) {
     watch,
     reset,
     formState: { errors }
-  } = useForm<Product>({
+  } = useForm<ProductWithId>({
+    defaultValues: {
+      ...data
+    },
     resolver: zodResolver(productInput)
   });
 
@@ -93,13 +101,29 @@ function ProductModal({ opened, setOpened }: ProductModalProps) {
     setImageValue();
   }, [register, cropSrc, setValue]);
 
-  const productSubmit = async (product: Product) => {
-    if (createProduct.isLoading) {
+  useEffect(() => {
+    reset(data);
+    if (data) {
+      setSrc(data.image);
+    }
+  }, [reset, data]);
+
+  const productUpdate = async (product: ProductWithId) => {
+    if (updateProduct.isLoading || deleteProduct.isLoading) {
       return;
     }
 
-    if (product) {
-      createProduct.mutate(product, {
+    if (imageEditMode) {
+      return;
+    }
+
+    if (data) {
+      let productWithId = {
+        ...product,
+        id: data.id,
+        imageId: data.imageId
+      };
+      updateProduct.mutate(productWithId, {
         onSuccess: () => {
           reset();
           setSrc(null);
@@ -110,19 +134,64 @@ function ProductModal({ opened, setOpened }: ProductModalProps) {
     }
   };
 
+  const productDelete = async () => {
+    if (updateProduct.isLoading || deleteProduct.isLoading) {
+      return;
+    }
+
+    if (data) {
+      deleteProduct.mutate(
+        { id: data.id, imageId: data.imageId },
+        {
+          onSuccess: () => {
+            reset();
+            setSrc(null);
+            setCropSrc(null);
+            setOpened(false);
+          }
+        }
+      );
+    }
+  };
+
+  const openDeleteModal = () =>
+    openConfirmModal({
+      zIndex: 1000,
+      title: 'Delete my product',
+      centered: true,
+      children: (
+        <Text size="sm">
+          Are you sure you want to delete your product? This action is destructive and will remove
+          your product fom zavy&apos;s marketplace.
+        </Text>
+      ),
+      labels: { confirm: 'Delete Product', cancel: "No don't delete it" },
+      confirmProps: { color: 'red' },
+      onCancel: () => setOpened(false),
+      onConfirm: () => productDelete()
+    });
+
   return (
     <Modal
       classNames={{ title: classes.title }}
       opened={opened}
-      onClose={() => setOpened(false)}
-      title="Create Your Product"
+      onClose={() => {
+        setImageEditMode(false);
+        setOpened(false);
+      }}
+      title="Update Your Product"
       size="auto"
       fullScreen={isMobile}
     >
-      <LoadingOverlay visible={createProduct.isLoading} radius="lg" />
+      <LoadingOverlay visible={updateProduct.isLoading || deleteProduct.isLoading} radius="lg" />
       <div className="flex gap-10 flex-wrap justify-center">
         <div className="w-full md:w-auto">
-          <form onSubmit={handleSubmit(productSubmit)}>
+          <form onSubmit={handleSubmit(productUpdate)}>
+            {imageEditMode && src && (
+              <Alert icon={<IconAlertCircle size={16} />} title="Image Crop Mode" color="green">
+                In crop mode, save to continue or discard by closing
+              </Alert>
+            )}
             <TextInput
               size="lg"
               label="Product Title"
@@ -194,12 +263,26 @@ function ProductModal({ opened, setOpened }: ProductModalProps) {
             <DropzoneButton onDrop={handleImageUpload} />
             <Text color={src ? 'green' : 'red'} size="md" mt={15}>
               {errors.image?.message && !src && <>Product must have an image</>}
-              {errors.image?.message && src && <>Save the image before continuing</>}
             </Text>
 
-            <Button type="submit" fullWidth size="md" radius="md" mt={15}>
-              Create Product
-            </Button>
+            <Group>
+              <Button type="submit" fullWidth size="md" radius="md" mt={15}>
+                Update Product
+              </Button>
+              <Button
+                onClick={openDeleteModal}
+                leftIcon={<IconTrash size={16} />}
+                type="button"
+                fullWidth
+                size="md"
+                variant="outline"
+                color="red"
+                radius="md"
+                mt={15}
+              >
+                Delete Product
+              </Button>
+            </Group>
           </form>
         </div>
 
@@ -222,4 +305,4 @@ function ProductModal({ opened, setOpened }: ProductModalProps) {
   );
 }
 
-export default ProductModal;
+export default EditProductModal;

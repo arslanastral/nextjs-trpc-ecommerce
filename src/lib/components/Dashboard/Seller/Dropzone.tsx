@@ -83,7 +83,9 @@ export function DropzoneButton({ onDrop }: DropZoneProp) {
             <Dropzone.Idle>{!fileName && <>Upload product image</>}</Dropzone.Idle>
           </Text>
           <Text align="center" size="sm" mt="xs" color={error ? 'red' : 'dimmed'}>
-            {fileName && !error && <>Image Added! To change drop another.</>}
+            {fileName && !error && (
+              <>Image Added! Click &apos;Save&apos; to keep, or drop another.</>
+            )}
             {!fileName && !error && <>Drag&apos;n&apos;drop or click here to add image.</>}
             {error && <>{error}</>}
           </Text>

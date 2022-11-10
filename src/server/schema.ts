@@ -44,14 +44,12 @@ export const productInput = z.object({
     .string()
     .min(1, { message: 'Product must have a description' })
     .max(280, { message: 'Product description must be under 280 characters' }),
-  image: z
-    .string()
-    .min(1, { message: 'Product must have a image' })
-    .startsWith('data:image', { message: 'Must be a Base64 encoded image' })
+  image: z.string().min(1, { message: 'Product must have a image' })
 });
 
 export const productInputWithId = productInput.extend({
-  id: z.string()
+  id: z.string(),
+  imageId: z.string()
 });
 
 export type SellerInfo = z.infer<typeof sellerInfoInput>;
