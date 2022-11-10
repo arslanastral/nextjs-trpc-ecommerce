@@ -1,6 +1,6 @@
 import cloudinary from '@/utils/cloudinary';
 
-export async function uploadToCloudinary(image: string, public_id: string) {
+export async function uploadToCloudinary(image: string, public_id?: string) {
   const options = {
     use_filename: true,
     unique_filename: false,
