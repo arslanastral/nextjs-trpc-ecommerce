@@ -16,6 +16,7 @@ import {
   NumberInput,
   Group
 } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 import PreviewProductCard from './PreviewProductCard';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -60,6 +61,7 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
   const [imageEditMode, setImageEditMode] = useState<boolean>(false);
   const [src, setSrc] = useState<any>(null);
   const [cropSrc, setCropSrc] = useState<any>(null);
+  const isMobile = useMediaQuery('(max-width: 600px)');
 
   const { classes } = useStyles();
 
@@ -123,10 +125,11 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
       onClose={() => setOpened(false)}
       title="Create Your Product"
       size="auto"
+      fullScreen={isMobile}
     >
       <LoadingOverlay visible={createProduct.isLoading} radius="lg" />
-      <div className="flex gap-10 ">
-        <div>
+      <div className="flex gap-10 flex-wrap justify-center">
+        <div className="w-full md:w-auto">
           <form onSubmit={handleSubmit(productSubmit)}>
             <TextInput
               size="lg"
@@ -207,7 +210,7 @@ function ProductModal({ opened, setOpened, data }: ProductModalProps) {
           </form>
         </div>
 
-        <div className="mt-2">
+        <div className="mt-2 w-full md:w-auto">
           <PreviewProductCard
             title={watch('title')}
             description={watch('description')}
