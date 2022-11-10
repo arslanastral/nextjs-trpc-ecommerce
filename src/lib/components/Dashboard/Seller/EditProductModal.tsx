@@ -249,7 +249,7 @@ function EditProductModal({ opened, setOpened, data }: EditProductModalProps) {
 
             <Group>
               <Button type="submit" fullWidth size="md" radius="md" mt={15}>
-                Create Product
+                Update Product
               </Button>
               <Button
                 leftIcon={<IconTrash size={16} />}
