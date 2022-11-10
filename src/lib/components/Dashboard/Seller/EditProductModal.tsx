@@ -23,6 +23,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ProductWithId, productInput } from '@/server/schema';
 import { useEffect, useState } from 'react';
 import { DropzoneButton } from './Dropzone';
+import { IconAlertCircle } from '@tabler/icons';
 import { getBase64FromBlobURI } from '@/utils/client/getBase64FromBlobURI';
 import { trpc } from '@/utils/trpc';
 
@@ -160,6 +161,11 @@ function EditProductModal({ opened, setOpened, data }: EditProductModalProps) {
       <div className="flex gap-10 flex-wrap justify-center">
         <div className="w-full md:w-auto">
           <form onSubmit={handleSubmit(productUpdate)}>
+            {imageEditMode && src && (
+              <Alert icon={<IconAlertCircle size={16} />} title="Edit Mode" color="green">
+                In edit mode, save to continue
+              </Alert>
+            )}
             <TextInput
               size="lg"
               label="Product Title"
@@ -231,7 +237,6 @@ function EditProductModal({ opened, setOpened, data }: EditProductModalProps) {
             <DropzoneButton onDrop={handleImageUpload} />
             <Text color={src ? 'green' : 'red'} size="md" mt={15}>
               {errors.image?.message && !src && <>Product must have an image</>}
-              {errors.image?.message && src && <>Save the image before continuing</>}
             </Text>
 
             <Button type="submit" fullWidth size="md" radius="md" mt={15}>
