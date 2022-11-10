@@ -26,10 +26,12 @@ type DropZoneProp = {
 
 export function DropzoneButton({ onDrop }: DropZoneProp) {
   const [fileName, setFileName] = useState('');
+  const [error, setError] = useState('');
   const { classes, theme } = useStyles();
   const openRef = useRef<() => void>(null);
 
   const handleImageUpload = (file: File) => {
+    setError('');
     setFileName(file.name);
     console.log(fileName);
     let imageDataUrl = URL.createObjectURL(file);
@@ -42,7 +44,9 @@ export function DropzoneButton({ onDrop }: DropZoneProp) {
         multiple={false}
         openRef={openRef}
         onDrop={(files) => handleImageUpload(files[0])}
-        onReject={(files) => console.log('rejected files', files)}
+        onReject={(files) =>
+          setError('Size is too big. Try With Different Image (Max 5mb is allowed)')
+        }
         className={classes.dropzone}
         radius="md"
         accept={IMAGE_MIME_TYPE}
@@ -63,26 +67,25 @@ export function DropzoneButton({ onDrop }: DropZoneProp) {
                 stroke={1.5}
               />
             </Dropzone.Idle>
+            {fileName && (
+              <Text
+                className="whitespace-nowrap max-w-[300px]"
+                sx={{ textOverflow: 'ellipsis', overflow: 'hidden', textAlign: 'center' }}
+              >
+                {fileName}
+              </Text>
+            )}
           </Group>
 
           <Text align="center" weight={700} size="lg" mt="xl">
             <Dropzone.Accept>Drop files here</Dropzone.Accept>
             <Dropzone.Reject>Image file less than 5mb</Dropzone.Reject>
-            <Dropzone.Idle>
-              {fileName && (
-                <Text
-                  className="whitespace-nowrap max-w-[300px]"
-                  sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}
-                >
-                  {fileName}
-                </Text>
-              )}
-              {!fileName && <>Upload product image</>}
-            </Dropzone.Idle>
+            <Dropzone.Idle>{!fileName && <>Upload product image</>}</Dropzone.Idle>
           </Text>
-          <Text align="center" size="sm" mt="xs" color="dimmed">
-            {fileName && <>Image Added! To change drop another.</>}
-            {!fileName && <>Drag&apos;n&apos;drop or click here to add image.</>}
+          <Text align="center" size="sm" mt="xs" color={error ? 'red' : 'dimmed'}>
+            {fileName && !error && <>Image Added! To change drop another.</>}
+            {!fileName && !error && <>Drag&apos;n&apos;drop or click here to add image.</>}
+            {error && <>{error}</>}
           </Text>
         </div>
       </Dropzone>

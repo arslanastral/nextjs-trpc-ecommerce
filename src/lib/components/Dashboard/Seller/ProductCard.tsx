@@ -6,7 +6,7 @@ type ProductCardProps = {
   image: string;
   description: string;
   price: string;
-  status: string;
+  status?: string;
   badge?: string;
 };
 
@@ -51,7 +51,7 @@ function ProductCard({ title, image, description, price, status, badge }: Produc
           >
             US ${price}
           </Text>
-          <Badge variant="light" color="red">
+          <Badge variant="light" color="green">
             {status}
           </Badge>
         </Group>

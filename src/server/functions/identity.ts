@@ -19,7 +19,6 @@ export async function getBuyerId(ctx: Context) {
 
 export async function getSellerId(ctx: Context) {
   if (!ctx.session?.user?.id) return null;
-  if (!ctx.session?.user?.email) return null;
 
   const sellerId = await ctx.prisma.seller.upsert({
     where: {
@@ -28,7 +27,7 @@ export async function getSellerId(ctx: Context) {
     update: {},
     create: {
       userId: ctx.session?.user?.id,
-      storeEmail: ctx.session?.user?.email,
+      storeEmail: '',
       storeName: `${ctx.session?.user?.name}'s Store`
     }
   });

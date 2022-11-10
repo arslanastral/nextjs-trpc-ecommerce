@@ -77,8 +77,8 @@ function PreviewProductCard({
   };
 
   return (
-    <div className="bg-brown-50 p-8">
-      <div className="flex items-center mb-4 justify-between">
+    <div className="bg-brown-50 p-8 flex flex-col items-center">
+      <div className="flex items-center mb-4 justify-between w-[337px]">
         <Badge className="bg-black text-white">live preview</Badge>
 
         <div className="flex gap-2">
