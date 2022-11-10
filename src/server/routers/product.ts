@@ -43,7 +43,8 @@ export const productRouter = router({
         priceInCents: true,
         title: true,
         image: true,
-        description: true
+        description: true,
+        category: true
       }
     });
 
