@@ -1,9 +1,20 @@
-import { Modal, Button, Input, Grid, Checkbox, LoadingOverlay, Group, Alert } from '@mantine/core';
+import {
+  Modal,
+  Button,
+  Input,
+  Text,
+  Grid,
+  Checkbox,
+  LoadingOverlay,
+  Group,
+  Alert
+} from '@mantine/core';
 import { IconTrash, IconAlertCircle } from '@tabler/icons';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AddressWithId, addressInput } from '@/server/schema';
 import { trpc } from '@/utils/trpc';
+import { openConfirmModal } from '@mantine/modals';
 import { useMediaQuery } from '@mantine/hooks';
 import { useEffect } from 'react';
 
@@ -56,6 +67,18 @@ function EditAddressModal({ opened, setOpened, data }: EditableAddressModalProps
       deleteBuyerAddress.mutate({ id: data.id }, { onSuccess: () => setOpened(false) });
     }
   };
+
+  const openDeleteModal = () =>
+    openConfirmModal({
+      zIndex: 1000,
+      title: 'Delete my address',
+      centered: true,
+      children: <Text size="sm">Are you sure you want to delete your address?</Text>,
+      labels: { confirm: 'Delete Address', cancel: 'Cancel' },
+      confirmProps: { color: 'red' },
+      onCancel: () => setOpened(false),
+      onConfirm: () => deleteAddress()
+    });
 
   return (
     <Modal
@@ -126,7 +149,7 @@ function EditAddressModal({ opened, setOpened, data }: EditableAddressModalProps
 
           <Button
             type="button"
-            onClick={deleteAddress}
+            onClick={openDeleteModal}
             leftIcon={<IconTrash size="15" />}
             mt="md"
             radius="md"
