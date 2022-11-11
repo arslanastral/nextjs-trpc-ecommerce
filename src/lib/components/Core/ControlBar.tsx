@@ -43,7 +43,11 @@ function ControlBar() {
   const { classes } = useStyles();
 
   return (
-    <div className="w-full bg-white h-16 flex items-center justify-between mx-auto">
+    <div
+      className={`w-full bg-white h-16 ${
+        status === 'loading' ? 'invisible' : 'flex'
+      } items-center justify-between mx-auto `}
+    >
       <div className="flex items-center min-h-full">
         <Burger
           className="lg:hidden ml-3 z-20 relative block"
