@@ -16,7 +16,7 @@ import {
   IconBolt
 } from '@tabler/icons';
 import { useSession, signOut } from 'next-auth/react';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { useState } from 'react';
 import { Burger } from '@mantine/core';
 import { useScrollLock } from '@mantine/hooks';
@@ -76,7 +76,8 @@ function ControlBar() {
         {!session && (
           <>
             <Button
-              onClick={() => router.push('/login')}
+              component={Link}
+              href="/login"
               leftIcon={<IconUser size="16px" />}
               className="text-[16px] font-medium rounded-lg hidden lg:block bg-brown-600 hover:bg-brown-700"
               variant="filled"
@@ -90,7 +91,8 @@ function ControlBar() {
         {session && (
           <>
             <Button
-              onClick={() => router.push('/login')}
+              component={Link}
+              href="/login"
               leftIcon={<IconBolt size="16px" />}
               className="text-[16px] font-medium rounded-lg hidden lg:block hover:bg-brown-50"
               variant="outline"
@@ -110,10 +112,7 @@ function ControlBar() {
 
               <Menu.Dropdown>
                 <Menu.Label>{session?.user?.name}</Menu.Label>
-                <Menu.Item
-                  onClick={() => router.push('/dashboard/buyer')}
-                  icon={<IconHome size={14} />}
-                >
+                <Menu.Item component={Link} href="/dashboard/buyer" icon={<IconHome size={14} />}>
                   Dashboard
                 </Menu.Item>
                 <Menu.Item onClick={() => signOut()} icon={<IconLogout size={14} />}>
