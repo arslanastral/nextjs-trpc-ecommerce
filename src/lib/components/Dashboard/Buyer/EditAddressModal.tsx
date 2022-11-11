@@ -25,6 +25,7 @@ type EditableAddressModalProps = {
 };
 
 function EditAddressModal({ opened, setOpened, data }: EditableAddressModalProps) {
+  const current = trpc.useContext();
   const updateBuyerAddress = trpc.address.update.useMutation();
   const deleteBuyerAddress = trpc.address.delete.useMutation();
   const isMobile = useMediaQuery('(max-width: 600px)');
@@ -55,7 +56,12 @@ function EditAddressModal({ opened, setOpened, data }: EditableAddressModalProps
         ...updatedAddress,
         id: data.id
       };
-      updateBuyerAddress.mutate(updatedAddressWithId, { onSuccess: () => setOpened(false) });
+      updateBuyerAddress.mutate(updatedAddressWithId, {
+        onSuccess: () => {
+          current.address.list.invalidate();
+          setOpened(false);
+        }
+      });
     }
   };
 
@@ -64,7 +70,15 @@ function EditAddressModal({ opened, setOpened, data }: EditableAddressModalProps
       return;
     }
     if (data) {
-      deleteBuyerAddress.mutate({ id: data.id }, { onSuccess: () => setOpened(false) });
+      deleteBuyerAddress.mutate(
+        { id: data.id },
+        {
+          onSuccess: () => {
+            current.address.list.invalidate();
+            setOpened(false);
+          }
+        }
+      );
     }
   };
 

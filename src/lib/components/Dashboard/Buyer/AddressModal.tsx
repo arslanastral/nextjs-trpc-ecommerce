@@ -13,6 +13,7 @@ function AddressModal({
   opened: boolean;
   setOpened: (state: boolean) => void;
 }) {
+  const current = trpc.useContext();
   const createBuyerAddress = trpc.address.create.useMutation();
   const isMobile = useMediaQuery('(max-width: 600px)');
 
@@ -38,6 +39,7 @@ function AddressModal({
     if (address) {
       createBuyerAddress.mutate(address, {
         onSuccess: () => {
+          current.address.list.invalidate();
           reset();
           setOpened(false);
         }
