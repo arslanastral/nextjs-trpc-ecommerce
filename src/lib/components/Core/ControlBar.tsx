@@ -46,7 +46,7 @@ function ControlBar() {
     <div className="w-full bg-white h-16 flex items-center justify-between mx-auto">
       <div className="flex items-center min-h-full">
         <Burger
-          className="ml-3 z-20 relative block lg:hidden"
+          className="lg:hidden ml-3 z-20 relative block"
           color={opened ? 'white' : 'black'}
           opened={opened}
           onClick={() => {
