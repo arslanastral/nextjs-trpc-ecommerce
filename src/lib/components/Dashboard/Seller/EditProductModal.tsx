@@ -59,6 +59,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function EditProductModal({ opened, setOpened, data }: EditProductModalProps) {
+  const current = trpc.useContext();
   const updateProduct = trpc.product.update.useMutation();
   const deleteProduct = trpc.product.delete.useMutation();
 
@@ -125,6 +126,7 @@ function EditProductModal({ opened, setOpened, data }: EditProductModalProps) {
       };
       updateProduct.mutate(productWithId, {
         onSuccess: () => {
+          current.product.list.invalidate();
           reset();
           setSrc(null);
           setCropSrc(null);

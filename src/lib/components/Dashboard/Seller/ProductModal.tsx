@@ -56,6 +56,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function ProductModal({ opened, setOpened }: ProductModalProps) {
+  const current = trpc.useContext();
   const createProduct = trpc.product.create.useMutation();
   const [imageEditMode, setImageEditMode] = useState<boolean>(false);
   const [src, setSrc] = useState<any>(null);
@@ -101,6 +102,7 @@ function ProductModal({ opened, setOpened }: ProductModalProps) {
     if (product) {
       createProduct.mutate(product, {
         onSuccess: () => {
+          current.product.list.invalidate();
           reset();
           setSrc(null);
           setCropSrc(null);
