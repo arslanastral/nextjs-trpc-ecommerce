@@ -40,7 +40,6 @@ function ControlBar() {
   const title = opened ? 'Close navigation' : 'Open navigation';
   const dark = colorScheme === 'dark';
   const { data: session, status } = useSession();
-  const router = useRouter();
   const { classes } = useStyles();
 
   return (
@@ -92,7 +91,7 @@ function ControlBar() {
           <>
             <Button
               component={Link}
-              href="/login"
+              href="/dashboard/seller/products"
               leftIcon={<IconBolt size="16px" />}
               className="text-[16px] font-medium rounded-lg hidden lg:block hover:bg-brown-50"
               variant="outline"
