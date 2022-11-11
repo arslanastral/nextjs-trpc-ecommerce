@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import ProductCard from '../Cards/ProductCard';
 import { Product } from '@/lib/types/product';
+import TestProductCard from '../Cards/TestProductCard';
 function Products() {
   const [products, setProducts] = useState([]);
   useEffect(() => {
@@ -9,17 +9,15 @@ function Products() {
       .then((data) => setProducts(data));
   }, []);
   return (
-    <div className="flex flex-wrap justify-center">
-      {products.map(({ id, title, image, description, price, category, rating }: Product) => (
-        <ProductCard
+    <div className="flex flex-wrap justify-center gap-10">
+      {products.map(({ id, title, image, description, price }: Product) => (
+        <TestProductCard
           key={id}
-          id={id}
+          id={id.toString()}
           title={title}
-          category={category}
           image={image}
           description={description}
-          price={price}
-          rating={rating}
+          price={price.toString()}
         />
       ))}
     </div>
