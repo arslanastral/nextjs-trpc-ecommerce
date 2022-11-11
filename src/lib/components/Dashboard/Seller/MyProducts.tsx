@@ -36,6 +36,7 @@ function MyProducts() {
         </div>
 
         {productList.data?.map((e, i) => {
+          console.log(`https://res.cloudinary.com/dv9wpbflv/image/upload/v${e.image}.jpg`);
           return (
             <ProductCard
               key={i}
@@ -44,7 +45,7 @@ function MyProducts() {
               description={e.description}
               price={(+e.priceInCents / 100).toString()}
               status="In Stock"
-              image={`https://res.cloudinary.com/dv9wpbflv/image/upload/${e.image}.jpg`}
+              image={`https://res.cloudinary.com/dv9wpbflv/image/upload/v${e.image}.jpg`}
               category={e.category[0].id.toString()}
               openEditModal={() => setOpenProductModal(true)}
               setEditableProduct={setEditableProduct}
