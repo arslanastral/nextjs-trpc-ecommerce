@@ -4,6 +4,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AddressWithId, addressInput } from '@/server/schema';
 import { trpc } from '@/utils/trpc';
+import { useMediaQuery } from '@mantine/hooks';
 import { useEffect } from 'react';
 
 type EditableAddressModalProps = {
@@ -15,6 +16,7 @@ type EditableAddressModalProps = {
 function EditAddressModal({ opened, setOpened, data }: EditableAddressModalProps) {
   const updateBuyerAddress = trpc.address.update.useMutation();
   const deleteBuyerAddress = trpc.address.delete.useMutation();
+  const isMobile = useMediaQuery('(max-width: 600px)');
 
   const {
     register,
@@ -61,6 +63,7 @@ function EditAddressModal({ opened, setOpened, data }: EditableAddressModalProps
       onClose={() => {
         setOpened(false);
       }}
+      fullScreen={isMobile}
       title="Update Address"
       closeOnEscape={!updateBuyerAddress.isLoading || deleteBuyerAddress.isLoading}
       closeOnClickOutside={!updateBuyerAddress.isLoading || deleteBuyerAddress.isLoading}
