@@ -120,6 +120,8 @@ function ProductModal({ opened, setOpened }: ProductModalProps) {
       title="Create Your Product"
       size="auto"
       fullScreen={isMobile}
+      closeOnEscape={!createProduct.isLoading}
+      closeOnClickOutside={!createProduct.isLoading}
     >
       <LoadingOverlay visible={createProduct.isLoading} radius="lg" />
       <div className="flex gap-10 flex-wrap justify-center">

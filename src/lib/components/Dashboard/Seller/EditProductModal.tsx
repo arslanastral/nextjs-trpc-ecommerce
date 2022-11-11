@@ -184,6 +184,8 @@ function EditProductModal({ opened, setOpened, data }: EditProductModalProps) {
       title="Update Your Product"
       size="auto"
       fullScreen={isMobile}
+      closeOnEscape={!updateProduct.isLoading || !deleteProduct.isLoading}
+      closeOnClickOutside={!updateProduct.isLoading || !deleteProduct.isLoading}
     >
       <LoadingOverlay visible={updateProduct.isLoading || deleteProduct.isLoading} radius="lg" />
       <div className="flex gap-10 flex-wrap justify-center">
