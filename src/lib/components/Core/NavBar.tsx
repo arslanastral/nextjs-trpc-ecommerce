@@ -3,7 +3,7 @@ function NavBar({
   pages = [
     'New',
     'Health & Beauty',
-    `Women's Fasion`,
+    `Women's Fashion`,
     `Men's Fashion`,
     'Luxury',
     'Electronics',
