@@ -11,7 +11,8 @@ export async function uploadToCloudinary(image: string, public_id?: string) {
 
   try {
     const result = await cloudinary.uploader.upload(image, options);
-    return result.public_id;
+    let imageMeta = `${result.version}/${result.public_id}`;
+    return imageMeta;
   } catch (error) {
     return null;
   }

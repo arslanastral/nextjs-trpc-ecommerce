@@ -57,9 +57,11 @@ export const productRouter = router({
     let sellerId = await getSellerId(ctx);
     if (!sellerId) return null;
 
+    let updatedImage = input.imageId;
+
     if (!input.image.includes(input.imageId)) {
-      let public_id = input.imageId.split('/')[1];
-      await uploadToCloudinary(input.image, public_id);
+      let public_id = input.imageId.split('/')[2];
+      updatedImage = (await uploadToCloudinary(input.image, public_id)) ?? input.imageId;
     }
 
     let priceInCents = (input.price * 100).toString();
@@ -72,7 +74,8 @@ export const productRouter = router({
       data: {
         title: input.title,
         priceInCents: priceInCents,
-        description: input.description
+        description: input.description,
+        image: updatedImage
       }
     });
 
