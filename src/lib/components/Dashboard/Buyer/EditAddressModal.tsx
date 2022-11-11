@@ -102,8 +102,8 @@ function EditAddressModal({ opened, setOpened, data }: EditableAddressModalProps
       }}
       fullScreen={isMobile}
       title="Update Address"
-      closeOnEscape={!updateBuyerAddress.isLoading || deleteBuyerAddress.isLoading}
-      closeOnClickOutside={!updateBuyerAddress.isLoading || deleteBuyerAddress.isLoading}
+      closeOnEscape={!updateBuyerAddress.isLoading || !deleteBuyerAddress.isLoading}
+      closeOnClickOutside={!updateBuyerAddress.isLoading || !deleteBuyerAddress.isLoading}
     >
       <LoadingOverlay
         visible={updateBuyerAddress.isLoading || deleteBuyerAddress.isLoading}
