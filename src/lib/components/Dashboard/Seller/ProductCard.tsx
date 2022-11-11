@@ -53,7 +53,7 @@ function ProductCard({
           )}
 
           <AspectRatio ratio={337 / 393} sx={{ maxWidth: '100%' }} className="relative">
-            <Image fill={true} src={image} alt="Norway" />
+            <Image fill={true} src={image} alt="Product Image" />
           </AspectRatio>
         </Card.Section>
         <Group position="apart" mt="md" mb="xs">
