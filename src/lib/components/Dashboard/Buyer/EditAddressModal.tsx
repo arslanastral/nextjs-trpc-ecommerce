@@ -1,9 +1,21 @@
-import { Modal, Button, Input, Grid, Checkbox, LoadingOverlay, Group, Alert } from '@mantine/core';
+import {
+  Modal,
+  Button,
+  Input,
+  Text,
+  Grid,
+  Checkbox,
+  LoadingOverlay,
+  Group,
+  Alert
+} from '@mantine/core';
 import { IconTrash, IconAlertCircle } from '@tabler/icons';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AddressWithId, addressInput } from '@/server/schema';
 import { trpc } from '@/utils/trpc';
+import { openConfirmModal } from '@mantine/modals';
+import { useMediaQuery } from '@mantine/hooks';
 import { useEffect } from 'react';
 
 type EditableAddressModalProps = {
@@ -13,8 +25,10 @@ type EditableAddressModalProps = {
 };
 
 function EditAddressModal({ opened, setOpened, data }: EditableAddressModalProps) {
+  const current = trpc.useContext();
   const updateBuyerAddress = trpc.address.update.useMutation();
   const deleteBuyerAddress = trpc.address.delete.useMutation();
+  const isMobile = useMediaQuery('(max-width: 600px)');
 
   const {
     register,
@@ -42,7 +56,12 @@ function EditAddressModal({ opened, setOpened, data }: EditableAddressModalProps
         ...updatedAddress,
         id: data.id
       };
-      updateBuyerAddress.mutate(updatedAddressWithId, { onSuccess: () => setOpened(false) });
+      updateBuyerAddress.mutate(updatedAddressWithId, {
+        onSuccess: () => {
+          current.address.list.invalidate();
+          setOpened(false);
+        }
+      });
     }
   };
 
@@ -51,9 +70,29 @@ function EditAddressModal({ opened, setOpened, data }: EditableAddressModalProps
       return;
     }
     if (data) {
-      deleteBuyerAddress.mutate({ id: data.id }, { onSuccess: () => setOpened(false) });
+      deleteBuyerAddress.mutate(
+        { id: data.id },
+        {
+          onSuccess: () => {
+            current.address.list.invalidate();
+            setOpened(false);
+          }
+        }
+      );
     }
   };
+
+  const openDeleteModal = () =>
+    openConfirmModal({
+      zIndex: 1000,
+      title: 'Delete my address',
+      centered: true,
+      children: <Text size="sm">Are you sure you want to delete your address?</Text>,
+      labels: { confirm: 'Delete Address', cancel: 'Cancel' },
+      confirmProps: { color: 'red' },
+      onCancel: () => setOpened(false),
+      onConfirm: () => deleteAddress()
+    });
 
   return (
     <Modal
@@ -61,9 +100,10 @@ function EditAddressModal({ opened, setOpened, data }: EditableAddressModalProps
       onClose={() => {
         setOpened(false);
       }}
+      fullScreen={isMobile}
       title="Update Address"
-      closeOnEscape={!updateBuyerAddress.isLoading || deleteBuyerAddress.isLoading}
-      closeOnClickOutside={!updateBuyerAddress.isLoading || deleteBuyerAddress.isLoading}
+      closeOnEscape={!updateBuyerAddress.isLoading || !deleteBuyerAddress.isLoading}
+      closeOnClickOutside={!updateBuyerAddress.isLoading || !deleteBuyerAddress.isLoading}
     >
       <LoadingOverlay
         visible={updateBuyerAddress.isLoading || deleteBuyerAddress.isLoading}
@@ -123,7 +163,7 @@ function EditAddressModal({ opened, setOpened, data }: EditableAddressModalProps
 
           <Button
             type="button"
-            onClick={deleteAddress}
+            onClick={openDeleteModal}
             leftIcon={<IconTrash size="15" />}
             mt="md"
             radius="md"

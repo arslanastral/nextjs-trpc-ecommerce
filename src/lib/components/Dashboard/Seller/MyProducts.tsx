@@ -1,4 +1,4 @@
-import { Button, Card, Group, Text, Image, Badge } from '@mantine/core';
+import { Button, Skeleton } from '@mantine/core';
 import { IconPlus } from '@tabler/icons';
 import ProductCard from './ProductCard';
 import ProductModal from './ProductModal';
@@ -23,17 +23,28 @@ function MyProducts() {
         data={editableProduct}
       />
       <div className="flex gap-8 items-center flex-wrap">
-        <div className="w-[337px] h-[583px] border-dashed border-2 border-brown-200 rounded-xl flex items-center justify-center text-brown-600">
-          <Button
-            onClick={() => setOpened(true)}
-            leftIcon={<IconPlus size="15px" />}
-            variant="outline"
-            mt="md"
-            radius="md"
-          >
-            New Product
-          </Button>
-        </div>
+        {!productList.isLoading && (
+          <div className="w-[337px] h-[583px] border-dashed border-2 border-brown-200 rounded-xl flex items-center justify-center text-brown-600">
+            <Button
+              onClick={() => setOpened(true)}
+              leftIcon={<IconPlus size="15px" />}
+              variant="outline"
+              mt="md"
+              radius="md"
+            >
+              New Product
+            </Button>
+          </div>
+        )}
+
+        {!productList.data && (
+          <div className="w-full">
+            <Skeleton height={10} mt={20} width="40%" radius="xl" />
+            <Skeleton height={10} mt={20} radius="xl" />
+            <Skeleton height={10} mt={20} radius="xl" />
+            <Skeleton height={10} mt={20} width="70%" radius="xl" />
+          </div>
+        )}
 
         {productList.data?.map((e, i) => {
           console.log(`https://res.cloudinary.com/dv9wpbflv/image/upload/v${e.image}.jpg`);

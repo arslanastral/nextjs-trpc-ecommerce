@@ -59,6 +59,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function EditProductModal({ opened, setOpened, data }: EditProductModalProps) {
+  const current = trpc.useContext();
   const updateProduct = trpc.product.update.useMutation();
   const deleteProduct = trpc.product.delete.useMutation();
 
@@ -125,6 +126,7 @@ function EditProductModal({ opened, setOpened, data }: EditProductModalProps) {
       };
       updateProduct.mutate(productWithId, {
         onSuccess: () => {
+          current.product.list.invalidate();
           reset();
           setSrc(null);
           setCropSrc(null);
@@ -182,6 +184,8 @@ function EditProductModal({ opened, setOpened, data }: EditProductModalProps) {
       title="Update Your Product"
       size="auto"
       fullScreen={isMobile}
+      closeOnEscape={!updateProduct.isLoading || !deleteProduct.isLoading}
+      closeOnClickOutside={!updateProduct.isLoading || !deleteProduct.isLoading}
     >
       <LoadingOverlay visible={updateProduct.isLoading || deleteProduct.isLoading} radius="lg" />
       <div className="flex gap-10 flex-wrap justify-center">

@@ -3,6 +3,7 @@ import { IconTrash, IconAlertCircle } from '@tabler/icons';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Address, addressInput } from '@/server/schema';
+import { useMediaQuery } from '@mantine/hooks';
 import { trpc } from '@/utils/trpc';
 
 function AddressModal({
@@ -12,7 +13,9 @@ function AddressModal({
   opened: boolean;
   setOpened: (state: boolean) => void;
 }) {
+  const current = trpc.useContext();
   const createBuyerAddress = trpc.address.create.useMutation();
+  const isMobile = useMediaQuery('(max-width: 600px)');
 
   const {
     register,
@@ -36,6 +39,7 @@ function AddressModal({
     if (address) {
       createBuyerAddress.mutate(address, {
         onSuccess: () => {
+          current.address.list.invalidate();
           reset();
           setOpened(false);
         }
@@ -49,6 +53,7 @@ function AddressModal({
       onClose={() => {
         setOpened(false);
       }}
+      fullScreen={isMobile}
       title="Add Address"
       closeOnEscape={!createBuyerAddress.isLoading}
       closeOnClickOutside={!createBuyerAddress.isLoading}

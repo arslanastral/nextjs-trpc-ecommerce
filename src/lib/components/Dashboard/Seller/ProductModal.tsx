@@ -56,6 +56,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function ProductModal({ opened, setOpened }: ProductModalProps) {
+  const current = trpc.useContext();
   const createProduct = trpc.product.create.useMutation();
   const [imageEditMode, setImageEditMode] = useState<boolean>(false);
   const [src, setSrc] = useState<any>(null);
@@ -101,6 +102,7 @@ function ProductModal({ opened, setOpened }: ProductModalProps) {
     if (product) {
       createProduct.mutate(product, {
         onSuccess: () => {
+          current.product.list.invalidate();
           reset();
           setSrc(null);
           setCropSrc(null);
@@ -118,6 +120,8 @@ function ProductModal({ opened, setOpened }: ProductModalProps) {
       title="Create Your Product"
       size="auto"
       fullScreen={isMobile}
+      closeOnEscape={!createProduct.isLoading}
+      closeOnClickOutside={!createProduct.isLoading}
     >
       <LoadingOverlay visible={createProduct.isLoading} radius="lg" />
       <div className="flex gap-10 flex-wrap justify-center">

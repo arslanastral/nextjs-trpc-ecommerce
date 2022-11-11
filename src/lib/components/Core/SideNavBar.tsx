@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createStyles, Navbar, Group, Burger, Text } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 import { useSession, signOut } from 'next-auth/react';
 import { IconLogout, IconUser } from '@tabler/icons';
 import Link from 'next/link';
@@ -83,8 +84,9 @@ const data = [
 export function SideNavBar({ opened }: { opened: boolean }) {
   const { data: session, status } = useSession();
   const { classes, cx } = useStyles();
-  const [active, setActive] = useState('Billing');
+  const [active, setActive] = useState('');
   const title = opened ? 'Close navigation' : 'Open navigation';
+  const isMobile = useMediaQuery('(max-width: 1600px)');
   const links = data.map((item) => (
     <a
       className={cx(classes.link, { [classes.linkActive]: item.label === active })}
@@ -101,11 +103,11 @@ export function SideNavBar({ opened }: { opened: boolean }) {
 
   return (
     <Navbar
+      className={`lg:invisible ${classes.navbar}`}
       hiddenBreakpoint="lg"
       height={'100%'}
       width={{ sm: 300 }}
       p="md"
-      className={`${classes.navbar} lg:hidden`}
       fixed={true}
       hidden={!opened}
       zIndex="2"

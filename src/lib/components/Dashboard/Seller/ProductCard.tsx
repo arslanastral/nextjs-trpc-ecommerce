@@ -1,6 +1,7 @@
 import { ProductWithId } from '@/server/schema';
-import { Button, Card, Group, Text, Badge, AspectRatio } from '@mantine/core';
+import { Skeleton, Button, Card, Group, Text, Badge, AspectRatio } from '@mantine/core';
 import Image from 'next/image';
+import { useState } from 'react';
 
 type ProductCardProps = {
   id: string;
@@ -43,6 +44,7 @@ function ProductCard({
     setEditableProduct(product);
     openEditModal();
   };
+  const [loading, setLoading] = useState<boolean>(true);
 
   return (
     <div className="w-[337px]">
@@ -53,7 +55,9 @@ function ProductCard({
           )}
 
           <AspectRatio ratio={337 / 393} sx={{ maxWidth: '100%' }} className="relative">
-            <Image fill={true} src={image} alt="Norway" />
+            <Skeleton visible={loading} radius={0}>
+              <Image fill={true} src={image} alt="Product Image" onLoad={() => setLoading(false)} />
+            </Skeleton>
           </AspectRatio>
         </Card.Section>
         <Group position="apart" mt="md" mb="xs">
