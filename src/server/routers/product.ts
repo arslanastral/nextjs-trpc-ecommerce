@@ -116,5 +116,25 @@ export const productRouter = router({
     });
 
     return products;
-  })
+  }),
+  sellableProductById: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ input, ctx }) => {
+      let product = await ctx.prisma.product.findUnique({
+        where: {
+          id: input.id
+        },
+        select: {
+          id: true,
+          priceInCents: true,
+          title: true,
+          image: true,
+          description: true,
+          category: true,
+          stock: true
+        }
+      });
+
+      return product;
+    })
 });
