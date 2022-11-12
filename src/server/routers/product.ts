@@ -1,4 +1,4 @@
-import { router, protectedProcedure } from '../trpc';
+import { router, protectedProcedure, publicProcedure } from '../trpc';
 import { getBuyerId, getSellerId } from '@/server/functions/identity';
 import { productInput, productInputWithId } from '../schema';
 import { uploadToCloudinary, deleteFromCloudinary } from '../functions/image';
@@ -97,5 +97,24 @@ export const productRouter = router({
       await deleteFromCloudinary(input.imageId);
 
       return deletedProduct;
-    })
+    }),
+  sellableProducts: publicProcedure.query(async ({ ctx }) => {
+    let products = await ctx.prisma.product.findMany({
+      where: {
+        stock: {
+          gt: 0
+        }
+      },
+      select: {
+        id: true,
+        priceInCents: true,
+        title: true,
+        image: true,
+        description: true,
+        category: true
+      }
+    });
+
+    return products;
+  })
 });
