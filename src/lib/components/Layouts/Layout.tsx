@@ -4,9 +4,7 @@ const Layout = ({ children }: React.PropsWithChildren<{}>) => {
   return (
     <>
       <Header />
-      <div className="flex min-h-[calc(100vh-75px)] max-h-fit mt-16 max-w-[1566px] mx-auto">
-        {children}
-      </div>
+      <div className="flex mt-16 max-w-[1566px] mx-auto">{children}</div>
     </>
   );
 };
