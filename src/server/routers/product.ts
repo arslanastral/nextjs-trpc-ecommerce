@@ -118,7 +118,7 @@ export const productRouter = router({
     return products;
   }),
   sellableProductById: publicProcedure
-    .input(z.object({ id: z.string() }))
+    .input(z.object({ id: z.string().min(1) }))
     .query(async ({ input, ctx }) => {
       let product = await ctx.prisma.product.findUnique({
         where: {
