@@ -34,7 +34,7 @@ export const productInput = z.object({
   title: z
     .string()
     .min(1, { message: 'Product must have a title' })
-    .max(30, { message: 'Product title must be under 60 characters' }),
+    .max(50, { message: 'Product title must be under 50 characters' }),
   price: z.number().min(1, { message: 'Product must have a price' }),
   category: z
     .string()
