@@ -9,7 +9,7 @@ const Home: PageWithLayout = () => {
   const { data: session, status } = useSession();
 
   return (
-    <div className="flex flex-col p-6 items-center justify-center 2xl:justify-around min-h-screen min-w-full text-white">
+    <div className="p-6 min-h-screen min-w-full text-white">
       <Head>
         <title>Zavy</title>
         <meta name="description" content="An ecommerce store" />
