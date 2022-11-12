@@ -1,13 +1,28 @@
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { ReactElement } from 'react';
 import { Button } from '@mantine/core';
 import { trpc } from '@/utils/trpc';
 import Layout from '@/lib/components/Layouts/Layout';
 import NextError from 'next/error';
+import { PageWithLayout } from '@/lib/types/page';
+import { GetServerSideProps } from 'next';
 
-const ProductPage = () => {
-  const id = useRouter().query.id as string;
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { id } = ctx.query;
 
+  return {
+    props: {
+      id
+    }
+  };
+};
+
+type PageProps = {
+  id: string;
+};
+
+const ProductPage: PageWithLayout<PageProps> = ({ id }) => {
   let product = trpc.product.sellableProductById.useQuery({ id });
 
   if (product.error) {
@@ -21,7 +36,7 @@ const ProductPage = () => {
   }
 
   return (
-    <Layout>
+    <>
       {product?.data && (
         <div className="flex flex-col w-full m-3 px-4 lg:flex-row lg:max-w-5xl xl:max-w-7xl ml-auto">
           <div className="lg:mr-10">
@@ -65,7 +80,12 @@ const ProductPage = () => {
           </div>
         </div>
       )}
-    </Layout>
+    </>
   );
 };
+
+ProductPage.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
+};
+
 export default ProductPage;
