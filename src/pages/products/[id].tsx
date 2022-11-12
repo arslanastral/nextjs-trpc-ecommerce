@@ -5,7 +5,7 @@ import { trpc } from '@/utils/trpc';
 import Layout from '@/lib/components/Layouts/Layout';
 import NextError from 'next/error';
 
-function Products() {
+const ProductPage = () => {
   const id = useRouter().query.id as string;
 
   let product = trpc.product.sellableProductById.useQuery({ id });
@@ -67,5 +67,5 @@ function Products() {
       )}
     </Layout>
   );
-}
-export default Products;
+};
+export default ProductPage;
