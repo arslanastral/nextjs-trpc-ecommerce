@@ -6,9 +6,9 @@ import Layout from '@/lib/components/Layouts/Layout';
 import NextError from 'next/error';
 
 function Products() {
-  const id = (useRouter().query.id as string) ?? '';
+  const id = useRouter().query.id as string;
 
-  let product = trpc.product.sellableProductById.useQuery({ id: id[0] });
+  let product = trpc.product.sellableProductById.useQuery({ id });
 
   if (product.error) {
     return (
