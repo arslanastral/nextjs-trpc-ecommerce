@@ -3,7 +3,7 @@ import { PageWithLayout } from '@/lib/types/page';
 import { ReactElement } from 'react';
 import Layout from '@/lib/components/Layouts/Layout';
 import { useSession, signOut } from 'next-auth/react';
-import Products from '@/lib/components/Core/Products';
+import ProductCards from '@/lib/components/Products/ProductCards';
 
 const Home: PageWithLayout = () => {
   const { data: session, status } = useSession();
@@ -16,7 +16,7 @@ const Home: PageWithLayout = () => {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
-      <Products />
+      <ProductCards />
     </div>
   );
 };
