@@ -67,12 +67,12 @@ const Product = ({ id, title, image, description, category, price }: ProductProp
             </div>
 
             <div className="fixed flex gap-3 p-5 w-full items-center justify-between lg:hidden bg-white shadow bottom-0 left-0 right-0">
-              <Text className="text-4xl">${price}</Text>
+              <Text className="text-3xl">${price}</Text>
               <QuantityInput />
               <Button
                 leftIcon={<IconShoppingCart stroke={1.2} />}
                 fullWidth
-                className="h-[50px] max-w-[20rem] text-lg font-light"
+                className="h-[50px] max-w-[10rem] text-md font-light"
                 radius="sm"
               >
                 Add To Cart
