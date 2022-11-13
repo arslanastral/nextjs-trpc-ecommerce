@@ -5,7 +5,8 @@ import {
   Menu,
   createStyles,
   ActionIcon,
-  useMantineColorScheme
+  useMantineColorScheme,
+  Indicator
 } from '@mantine/core';
 import {
   IconSearch,
@@ -62,7 +63,7 @@ function ControlBar() {
         <SideNavBar opened={opened} />
       </div>
 
-      <div className="flex items-center min-h-full gap-4 mr-4">
+      <div className="flex items-center min-h-full gap-5 mr-4">
         <TextInput
           className="mx-4"
           classNames={{ input: classes.input }}
@@ -72,9 +73,13 @@ function ControlBar() {
           size="sm"
         />
 
-        <ActionIcon component={Link} href="/cart" size="lg" color="brown" title="Checkout">
-          <IconShoppingCart size={25} stroke={1.6} />
-        </ActionIcon>
+        <div className="mr-3 mt-3">
+          <Indicator label={0} inline size={22}>
+            <ActionIcon component={Link} href="/cart" size="lg" color="brown" title="Checkout">
+              <IconShoppingCart size={25} stroke={1.6} />
+            </ActionIcon>
+          </Indicator>
+        </div>
 
         {!session && (
           <>
