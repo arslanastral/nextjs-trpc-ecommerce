@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { ReactElement } from 'react';
 import { trpc } from '@/utils/trpc';
 import Layout from '@/lib/components/Layouts/Layout';
@@ -24,14 +25,21 @@ const ProductPage: PageWithLayout<PageProps> = ({ id }: PageProps) => {
 
   return (
     data && (
-      <Product
-        id={data.id}
-        title={data.title}
-        image={data.image}
-        category={data.category[0].name ?? ''}
-        description={data.description}
-        price={(+data.priceInCents / 100).toString()}
-      />
+      <>
+        <Head>
+          <title>{data.title} | Zavy</title>
+          <meta name="description" content={data.description} />
+          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        </Head>
+        <Product
+          id={data.id}
+          title={data.title}
+          image={data.image}
+          category={data.category[0].name ?? ''}
+          description={data.description}
+          price={(+data.priceInCents / 100).toString()}
+        />
+      </>
     )
   );
 };
