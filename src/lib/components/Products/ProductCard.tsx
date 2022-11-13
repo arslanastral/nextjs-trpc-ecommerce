@@ -13,15 +13,7 @@ type ProductCardProps = {
   badge?: string;
 };
 
-function TestProductCard({
-  id,
-  title,
-  image,
-  description,
-  price,
-  status,
-  badge
-}: ProductCardProps) {
+function ProductCard({ id, title, image, description, price, status, badge }: ProductCardProps) {
   const [loading, setLoading] = useState<boolean>(true);
 
   return (
@@ -88,6 +80,7 @@ function TestProductCard({
             fullWidth
             mt="md"
             radius="md"
+            className="h-[45px] font-light text-lg"
           >
             Add To Cart
           </Button>
@@ -97,4 +90,4 @@ function TestProductCard({
   );
 }
 
-export default TestProductCard;
+export default ProductCard;

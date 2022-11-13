@@ -6,12 +6,18 @@ import EditProductModal from './EditProductModal';
 import { useState } from 'react';
 import { trpc } from '@/utils/trpc';
 import { ProductWithId } from '@/server/schema';
+import ProductCardSkeleton from '@/lib/components/Products/ProductCardSkeleton';
+import NextError from 'next/error';
 
 function MyProducts() {
-  const productList = trpc.product.list.useQuery();
+  const { data, isLoading, error } = trpc.product.list.useQuery();
   const [opened, setOpened] = useState<boolean>(false);
   const [editableProduct, setEditableProduct] = useState<ProductWithId>();
   const [openProductModal, setOpenProductModal] = useState<boolean>(false);
+
+  if (error) {
+    return <NextError title={error.message} statusCode={error.data?.httpStatus ?? 500} />;
+  }
 
   return (
     <div className="p-8">
@@ -23,7 +29,7 @@ function MyProducts() {
         data={editableProduct}
       />
       <div className="flex gap-8 items-center flex-wrap">
-        {!productList.isLoading && (
+        {!isLoading && (
           <div className="w-[337px] h-[583px] border-dashed border-2 border-brown-200 rounded-xl flex items-center justify-center text-brown-600">
             <Button
               onClick={() => setOpened(true)}
@@ -37,33 +43,26 @@ function MyProducts() {
           </div>
         )}
 
-        {!productList.data && (
-          <div className="w-full">
-            <Skeleton height={10} mt={20} width="40%" radius="xl" />
-            <Skeleton height={10} mt={20} radius="xl" />
-            <Skeleton height={10} mt={20} radius="xl" />
-            <Skeleton height={10} mt={20} width="70%" radius="xl" />
-          </div>
-        )}
+        {isLoading && Array.from(Array(8).keys()).map((e, i) => <ProductCardSkeleton key={i} />)}
 
-        {productList.data?.map((e, i) => {
-          console.log(`https://res.cloudinary.com/dv9wpbflv/image/upload/v${e.image}.jpg`);
-          return (
-            <ProductCard
-              key={i}
-              id={e.id}
-              title={e.title}
-              description={e.description}
-              price={(+e.priceInCents / 100).toString()}
-              status="In Stock"
-              image={`https://res.cloudinary.com/dv9wpbflv/image/upload/v${e.image}.jpg`}
-              category={e.category[0].id.toString()}
-              openEditModal={() => setOpenProductModal(true)}
-              setEditableProduct={setEditableProduct}
-              imageId={e.image}
-            />
-          );
-        })}
+        {data &&
+          data?.map((e, i) => {
+            return (
+              <ProductCard
+                key={i}
+                id={e.id}
+                title={e.title}
+                description={e.description}
+                price={(+e.priceInCents / 100).toString()}
+                status="In Stock"
+                image={`https://res.cloudinary.com/dv9wpbflv/image/upload/v${e.image}.jpg`}
+                category={e.category[0].id.toString()}
+                openEditModal={() => setOpenProductModal(true)}
+                setEditableProduct={setEditableProduct}
+                imageId={e.image}
+              />
+            );
+          })}
       </div>
     </div>
   );
