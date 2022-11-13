@@ -15,8 +15,8 @@ type ProductProps = {
 const Product = ({ id, title, image, description, category, price }: ProductProps) => {
   return (
     <>
-      <div className="lg:p-6 flex justify-center w-full min-h-[600px]">
-        <div className="flex flex-col justify-center lg:flex-row bg-white gap-6 max-w-[1300px]">
+      <div className="lg:p-6 flex justify-center w-full min-h-[640px]">
+        <div className="flex flex-col justify-center lg:flex-row bg-white gap-6 max-w-[1400px]">
           <div className="w-full md:w-3/5 lg:w-[450px] mx-auto">
             <AspectRatio ratio={337 / 393} sx={{ maxWidth: '100%', minHeight: '100%' }}>
               <Image
