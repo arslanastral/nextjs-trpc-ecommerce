@@ -1,12 +1,14 @@
 import { publicProcedure, router } from '../trpc';
-import { addressRouter } from './address';
 import { identityRouter } from './identity';
+import { addressRouter } from './address';
 import { productRouter } from './product';
+import { cartRouter } from './cart';
 
 export const appRouter = router({
   address: addressRouter,
   identity: identityRouter,
-  product: productRouter
+  product: productRouter,
+  cart: cartRouter
 });
 
 // export type definition of API
