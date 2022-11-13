@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "netlify-build": "prisma generate && prisma migrate deploy && next build"
+    "netlify-build": "prisma generate && prisma migrate deploy && prisma db seed && next build"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
