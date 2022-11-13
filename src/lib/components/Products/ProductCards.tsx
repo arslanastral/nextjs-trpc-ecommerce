@@ -1,9 +1,14 @@
 import { trpc } from '@/utils/trpc';
+import NextError from 'next/error';
 import ProductCard from './ProductCard';
 import ProductCardSkeleton from './ProductCardSkeleton';
 
 function ProductCards() {
   const { data, isLoading, error } = trpc.product.sellableProducts.useQuery();
+
+  if (error) {
+    return <NextError title={error.message} statusCode={error.data?.httpStatus ?? 500} />;
+  }
 
   return (
     <div className="flex flex-wrap justify-center gap-10">

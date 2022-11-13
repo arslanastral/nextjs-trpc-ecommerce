@@ -7,12 +7,17 @@ import { useState } from 'react';
 import { trpc } from '@/utils/trpc';
 import { ProductWithId } from '@/server/schema';
 import ProductCardSkeleton from '@/lib/components/Products/ProductCardSkeleton';
+import NextError from 'next/error';
 
 function MyProducts() {
   const { data, isLoading, error } = trpc.product.list.useQuery();
   const [opened, setOpened] = useState<boolean>(false);
   const [editableProduct, setEditableProduct] = useState<ProductWithId>();
   const [openProductModal, setOpenProductModal] = useState<boolean>(false);
+
+  if (error) {
+    return <NextError title={error.message} statusCode={error.data?.httpStatus ?? 500} />;
+  }
 
   return (
     <div className="p-8">
