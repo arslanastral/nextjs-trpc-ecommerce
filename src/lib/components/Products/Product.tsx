@@ -1,7 +1,8 @@
-import { Button, Spoiler, AspectRatio, Text } from '@mantine/core';
+import { Button, Spoiler, AspectRatio, Text, Skeleton } from '@mantine/core';
 import Image from 'next/image';
 import { QuantityInput } from '@/lib/components/Products/QuantityInput';
 import { IconShoppingCart } from '@tabler/icons';
+import { useState } from 'react';
 
 type ProductProps = {
   id: string;
@@ -13,17 +14,22 @@ type ProductProps = {
 };
 
 const Product = ({ id, title, image, description, category, price }: ProductProps) => {
+  const [loading, setLoading] = useState<boolean>(true);
+
   return (
     <>
-      <div className="lg:p-6 flex justify-center w-full min-h-[640px]">
-        <div className="flex flex-col justify-center lg:flex-row bg-white gap-6 max-w-[1400px]">
-          <div className="w-full md:w-3/5 lg:w-[450px] mx-auto">
+      <div className="lg:p-6 lg:pt-1 flex justify-center w-full min-h-[640px]">
+        <div className="flex flex-col justify-center lg:flex-row bg-white h-full gap-6 max-w-[1400px]">
+          <div className="w-full md:w-3/5 lg:w-[525px] h-full mx-auto">
             <AspectRatio ratio={337 / 393} sx={{ maxWidth: '100%', minHeight: '100%' }}>
-              <Image
-                fill={true}
-                src={`https://res.cloudinary.com/dv9wpbflv/image/upload/v${image}.jpg`}
-                alt="Product Image"
-              />
+              <Skeleton visible={loading} radius={0}>
+                <Image
+                  fill={true}
+                  src={`https://res.cloudinary.com/dv9wpbflv/image/upload/v${image}.jpg`}
+                  alt="Product Image"
+                  onLoad={() => setLoading(false)}
+                />
+              </Skeleton>
             </AspectRatio>
           </div>
 
