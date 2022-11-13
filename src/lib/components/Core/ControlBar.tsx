@@ -72,7 +72,7 @@ function ControlBar() {
           size="sm"
         />
 
-        <ActionIcon size="lg" color="brown" title="Checkout">
+        <ActionIcon component={Link} href="/cart" size="lg" color="brown" title="Checkout">
           <IconShoppingCart size={20} />
         </ActionIcon>
 
