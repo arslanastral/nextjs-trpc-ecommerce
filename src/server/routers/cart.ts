@@ -22,7 +22,7 @@ export const cartRouter = router({
 
   addToCart: protectedProcedure
     .input(z.object({ id: z.string() }))
-    .query(async ({ input, ctx }) => {
+    .mutation(async ({ input, ctx }) => {
       let cartId = await getCartId(ctx);
       if (!cartId) return null;
 
