@@ -4,8 +4,8 @@ import Layout from '@/lib/components/Layouts/Layout';
 import NextError from 'next/error';
 import { PageWithLayout } from '@/lib/types/page';
 import { GetServerSideProps } from 'next';
-import Product from '@/lib/components/ProductPage/Product';
-import ProductSkeleton from '@/lib/components/ProductPage/ProductSkeleton';
+import Product from '@/lib/components/Products/Product';
+import ProductSkeleton from '@/lib/components/Products/ProductSkeleton';
 
 type PageProps = {
   id: string;
