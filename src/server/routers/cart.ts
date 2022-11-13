@@ -1,12 +1,22 @@
 import { router, protectedProcedure } from '../trpc';
-import { getBuyerId } from '@/server/functions/identity';
+import { getBuyerId, getCartId } from '@/server/functions/identity';
 import { sellerInfoInput } from '../schema';
 
 export const cartRouter = router({
   getCartItems: protectedProcedure.query(async ({ ctx }) => {
-    let id = await getBuyerId(ctx);
+    let cartId = await getCartId(ctx);
+    if (!cartId) return null;
 
-    return id;
+    let cartItems = await ctx.prisma.cart.findUnique({
+      where: {
+        id: cartId
+      },
+      include: {
+        items: true
+      }
+    });
+
+    return cartItems;
   }),
 
   addToCart: protectedProcedure.query(async ({ ctx }) => {
