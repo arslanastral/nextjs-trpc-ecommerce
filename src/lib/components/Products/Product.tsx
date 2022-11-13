@@ -46,11 +46,9 @@ const Product = ({ id, title, image, description, category, price }: ProductProp
             <div className="p-5">
               <Text className="text-xl text-brown-500" mt="xs" mb="md" weight={300}>
                 <Spoiler maxHeight={90} showLabel="Read More" hideLabel="Hide">
-                  {description}. We work with monitoring programs to guarantee compliance with the
-                  health, safety, and quality standards for our products. The Green to Wear 2.0
-                  standard aims to minimize the environmental impact of textile manufacturing. To do
-                  this, we have developed Inditex’s The List program which helps us guarantee both
-                  the purity of production processes and the health and safety of our garments.
+                  {description}. Cake croissant gummi bears dessert bear claw oat cake danish. Bear
+                  claw candy marzipan soufflé dragée pudding halvah cheesecake. Cheesecake
+                  marshmallow sugar plum sugar plum apple pie marshmallow marshmallow soufflé pie.
                 </Spoiler>
               </Text>
             </div>
