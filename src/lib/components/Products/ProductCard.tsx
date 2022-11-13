@@ -80,6 +80,7 @@ function ProductCard({ id, title, image, description, price, status, badge }: Pr
             fullWidth
             mt="md"
             radius="md"
+            className="h-[45px] font-light text-lg"
           >
             Add To Cart
           </Button>

@@ -93,7 +93,13 @@ function ProductCard({
           </Badge>
         </Group>
 
-        <Button onClick={() => handleEditModal()} fullWidth mt="md" radius="md">
+        <Button
+          onClick={() => handleEditModal()}
+          fullWidth
+          mt="md"
+          radius="md"
+          className="h-[45px] font-light text-lg"
+        >
           Edit
         </Button>
       </Card>

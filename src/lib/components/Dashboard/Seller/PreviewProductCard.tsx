@@ -178,7 +178,13 @@ function PreviewProductCard({
             </Badge>
           </Group>
 
-          <Button fullWidth mt="md" radius="md" variant="outline">
+          <Button
+            fullWidth
+            mt="md"
+            radius="md"
+            variant="outline"
+            className="h-[45px] font-light text-lg"
+          >
             Add To Cart
           </Button>
         </Card>

@@ -270,7 +270,14 @@ function EditProductModal({ opened, setOpened, data }: EditProductModalProps) {
             </Text>
 
             <Group>
-              <Button type="submit" fullWidth size="md" radius="md" mt={15}>
+              <Button
+                type="submit"
+                fullWidth
+                size="md"
+                radius="md"
+                mt={15}
+                className="h-[45px] font-light text-lg"
+              >
                 Update Product
               </Button>
               <Button
@@ -283,6 +290,7 @@ function EditProductModal({ opened, setOpened, data }: EditProductModalProps) {
                 color="red"
                 radius="md"
                 mt={15}
+                className="h-[45px] font-light text-lg"
               >
                 Delete Product
               </Button>
