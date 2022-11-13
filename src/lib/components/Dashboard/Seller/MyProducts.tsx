@@ -47,7 +47,6 @@ function MyProducts() {
         )}
 
         {productList.data?.map((e, i) => {
-          console.log(`https://res.cloudinary.com/dv9wpbflv/image/upload/v${e.image}.jpg`);
           return (
             <ProductCard
               key={i}
