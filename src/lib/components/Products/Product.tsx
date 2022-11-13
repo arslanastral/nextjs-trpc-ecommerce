@@ -1,4 +1,5 @@
-import { Button, Spoiler, AspectRatio, Text, Skeleton } from '@mantine/core';
+import { Button, Spoiler, AspectRatio, Text, Skeleton, Loader } from '@mantine/core';
+import { trpc } from '@/utils/trpc';
 import Image from 'next/image';
 import { QuantityInput } from '@/lib/components/Products/QuantityInput';
 import { IconShoppingCart } from '@tabler/icons';
@@ -14,7 +15,13 @@ type ProductProps = {
 };
 
 const Product = ({ id, title, image, description, category, price }: ProductProps) => {
+  const addToCart = trpc.cart.addToCart.useMutation();
   const [loading, setLoading] = useState<boolean>(true);
+
+  const handleAddToCart = async () => {
+    console.log('Got em');
+    addToCart.mutate({ id });
+  };
 
   return (
     <>
@@ -61,8 +68,13 @@ const Product = ({ id, title, image, description, category, price }: ProductProp
 
             <div className=" gap-3 p-5 items-center justify-between hidden lg:flex">
               <QuantityInput />
-              <Button fullWidth className="h-[50px] max-w-[20rem] text-xl font-light" radius="sm">
-                Add To Cart
+              <Button
+                onClick={handleAddToCart}
+                fullWidth
+                className="h-[50px] max-w-[20rem] text-xl font-light"
+                radius="sm"
+              >
+                {addToCart.isLoading ? <Loader color="white" size="md" /> : <>Add To Cart</>}
               </Button>
             </div>
 
@@ -70,7 +82,14 @@ const Product = ({ id, title, image, description, category, price }: ProductProp
               <Text className="text-3xl">${price}</Text>
               <QuantityInput />
               <Button
-                leftIcon={<IconShoppingCart stroke={1.2} />}
+                onClick={handleAddToCart}
+                leftIcon={
+                  addToCart.isLoading ? (
+                    <Loader color="white" size="sm" />
+                  ) : (
+                    <IconShoppingCart stroke={1.2} />
+                  )
+                }
                 fullWidth
                 className="h-[50px] max-w-[10rem] text-md font-light"
                 radius="sm"
