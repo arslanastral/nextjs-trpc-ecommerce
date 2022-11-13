@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "netlify-build": "prisma generate && prisma migrate deploy && prisma db seed && next build"
+    "netlify-build": "prisma generate && prisma migrate deploy && prisma db seed && next build",
+    "start-dev": "docker run --name zavy -e POSTGRES_PASSWORD=password -p 5432:5432 -d --rm postgres && prisma migrate dev && prisma db seed && next dev"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
