@@ -4,7 +4,8 @@ import Layout from '@/lib/components/Layouts/Layout';
 import NextError from 'next/error';
 import { PageWithLayout } from '@/lib/types/page';
 import { GetServerSideProps } from 'next';
-import Product from '@/lib/components/Products/Product';
+import Product from '@/lib/components/ProductPage/Product';
+import ProductSkeleton from '@/lib/components/ProductPage/ProductSkeleton';
 
 type PageProps = {
   id: string;
@@ -18,7 +19,7 @@ const ProductPage: PageWithLayout<PageProps> = ({ id }: PageProps) => {
   }
 
   if (isLoading) {
-    return <>Loading...</>;
+    return <ProductSkeleton />;
   }
 
   return (
