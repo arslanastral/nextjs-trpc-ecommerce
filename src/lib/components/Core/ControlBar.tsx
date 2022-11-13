@@ -73,7 +73,7 @@ function ControlBar() {
         />
 
         <ActionIcon component={Link} href="/cart" size="lg" color="brown" title="Checkout">
-          <IconShoppingCart size={20} />
+          <IconShoppingCart size={25} stroke={1.6} />
         </ActionIcon>
 
         {!session && (
