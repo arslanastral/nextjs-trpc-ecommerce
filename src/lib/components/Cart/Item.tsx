@@ -35,7 +35,7 @@ type ItemProps = ItemInfoProps & ItemRowProps;
 export const Item = memo(
   ({ id, toggleRow, title, image, selected, price, quantity, stock }: ItemProps) => {
     const { classes, cx } = useStyles();
-    const [itemQuantity, setItemQuantity] = useState<number | undefined>(1);
+    const [itemQuantity, setItemQuantity] = useState<number | undefined>(quantity);
 
     console.log(id);
 
