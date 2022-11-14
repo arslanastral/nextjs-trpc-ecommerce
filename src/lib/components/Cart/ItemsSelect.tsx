@@ -11,6 +11,7 @@ import {
 } from '@mantine/core';
 import { IconTrash } from '@tabler/icons';
 import { Item } from './Item';
+import { QuantityInput } from '../Products/QuantityInput';
 
 const useStyles = createStyles((theme) => ({
   rowSelected: {
@@ -56,10 +57,13 @@ export function ItemsSelect({ data }: ItemSelectionProps) {
           <Text size="lg">${item.price}</Text>
         </td>
         <td>
-          <Group spacing={0} position="right">
-            <ActionIcon color="red" m={10} size="lg">
+          <Group spacing={10} position="right">
+            <ActionIcon color="red" m={20} size="lg">
               <IconTrash size={22} stroke={1.5} />
             </ActionIcon>
+            <div className="max-w-[130px]">
+              <QuantityInput />
+            </div>
           </Group>
         </td>
       </tr>
