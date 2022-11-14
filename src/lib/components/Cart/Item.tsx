@@ -46,7 +46,7 @@ export const Item = memo(
         </td>
         <td>
           {/* <Group spacing="sm"> */}
-          <ItemInfo image={image} title={title} />
+          <ItemInfo image={image} title={title} quantity={itemQuantity ?? 1} />
           {/* </Group> */}
         </td>
         <td>
