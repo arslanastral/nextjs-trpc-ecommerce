@@ -39,14 +39,15 @@ const useStyles = createStyles((theme) => ({
 }));
 
 interface QuantityInputProps {
+  value: number | undefined;
+  setValue: (value: number | undefined) => void;
   min?: number;
   max?: number;
 }
 
-export function QuantityInput({ min = 1, max = 10 }: QuantityInputProps) {
+export function QuantityInput({ value, setValue, min = 1, max = 10 }: QuantityInputProps) {
   const { classes } = useStyles();
   const handlers = useRef<NumberInputHandlers>(null);
-  const [value, setValue] = useState<number | undefined>(1);
 
   return (
     <div className={classes.wrapper}>
