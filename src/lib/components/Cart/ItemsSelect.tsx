@@ -52,10 +52,12 @@ export function ItemsSelect({ data }: ItemSelectionProps) {
           <Item image={item.avatar} title={item.title} />
           {/* </Group> */}
         </td>
-        <td>{item.price}</td>
+        <td>
+          <Text size="lg">${item.price}</Text>
+        </td>
         <td>
           <Group spacing={0} position="right">
-            <ActionIcon color="red" m={10}>
+            <ActionIcon color="red" m={10} size="lg">
               <IconTrash size={22} stroke={1.5} />
             </ActionIcon>
           </Group>
