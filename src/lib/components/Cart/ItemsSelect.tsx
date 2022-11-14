@@ -12,7 +12,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 interface ItemSelectionProps {
-  data: { avatar: string; title: string; price: string; id: string }[];
+  data: { avatar: string; title: string; price: string; id: string; quantity: number }[];
 }
 
 export function ItemsSelect({ data }: ItemSelectionProps) {
@@ -47,6 +47,7 @@ export function ItemsSelect({ data }: ItemSelectionProps) {
         selected={selected}
         image={item.avatar}
         price={item.price}
+        quantity={item.quantity}
       />
     );
   });
