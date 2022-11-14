@@ -4,16 +4,16 @@ import { trpc } from '@/utils/trpc';
 import Layout from '@/lib/components/Layouts/Layout';
 import NextError from 'next/error';
 import { PageWithLayout } from '@/lib/types/page';
-import { GetServerSideProps } from 'next';
 import Product from '@/lib/components/Products/Product';
 import ProductSkeleton from '@/lib/components/Products/ProductSkeleton';
+import { useRouter } from 'next/router';
 
-type PageProps = {
-  id: string;
-};
-
-const ProductPage: PageWithLayout<PageProps> = ({ id }: PageProps) => {
-  const { data, error, isLoading } = trpc.product.sellableProductById.useQuery({ id });
+const ProductPage: PageWithLayout = () => {
+  const id = useRouter().query.id as string;
+  const { data, error, isLoading } = trpc.product.sellableProductById.useQuery(
+    { id },
+    { enabled: !!id }
+  );
 
   if (error) {
     return <NextError title={error.message} statusCode={error.data?.httpStatus ?? 500} />;
@@ -42,16 +42,6 @@ const ProductPage: PageWithLayout<PageProps> = ({ id }: PageProps) => {
       </>
     )
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { id } = ctx.query;
-
-  return {
-    props: {
-      id
-    }
-  };
 };
 
 ProductPage.getLayout = function getLayout(page: ReactElement) {
