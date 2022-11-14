@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { createStyles, Table, Checkbox, ScrollArea } from '@mantine/core';
 import { Item } from './Item';
 
@@ -20,12 +20,21 @@ export function ItemsSelect({ data }: ItemSelectionProps) {
 
   console.log(selection);
 
-  const toggleRow = (id: string) =>
-    setSelection((current) =>
-      current.includes(id) ? current.filter((item) => item !== id) : [...current, id]
-    );
-  const toggleAll = () =>
-    setSelection((current) => (current.length === data.length ? [] : data.map((item) => item.id)));
+  const toggleRow = useCallback(
+    (id: string) =>
+      setSelection((current) =>
+        current.includes(id) ? current.filter((item) => item !== id) : [...current, id]
+      ),
+    [setSelection]
+  );
+
+  const toggleAll = useCallback(
+    () =>
+      setSelection((current) =>
+        current.length === data.length ? [] : data.map((item) => item.id)
+      ),
+    [setSelection, data]
+  );
 
   const rows = data.map((item) => {
     const selected = selection.includes(item.id);
