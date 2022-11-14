@@ -66,7 +66,7 @@ export function ItemsSelect({ data }: ItemSelectionProps) {
 
   return (
     <ScrollArea>
-      <Table sx={{ minWidth: 800 }} verticalSpacing="sm">
+      <Table sx={{ minWidth: 320 }} verticalSpacing="sm">
         <thead>
           <tr>
             <th style={{ width: 40 }}>
