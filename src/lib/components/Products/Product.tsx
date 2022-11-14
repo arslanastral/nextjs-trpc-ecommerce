@@ -15,12 +15,20 @@ type ProductProps = {
 };
 
 const Product = ({ id, title, image, description, category, price }: ProductProps) => {
+  const current = trpc.useContext();
   const addToCart = trpc.cart.addToCart.useMutation();
   const [loading, setLoading] = useState<boolean>(true);
 
   const handleAddToCart = async () => {
     console.log('Got em');
-    addToCart.mutate({ id });
+    addToCart.mutate(
+      { id },
+      {
+        onSuccess: () => {
+          current.cart.getItemCount.invalidate();
+        }
+      }
+    );
   };
 
   return (
