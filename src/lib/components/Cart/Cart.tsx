@@ -8,7 +8,7 @@ function Cart() {
         <Title order={1} color="dark">
           My Cart
         </Title>
-        <div className="mt-8 min-h-[600px] rounded flex gap-6">
+        <div className="mt-8 min-h-[600px] rounded flex gap-6 flex-col lg:flex-row">
           <div className="bg-white text-white flex-1 rounded-lg">
             <ItemsSelect data={data.data} />
           </div>
