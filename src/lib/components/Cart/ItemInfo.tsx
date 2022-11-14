@@ -31,7 +31,7 @@ export function ItemInfo({ image, title, quantity, stock }: ItemInfoProps) {
 
           <Group noWrap spacing={10} mt={3}>
             <Text size="md" color="dimmed">
-              x5
+              x{quantity}
             </Text>
           </Group>
 
