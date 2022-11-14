@@ -24,16 +24,20 @@ const Product = ({ id, title, image, description, category, price }: ProductProp
   const [loading, setLoading] = useState<boolean>(true);
   const [itemQuantity, setItemQuantity] = useState<number | undefined>(1);
 
+  console.log(itemQuantity);
   const handleAddToCart = async () => {
     if (!session) {
       router.push('/login');
       return;
     }
 
+    const quantity = itemQuantity ?? 1;
+
     addToCart.mutate(
-      { id },
+      { id: id, quantity: quantity },
       {
         onSuccess: () => {
+          setItemQuantity(1);
           current.cart.getItemCount.invalidate();
         }
       }
@@ -84,7 +88,7 @@ const Product = ({ id, title, image, description, category, price }: ProductProp
             </div>
 
             <div className=" gap-3 p-5 items-center justify-between hidden lg:flex">
-              <QuantityInput />
+              <QuantityInput value={itemQuantity} setValue={setItemQuantity} />
               <Button
                 onClick={handleAddToCart}
                 fullWidth
@@ -97,7 +101,7 @@ const Product = ({ id, title, image, description, category, price }: ProductProp
 
             <div className="fixed flex gap-3 p-5 w-full items-center justify-between lg:hidden bg-white shadow bottom-0 left-0 right-0">
               <Text className="text-3xl">${price}</Text>
-              <QuantityInput />
+              <QuantityInput value={itemQuantity} setValue={setItemQuantity} />
               <Button
                 onClick={handleAddToCart}
                 leftIcon={
