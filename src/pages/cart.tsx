@@ -3,8 +3,9 @@ import { PageWithLayout } from '@/lib/types/page';
 import { ReactElement } from 'react';
 import Layout from '@/lib/components/Layouts/Layout';
 import { useSession, signOut } from 'next-auth/react';
+import Cart from '@/lib/components/Cart/Cart';
 
-const Cart: PageWithLayout = () => {
+const CartPage: PageWithLayout = () => {
   const { data: session, status } = useSession();
 
   return (
@@ -15,13 +16,13 @@ const Cart: PageWithLayout = () => {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
-      <div className="text-3xl text-black">My Cart</div>
+      <Cart />
     </div>
   );
 };
 
-Cart.getLayout = function getLayout(page: ReactElement) {
+CartPage.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;
 };
 
-export default Cart;
+export default CartPage;
