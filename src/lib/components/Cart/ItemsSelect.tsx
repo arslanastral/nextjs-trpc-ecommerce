@@ -29,6 +29,8 @@ interface ItemSelectionProps {
 export function ItemsSelect({ data }: ItemSelectionProps) {
   const { classes, cx } = useStyles();
   const [selection, setSelection] = useState(['fsd1']);
+  const [itemQuantity, setItemQuantity] = useState<number | undefined>(1);
+
   console.log(selection);
   const toggleRow = (id: string) =>
     setSelection((current) =>
@@ -62,7 +64,7 @@ export function ItemsSelect({ data }: ItemSelectionProps) {
               <IconTrash size={22} stroke={1.5} />
             </ActionIcon>
             <div className="max-w-[130px]">
-              <QuantityInput />
+              <QuantityInput value={itemQuantity} setValue={setItemQuantity} />
             </div>
           </Group>
         </td>
