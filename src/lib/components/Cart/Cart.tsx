@@ -27,38 +27,7 @@ function Cart() {
                   </tr>
                 </tbody>
               </Table>
-
-              {/* <div className="flex justify-between">
-                <div>Subtotal</div>
-                <div>$40.00</div>
-              </div>
-
-              <div className="flex justify-between">
-                <div>Shipping</div>
-                <div>FREE</div>
-              </div>
-              <div className="flex justify-between">
-                <div>Subtotal</div>
-                <Text >$40.00</Text>
-              </div> */}
             </div>
-
-            {/* <table className="table-auto w-full text-lg space-y-5">
-                <tbody className="divide-y">
-                  <div>
-                    < className="text-left">Subtotal</td>
-                    <td className="text-right">$40.00</td>
-                  </div>
-                  <tr>
-                    <td className="text-left">Shipping</td>
-                    <td className="text-right font-medium">FREE</td>
-                  </tr>
-                  <tr>
-                    <td className="text-left font-semibold">Total</td>
-                    <td className="text-right font-semibold">$40</td>
-                  </tr>
-                </tbody>
-              </table> */}
 
             <Button fullWidth radius="md" className="h-[45px] font-light text-lg">
               Proceed To Checkout
