@@ -1,17 +1,6 @@
 import { useState } from 'react';
-import {
-  createStyles,
-  Table,
-  Checkbox,
-  ScrollArea,
-  Group,
-  ActionIcon,
-  Avatar,
-  Text
-} from '@mantine/core';
-import { IconTrash } from '@tabler/icons';
+import { createStyles, Table, Checkbox, ScrollArea } from '@mantine/core';
 import { Item } from './Item';
-import { QuantityInput } from '../Products/QuantityInput';
 
 const useStyles = createStyles((theme) => ({
   rowSelected: {
@@ -27,11 +16,10 @@ interface ItemSelectionProps {
 }
 
 export function ItemsSelect({ data }: ItemSelectionProps) {
-  const { classes, cx } = useStyles();
   const [selection, setSelection] = useState(['fsd1']);
-  const [itemQuantity, setItemQuantity] = useState<number | undefined>(1);
 
   console.log(selection);
+
   const toggleRow = (id: string) =>
     setSelection((current) =>
       current.includes(id) ? current.filter((item) => item !== id) : [...current, id]
@@ -42,33 +30,15 @@ export function ItemsSelect({ data }: ItemSelectionProps) {
   const rows = data.map((item) => {
     const selected = selection.includes(item.id);
     return (
-      <tr key={item.id} className={cx({ [classes.rowSelected]: selected })}>
-        <td>
-          <Checkbox
-            checked={selection.includes(item.id)}
-            onChange={() => toggleRow(item.id)}
-            transitionDuration={0}
-          />
-        </td>
-        <td>
-          {/* <Group spacing="sm"> */}
-          <Item image={item.avatar} title={item.title} />
-          {/* </Group> */}
-        </td>
-        <td>
-          <Text size="lg">${item.price}</Text>
-        </td>
-        <td>
-          <Group spacing={10} position="right">
-            <ActionIcon color="red" m={20} size="lg">
-              <IconTrash size={22} stroke={1.5} />
-            </ActionIcon>
-            <div className="max-w-[130px]">
-              <QuantityInput value={itemQuantity} setValue={setItemQuantity} />
-            </div>
-          </Group>
-        </td>
-      </tr>
+      <Item
+        key={item.id}
+        id={item.id}
+        title={item.title}
+        toggleRow={toggleRow}
+        selected={selected}
+        image={item.avatar}
+        price={item.price}
+      />
     );
   });
 

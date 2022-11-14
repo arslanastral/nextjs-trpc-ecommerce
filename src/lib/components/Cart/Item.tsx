@@ -1,48 +1,66 @@
-import { createStyles, Avatar, Text, Group } from '@mantine/core';
-import { IconAlertCircle } from '@tabler/icons';
+import {
+  createStyles,
+  Table,
+  Checkbox,
+  ScrollArea,
+  Group,
+  ActionIcon,
+  Avatar,
+  Text
+} from '@mantine/core';
+import { IconTrash } from '@tabler/icons';
+import { ItemInfo } from './ItemInfo';
+import { QuantityInput } from '../Products/QuantityInput';
+import { ItemInfoProps } from './ItemInfo';
+import { useState } from 'react';
 
 const useStyles = createStyles((theme) => ({
-  icon: {
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5]
+  rowSelected: {
+    backgroundColor:
+      theme.colorScheme === 'dark'
+        ? theme.fn.rgba(theme.colors[theme.primaryColor][7], 0.2)
+        : theme.colors[theme.primaryColor][0]
   }
 }));
 
-interface ItemInfoProps {
-  image: string;
-  title: string;
-  quantity?: string;
-  stock?: string;
+interface ItemRowProps {
+  toggleRow: (id: string) => void;
+  id: string;
+  price: string;
+  selected: boolean;
 }
 
-export function Item({ image, title, quantity, stock }: ItemInfoProps) {
-  const { classes } = useStyles();
+type ItemProps = ItemInfoProps & ItemRowProps;
+
+export function Item({ id, toggleRow, title, image, selected, price, quantity, stock }: ItemProps) {
+  const { classes, cx } = useStyles();
+  const [itemQuantity, setItemQuantity] = useState<number | undefined>(1);
+
+  console.log(id);
+
   return (
-    <div>
-      <Group noWrap>
-        <Avatar src={image} size={94} radius="md" />
-        <div>
-          <Text size="xs" sx={{ textTransform: 'uppercase' }} weight={700} color="dimmed">
-            Free Shipping
-          </Text>
-
-          <Text size="lg" weight={500}>
-            {title}
-          </Text>
-
-          <Group noWrap spacing={10} mt={3}>
-            <Text size="md" color="dimmed">
-              x5
-            </Text>
-          </Group>
-
-          <Group noWrap spacing={10} mt={5}>
-            <IconAlertCircle stroke={1.5} size={16} className={classes.icon} />
-            <Text size="xs" color="dimmed">
-              1 Item Left
-            </Text>
-          </Group>
-        </div>
-      </Group>
-    </div>
+    <tr className={cx({ [classes.rowSelected]: selected })}>
+      <td>
+        <Checkbox checked={selected} onChange={() => toggleRow(id)} transitionDuration={0} />
+      </td>
+      <td>
+        {/* <Group spacing="sm"> */}
+        <ItemInfo image={image} title={title} />
+        {/* </Group> */}
+      </td>
+      <td>
+        <Text size="lg">${price}</Text>
+      </td>
+      <td>
+        <Group spacing={10} position="right">
+          <ActionIcon color="red" m={20} size="lg">
+            <IconTrash size={22} stroke={1.5} />
+          </ActionIcon>
+          <div className="max-w-[130px]">
+            <QuantityInput value={itemQuantity} setValue={setItemQuantity} />
+          </div>
+        </Group>
+      </td>
+    </tr>
   );
 }
