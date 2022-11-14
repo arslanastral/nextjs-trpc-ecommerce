@@ -36,7 +36,7 @@ export const cartRouter = router({
   }),
 
   addToCart: protectedProcedure
-    .input(z.object({ id: z.string() }))
+    .input(z.object({ id: z.string(), quantity: z.number().min(1) }))
     .mutation(async ({ input, ctx }) => {
       let cartId = await getCartId(ctx);
       if (!cartId) return null;
@@ -49,7 +49,7 @@ export const cartRouter = router({
           }
         },
         update: {
-          itemCount: { increment: 1 }
+          itemCount: { increment: input.quantity }
         },
         create: {
           cartId: cartId,
