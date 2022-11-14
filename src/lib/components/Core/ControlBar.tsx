@@ -1,3 +1,4 @@
+import { trpc } from '@/utils/trpc';
 import {
   TextInput,
   Button,
@@ -41,6 +42,7 @@ function ControlBar() {
   const title = opened ? 'Close navigation' : 'Open navigation';
   const dark = colorScheme === 'dark';
   const { data: session, status } = useSession();
+  const { data, isLoading, error } = trpc.cart.getItemCount.useQuery();
   const { classes } = useStyles();
 
   return (
@@ -74,7 +76,7 @@ function ControlBar() {
         />
 
         <div className="mr-3 mt-3">
-          <Indicator label={0} inline size={22}>
+          <Indicator label={data ?? 0} inline size={22}>
             <ActionIcon component={Link} href="/cart" size="lg" color="brown" title="Checkout">
               <IconShoppingCart size={25} stroke={1.6} />
             </ActionIcon>
