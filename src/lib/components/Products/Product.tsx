@@ -24,7 +24,6 @@ const Product = ({ id, title, image, description, category, price }: ProductProp
   const [loading, setLoading] = useState<boolean>(true);
   const [itemQuantity, setItemQuantity] = useState<number | undefined>(1);
 
-  console.log(itemQuantity);
   const handleAddToCart = async () => {
     if (!session) {
       router.push('/login');
