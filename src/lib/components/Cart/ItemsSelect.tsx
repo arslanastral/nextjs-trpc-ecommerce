@@ -1,5 +1,15 @@
 import { useState } from 'react';
-import { createStyles, Table, Checkbox, ScrollArea, Group, Avatar, Text } from '@mantine/core';
+import {
+  createStyles,
+  Table,
+  Checkbox,
+  ScrollArea,
+  Group,
+  ActionIcon,
+  Avatar,
+  Text
+} from '@mantine/core';
+import { IconTrash } from '@tabler/icons';
 import { Item } from './Item';
 
 const useStyles = createStyles((theme) => ({
@@ -38,11 +48,18 @@ export function ItemsSelect({ data }: ItemSelectionProps) {
           />
         </td>
         <td>
-          <Group spacing="sm">
-            <Item image={item.avatar} title={item.title} />
-          </Group>
+          {/* <Group spacing="sm"> */}
+          <Item image={item.avatar} title={item.title} />
+          {/* </Group> */}
         </td>
         <td>{item.price}</td>
+        <td>
+          <Group spacing={0} position="right">
+            <ActionIcon color="red" m={10}>
+              <IconTrash size={22} stroke={1.5} />
+            </ActionIcon>
+          </Group>
+        </td>
       </tr>
     );
   });
@@ -62,6 +79,7 @@ export function ItemsSelect({ data }: ItemSelectionProps) {
             </th>
             <th>Items</th>
             <th>Price</th>
+            <th />
           </tr>
         </thead>
         <tbody>{rows}</tbody>
