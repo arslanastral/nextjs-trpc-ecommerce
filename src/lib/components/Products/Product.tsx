@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { QuantityInput } from '@/lib/components/Products/QuantityInput';
 import { IconShoppingCart } from '@tabler/icons';
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 type ProductProps = {
   id: string;
@@ -15,12 +17,18 @@ type ProductProps = {
 };
 
 const Product = ({ id, title, image, description, category, price }: ProductProps) => {
+  const router = useRouter();
+  const { data: session, status } = useSession();
   const current = trpc.useContext();
   const addToCart = trpc.cart.addToCart.useMutation();
   const [loading, setLoading] = useState<boolean>(true);
 
   const handleAddToCart = async () => {
-    console.log('Got em');
+    if (!session) {
+      router.push('/login');
+      return;
+    }
+
     addToCart.mutate(
       { id },
       {
