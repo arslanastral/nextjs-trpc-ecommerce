@@ -22,7 +22,7 @@ const Product = ({ id, title, image, description, category, price }: ProductProp
   const current = trpc.useContext();
   const addToCart = trpc.cart.addToCart.useMutation();
   const [loading, setLoading] = useState<boolean>(true);
-  const [itemQuantity, setItemQuantity] = useState<number>(1);
+  const [itemQuantity, setItemQuantity] = useState<number | undefined>(1);
 
   const handleAddToCart = async () => {
     if (!session) {
