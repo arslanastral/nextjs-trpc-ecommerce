@@ -42,7 +42,9 @@ function ControlBar() {
   const title = opened ? 'Close navigation' : 'Open navigation';
   const dark = colorScheme === 'dark';
   const { data: session, status } = useSession();
-  const { data, isLoading, error } = trpc.cart.getItemCount.useQuery();
+  const { data, isLoading, error } = trpc.cart.getItemCount.useQuery(undefined, {
+    enabled: !!session
+  });
   const { classes } = useStyles();
 
   return (
