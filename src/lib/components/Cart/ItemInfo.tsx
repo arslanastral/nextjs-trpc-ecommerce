@@ -10,7 +10,7 @@ const useStyles = createStyles((theme) => ({
 export interface ItemInfoProps {
   image: string;
   title: string;
-  quantity?: string;
+  quantity: number;
   stock?: string;
 }
 
