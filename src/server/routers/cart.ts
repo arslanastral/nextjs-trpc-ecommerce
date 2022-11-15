@@ -96,6 +96,25 @@ export const cartRouter = router({
 
       return selected;
     }),
+  selectAllBags: protectedProcedure
+    .input(z.object({ shouldDeselect: z.literal(true).optional() }))
+    .mutation(async ({ input, ctx }) => {
+      let cartId = await getCartId(ctx);
+      if (!cartId) return null;
+
+      let { shouldDeselect } = input;
+
+      let selected = await ctx.prisma.bag.updateMany({
+        where: {
+          cartId: cartId
+        },
+        data: {
+          selected: shouldDeselect ? false : true
+        }
+      });
+
+      return selected;
+    }),
 
   removeFromCart: protectedProcedure.query(async ({ ctx }) => {
     let id = await getBuyerId(ctx);
