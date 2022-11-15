@@ -24,7 +24,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 interface ItemRowProps {
-  toggleRow: (id: number) => void;
+  toggleRow: (id: number, selected: boolean) => void;
   id: number;
   price: string;
   selected: boolean;
@@ -37,12 +37,14 @@ export const Item = memo(
     const { classes, cx } = useStyles();
     const [itemQuantity, setItemQuantity] = useState<number | undefined>(quantity);
 
-    console.log(id);
-
     return (
       <tr className={cx({ [classes.rowSelected]: selected })}>
         <td>
-          <Checkbox checked={selected} onChange={() => toggleRow(id)} transitionDuration={0} />
+          <Checkbox
+            checked={selected}
+            onChange={() => toggleRow(id, selected)}
+            transitionDuration={0}
+          />
         </td>
         <td>
           {/* <Group spacing="sm"> */}
