@@ -152,7 +152,7 @@ export const cartRouter = router({
 
     return id;
   }),
-  incrementCartItemCount: protectedProcedure
+  incrementItemCount: protectedProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ input, ctx }) => {
       let cartId = await getCartId(ctx);
@@ -171,7 +171,7 @@ export const cartRouter = router({
 
       return updatedCount;
     }),
-  decrementCartItemCount: protectedProcedure
+  decrementItemCount: protectedProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ input, ctx }) => {
       let cartId = await getCartId(ctx);
@@ -191,7 +191,7 @@ export const cartRouter = router({
       return updatedCount;
     }),
 
-  updateCartItemCount: protectedProcedure
+  updateItemCount: protectedProcedure
     .input(z.object({ id: z.number(), quantity: z.number().min(1) }))
     .mutation(async ({ input, ctx }) => {
       let cartId = await getCartId(ctx);
