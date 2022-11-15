@@ -1,3 +1,4 @@
+import { trpc } from '@/utils/trpc';
 import { useCallback, useState } from 'react';
 import { createStyles, Table, Checkbox, ScrollArea } from '@mantine/core';
 import { Item } from './Item';
@@ -21,6 +22,7 @@ type Item = {
 
 type CartBag = {
   id: number;
+  selected: boolean;
   item: Item;
   itemCount: number;
 };
@@ -31,38 +33,39 @@ interface ItemSelectionProps {
 }
 
 export function ItemsSelect({ data, setPrice }: ItemSelectionProps) {
-  const [selection, setSelection] = useState([1]);
+  const current = trpc.useContext();
+  const selectBag = trpc.cart.toggleBagSelect.useMutation();
+  const selectAllBags = trpc.cart.selectAllBags.useMutation();
 
-  console.log(selection);
+  console.log(selectBag.data);
 
-  const toggleRow = useCallback(
-    (id: number) => {
-      setSelection((current) =>
-        current.includes(id) ? current.filter((item) => item !== id) : [...current, id]
-      );
+  const toggleRow = async (id: number, selected: boolean) => {
+    selectBag.mutate(
+      { bagId: id, isSelected: selected },
+      {
+        onSuccess: () => {
+          current.cart.getCartItems.invalidate();
+        }
+      }
+    );
+  };
 
-      setPrice(10);
-    },
-    [setSelection, setPrice]
-  );
-
-  const toggleAll = useCallback(
-    () =>
-      setSelection((current) =>
-        current.length === data.length ? [] : data.map((item) => item.id)
-      ),
-    [setSelection, data]
-  );
+  const toggleAll = async () => {
+    selectAllBags.mutate(undefined, {
+      onSuccess: () => {
+        current.cart.getCartItems.invalidate();
+      }
+    });
+  };
 
   const rows = data.map((e) => {
-    const selected = selection.includes(e.id);
     return (
       <Item
         key={e.id}
         id={e.id}
         title={e.item.title}
         toggleRow={toggleRow}
-        selected={selected}
+        selected={e.selected}
         image={`https://res.cloudinary.com/dv9wpbflv/image/upload/v${e.item.image}.jpg`}
         price={(+e.item.priceInCents / 100).toString()}
         quantity={e.itemCount}
@@ -78,8 +81,8 @@ export function ItemsSelect({ data, setPrice }: ItemSelectionProps) {
             <th style={{ width: 40 }}>
               <Checkbox
                 onChange={toggleAll}
-                checked={selection.length === data.length}
-                indeterminate={selection.length > 0 && selection.length !== data.length}
+                checked={data.every((e) => e.selected === true)}
+                indeterminate={data.some((e) => e.selected === true)}
                 transitionDuration={0}
               />
             </th>
