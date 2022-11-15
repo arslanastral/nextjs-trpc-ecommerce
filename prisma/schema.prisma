@@ -84,12 +84,12 @@ model Bag {
   itemCount  Int
   item       Product @relation(fields: [productId], references: [id])
   Cart       Cart    @relation(fields: [cartId], references: [id])
-  order      Order   @relation(fields: [orderId], references: [id])
+  order      Order?  @relation(fields: [orderId], references: [id])
   selected   Boolean @default(false)
   checkedOut Boolean @default(false)
   cartId     String
   productId  String
-  orderId    String
+  orderId    String?
 
   @@unique([cartId, productId], name: "product_in_cart")
 }
