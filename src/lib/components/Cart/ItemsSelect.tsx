@@ -11,21 +11,39 @@ const useStyles = createStyles((theme) => ({
   }
 }));
 
+type Item = {
+  image: string;
+  seller: { storeName: string };
+  stock: number;
+  title: string;
+  priceInCents: string;
+};
+
+type CartBag = {
+  id: number;
+  item: Item;
+  itemCount: number;
+};
+
 interface ItemSelectionProps {
-  data: { avatar: string; title: string; price: string; id: string; quantity: number }[];
+  data: CartBag[];
+  setPrice: (price: number) => void;
 }
 
-export function ItemsSelect({ data }: ItemSelectionProps) {
-  const [selection, setSelection] = useState(['fsd1']);
+export function ItemsSelect({ data, setPrice }: ItemSelectionProps) {
+  const [selection, setSelection] = useState([1]);
 
   console.log(selection);
 
   const toggleRow = useCallback(
-    (id: string) =>
+    (id: number) => {
       setSelection((current) =>
         current.includes(id) ? current.filter((item) => item !== id) : [...current, id]
-      ),
-    [setSelection]
+      );
+
+      setPrice(10);
+    },
+    [setSelection, setPrice]
   );
 
   const toggleAll = useCallback(
@@ -36,18 +54,18 @@ export function ItemsSelect({ data }: ItemSelectionProps) {
     [setSelection, data]
   );
 
-  const rows = data.map((item) => {
-    const selected = selection.includes(item.id);
+  const rows = data.map((e) => {
+    const selected = selection.includes(e.id);
     return (
       <Item
-        key={item.id}
-        id={item.id}
-        title={item.title}
+        key={e.id}
+        id={e.id}
+        title={e.item.title}
         toggleRow={toggleRow}
         selected={selected}
-        image={item.avatar}
-        price={item.price}
-        quantity={item.quantity}
+        image={`https://res.cloudinary.com/dv9wpbflv/image/upload/v${e.item.image}.jpg`}
+        price={(+e.item.priceInCents / 100).toString()}
+        quantity={e.itemCount}
       />
     );
   });
