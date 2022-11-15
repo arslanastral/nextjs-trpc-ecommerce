@@ -1,8 +1,11 @@
-import { Button, Spoiler, AspectRatio, Text, Skeleton } from '@mantine/core';
+import { Button, Spoiler, AspectRatio, Text, Skeleton, Loader } from '@mantine/core';
+import { trpc } from '@/utils/trpc';
 import Image from 'next/image';
 import { QuantityInput } from '@/lib/components/Products/QuantityInput';
 import { IconShoppingCart } from '@tabler/icons';
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 type ProductProps = {
   id: string;
@@ -14,7 +17,31 @@ type ProductProps = {
 };
 
 const Product = ({ id, title, image, description, category, price }: ProductProps) => {
+  const router = useRouter();
+  const { data: session, status } = useSession();
+  const current = trpc.useContext();
+  const addToCart = trpc.cart.addToCart.useMutation();
   const [loading, setLoading] = useState<boolean>(true);
+  const [itemQuantity, setItemQuantity] = useState<number | undefined>(1);
+
+  const handleAddToCart = async () => {
+    if (!session) {
+      router.push('/login');
+      return;
+    }
+
+    const quantity = itemQuantity ?? 1;
+
+    addToCart.mutate(
+      { id: id, quantity: quantity },
+      {
+        onSuccess: () => {
+          setItemQuantity(1);
+          current.cart.getItemCount.invalidate();
+        }
+      }
+    );
+  };
 
   return (
     <>
@@ -60,17 +87,29 @@ const Product = ({ id, title, image, description, category, price }: ProductProp
             </div>
 
             <div className=" gap-3 p-5 items-center justify-between hidden lg:flex">
-              <QuantityInput />
-              <Button fullWidth className="h-[50px] max-w-[20rem] text-xl font-light" radius="sm">
-                Add To Cart
+              <QuantityInput value={itemQuantity} setValue={setItemQuantity} />
+              <Button
+                onClick={handleAddToCart}
+                fullWidth
+                className="h-[50px] max-w-[20rem] text-xl font-light"
+                radius="sm"
+              >
+                {addToCart.isLoading ? <Loader color="white" size="md" /> : <>Add To Cart</>}
               </Button>
             </div>
 
             <div className="fixed flex gap-3 p-5 w-full items-center justify-between lg:hidden bg-white shadow bottom-0 left-0 right-0">
               <Text className="text-3xl">${price}</Text>
-              <QuantityInput />
+              <QuantityInput value={itemQuantity} setValue={setItemQuantity} />
               <Button
-                leftIcon={<IconShoppingCart stroke={1.2} />}
+                onClick={handleAddToCart}
+                leftIcon={
+                  addToCart.isLoading ? (
+                    <Loader color="white" size="sm" />
+                  ) : (
+                    <IconShoppingCart stroke={1.2} />
+                  )
+                }
                 fullWidth
                 className="h-[50px] max-w-[10rem] text-md font-light"
                 radius="sm"

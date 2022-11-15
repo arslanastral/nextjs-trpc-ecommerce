@@ -1,6 +1,13 @@
 import { useRef, useState } from 'react';
-import { createStyles, NumberInput, NumberInputHandlers, ActionIcon } from '@mantine/core';
+import {
+  createStyles,
+  NumberInput,
+  NumberInputHandlers,
+  ActionIcon,
+  LoadingOverlay
+} from '@mantine/core';
 import { IconPlus, IconMinus } from '@tabler/icons';
+import { trpc } from '@/utils/trpc';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -38,24 +45,61 @@ const useStyles = createStyles((theme) => ({
   }
 }));
 
-interface QuantityInputProps {
+interface CartQuantityInputProps {
+  id: number;
+  selectedRow: boolean;
   value: number | undefined;
-  setValue: (value: number | undefined) => void;
   min?: number;
   max?: number;
 }
 
-export function QuantityInput({ value, setValue, min = 1, max = 10 }: QuantityInputProps) {
+export function CartQuantityInput({
+  id,
+  selectedRow,
+  value,
+  min = 1,
+  max = 10
+}: CartQuantityInputProps) {
+  const current = trpc.useContext();
   const { classes } = useStyles();
   const handlers = useRef<NumberInputHandlers>(null);
+  const incrementItem = trpc.cart.incrementItemCount.useMutation();
+  const decrementItem = trpc.cart.decrementItemCount.useMutation();
+  const updateItemCount = trpc.cart.updateItemCount.useMutation();
+
+  const handleIncrement = async () => {
+    incrementItem.mutate({ id }, { onSuccess: invalidateData });
+  };
+
+  const handleDecrement = async () => {
+    decrementItem.mutate({ id }, { onSuccess: invalidateData });
+  };
+
+  const handleItemCount = async (value: number) => {
+    if (value) {
+      updateItemCount.mutate({ id, quantity: value }, { onSuccess: invalidateData });
+    }
+  };
+
+  const invalidateData = () => {
+    if (selectedRow) {
+      current.cart.getCartItemsPrice.invalidate();
+    }
+    current.cart.getCartItems.invalidate();
+  };
 
   return (
     <div className={classes.wrapper}>
+      <LoadingOverlay
+        visible={incrementItem.isLoading || decrementItem.isLoading || updateItemCount.isLoading}
+        overlayBlur={2}
+        exitTransitionDuration={1000}
+      />
       <ActionIcon<'button'>
         size={28}
         variant="transparent"
-        onClick={() => handlers.current?.decrement()}
-        disabled={value === min}
+        onClick={handleDecrement}
+        disabled={value === min || incrementItem.isLoading}
         className={classes.control}
         onMouseDown={(event) => event.preventDefault()}
         radius="sm"
@@ -69,14 +113,14 @@ export function QuantityInput({ value, setValue, min = 1, max = 10 }: QuantityIn
         max={max}
         handlersRef={handlers}
         value={value}
-        onChange={setValue}
+        onChange={handleItemCount}
         classNames={{ input: classes.input }}
       />
 
       <ActionIcon<'button'>
         size={28}
         variant="transparent"
-        onClick={() => handlers.current?.increment()}
+        onClick={handleIncrement}
         disabled={value === max}
         className={classes.control}
         onMouseDown={(event) => event.preventDefault()}

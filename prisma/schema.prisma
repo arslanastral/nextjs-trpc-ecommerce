@@ -59,10 +59,9 @@ model Product {
   stock        Int        @default(1)
   sold         Int        @default(0)
   image        String
-  orders       Order[]
   seller       Seller     @relation(fields: [sellerId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  carts        Cart[]
   sellerId     String
+  Bags         Bag[]
 }
 
 model Category {
@@ -72,12 +71,27 @@ model Category {
 }
 
 model Cart {
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  id        String    @id @default(cuid())
-  buyer     Buyer     @relation(fields: [buyerId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  buyerId   String    @unique
-  items     Product[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  id        String   @id @default(cuid())
+  buyer     Buyer    @relation(fields: [buyerId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  buyerId   String   @unique
+  bags      Bag[]
+}
+
+model Bag {
+  id         Int     @id @default(autoincrement())
+  itemCount  Int
+  item       Product @relation(fields: [productId], references: [id])
+  Cart       Cart    @relation(fields: [cartId], references: [id])
+  order      Order?  @relation(fields: [orderId], references: [id])
+  selected   Boolean @default(false)
+  checkedOut Boolean @default(false)
+  cartId     String
+  productId  String
+  orderId    String?
+
+  @@unique([cartId, productId], name: "product_in_cart")
 }
 
 model Order {
@@ -92,8 +106,8 @@ model Order {
   buyerId           String      @unique
   seller            Seller      @relation(fields: [sellerId], references: [id])
   sellerId          String      @unique
-  products          Product[]
   totalPriceInCents String?
+  Bag               Bag[]
 }
 
 model Payment {

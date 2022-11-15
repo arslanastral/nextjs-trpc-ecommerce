@@ -71,17 +71,7 @@ function ProductCard({ id, title, image, description, price, status, badge }: Pr
             )}
           </Group>
 
-          <Button
-            onClick={(e: React.MouseEvent<HTMLElement>) => {
-              e.preventDefault();
-              e.stopPropagation();
-              console.log('Added To Cart');
-            }}
-            fullWidth
-            mt="md"
-            radius="md"
-            className="h-[45px] font-light text-lg"
-          >
+          <Button fullWidth mt="md" radius="md" className="h-[45px] font-light text-lg">
             Add To Cart
           </Button>
         </Card>

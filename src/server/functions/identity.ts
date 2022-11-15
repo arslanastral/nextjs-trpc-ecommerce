@@ -54,3 +54,20 @@ export async function updateSellerInfo(input: SellerInfo, ctx: Context) {
   };
   return info;
 }
+
+export async function getCartId(ctx: Context) {
+  let buyerId = await getBuyerId(ctx);
+  if (!buyerId) return null;
+
+  const cartId = await ctx.prisma.cart.upsert({
+    where: {
+      buyerId: buyerId
+    },
+    update: {},
+    create: {
+      buyerId: buyerId
+    }
+  });
+
+  return cartId.id;
+}
