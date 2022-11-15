@@ -37,6 +37,7 @@ export const cartRouter = router({
                 image: true,
                 title: true,
                 stock: true,
+                priceInCents: true,
                 seller: {
                   select: {
                     storeName: true
