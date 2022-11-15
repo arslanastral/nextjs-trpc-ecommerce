@@ -24,8 +24,8 @@ const useStyles = createStyles((theme) => ({
 }));
 
 interface ItemRowProps {
-  toggleRow: (id: string) => void;
-  id: string;
+  toggleRow: (id: number) => void;
+  id: number;
   price: string;
   selected: boolean;
 }
