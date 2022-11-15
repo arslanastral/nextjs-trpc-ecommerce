@@ -79,6 +79,23 @@ export const cartRouter = router({
 
       return addedItem;
     }),
+  toggleBagSelect: protectedProcedure
+    .input(z.object({ bagId: z.number(), isSelected: z.boolean() }))
+    .mutation(async ({ input, ctx }) => {
+      let cartId = await getCartId(ctx);
+      if (!cartId) return null;
+
+      let selected = await ctx.prisma.bag.update({
+        where: {
+          id: input.bagId
+        },
+        data: {
+          selected: !input.isSelected
+        }
+      });
+
+      return selected;
+    }),
 
   removeFromCart: protectedProcedure.query(async ({ ctx }) => {
     let id = await getBuyerId(ctx);
