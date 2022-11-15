@@ -23,16 +23,33 @@ export const cartRouter = router({
     let cartId = await getCartId(ctx);
     if (!cartId) return null;
 
-    let cartItems = await ctx.prisma.cart.findUnique({
+    let cart = await ctx.prisma.cart.findUnique({
       where: {
         id: cartId
       },
-      include: {
-        bags: true
+      select: {
+        bags: {
+          select: {
+            id: true,
+            itemCount: true,
+            item: {
+              select: {
+                image: true,
+                title: true,
+                stock: true,
+                seller: {
+                  select: {
+                    storeName: true
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     });
 
-    return cartItems;
+    return cart?.bags;
   }),
 
   addToCart: protectedProcedure
