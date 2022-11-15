@@ -90,7 +90,11 @@ export function CartQuantityInput({
 
   return (
     <div className={classes.wrapper}>
-      <LoadingOverlay visible={incrementItem.isLoading} overlayBlur={2} />
+      <LoadingOverlay
+        visible={incrementItem.isLoading || decrementItem.isLoading || updateItemCount.isLoading}
+        overlayBlur={2}
+        exitTransitionDuration={1000}
+      />
       <ActionIcon<'button'>
         size={28}
         variant="transparent"
