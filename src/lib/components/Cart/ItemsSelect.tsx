@@ -43,10 +43,7 @@ export function ItemsSelect({ data }: ItemSelectionProps) {
     selectBag.mutate(
       { bagId: id, isSelected: selected },
       {
-        onSuccess: () => {
-          current.cart.getCartItemsPrice.invalidate();
-          current.cart.getCartItems.invalidate();
-        }
+        onSuccess: invalidateData
       }
     );
   };
@@ -60,11 +57,14 @@ export function ItemsSelect({ data }: ItemSelectionProps) {
     selectAllBags.mutate(
       { shouldDeselect },
       {
-        onSuccess: () => {
-          current.cart.getCartItems.invalidate();
-        }
+        onSuccess: invalidateData
       }
     );
+  };
+
+  const invalidateData = () => {
+    current.cart.getCartItemsPrice.invalidate();
+    current.cart.getCartItems.invalidate();
   };
 
   const rows = data
