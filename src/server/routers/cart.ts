@@ -153,9 +153,11 @@ export const cartRouter = router({
     return id;
   }),
 
-  updateCart: protectedProcedure.input(sellerInfoInput).mutation(async ({ input, ctx }) => {
-    let id = await getBuyerId(ctx);
+  updateCartItemCount: protectedProcedure
+    .input(sellerInfoInput)
+    .mutation(async ({ input, ctx }) => {
+      let id = await getBuyerId(ctx);
 
-    return id;
-  })
+      return id;
+    })
 });
