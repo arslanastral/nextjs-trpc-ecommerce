@@ -6,8 +6,10 @@ import {
   Group,
   ActionIcon,
   Avatar,
-  Text
+  Text,
+  LoadingOverlay
 } from '@mantine/core';
+import { trpc } from '@/utils/trpc';
 import { IconTrash } from '@tabler/icons';
 import { ItemInfo } from './ItemInfo';
 import { ItemInfoProps } from './ItemInfo';
@@ -35,6 +37,25 @@ type ItemProps = ItemInfoProps & ItemRowProps;
 export const Item = memo(
   ({ id, toggleRow, title, image, selected, price, quantity, stock, storeName }: ItemProps) => {
     const { classes, cx } = useStyles();
+    const current = trpc.useContext();
+    const deleteItem = trpc.cart.deleteItem.useMutation();
+
+    const handleItemDelete = async () => {
+      deleteItem.mutate(
+        { id },
+        {
+          onSuccess: invalidateData
+        }
+      );
+    };
+
+    const invalidateData = () => {
+      if (selected) {
+        current.cart.getCartItemsPrice.invalidate();
+      }
+      current.cart.getItemCount.invalidate();
+      current.cart.getCartItems.invalidate();
+    };
 
     return (
       <tr className={cx({ [classes.rowSelected]: selected })}>
@@ -61,7 +82,8 @@ export const Item = memo(
         </td>
         <td>
           <Group spacing={10} position="right">
-            <ActionIcon color="red" m={20} size="lg">
+            <LoadingOverlay visible={deleteItem.isLoading} overlayBlur={2} />
+            <ActionIcon onClick={handleItemDelete} color="red" m={20} size="lg">
               <IconTrash size={22} stroke={1.5} />
             </ActionIcon>
             <div className="max-w-[130px]">
