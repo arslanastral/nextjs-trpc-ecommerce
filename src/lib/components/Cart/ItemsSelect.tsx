@@ -37,8 +37,6 @@ export function ItemsSelect({ data, setPrice }: ItemSelectionProps) {
   const selectBag = trpc.cart.toggleBagSelect.useMutation();
   const selectAllBags = trpc.cart.toggleAllBagsSelect.useMutation();
 
-  console.log(selectBag.data);
-
   const toggleRow = async (id: number, selected: boolean) => {
     if (selectBag.isLoading || selectAllBags.isLoading) {
       return;
