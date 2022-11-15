@@ -40,6 +40,9 @@ export function ItemsSelect({ data, setPrice }: ItemSelectionProps) {
   console.log(selectBag.data);
 
   const toggleRow = async (id: number, selected: boolean) => {
+    if (selectBag.isLoading || selectAllBags.isLoading) {
+      return;
+    }
     selectBag.mutate(
       { bagId: id, isSelected: selected },
       {
@@ -51,6 +54,9 @@ export function ItemsSelect({ data, setPrice }: ItemSelectionProps) {
   };
 
   const toggleAll = async () => {
+    if (selectBag.isLoading || selectAllBags.isLoading) {
+      return;
+    }
     const shouldDeselect = data.every((e) => e.selected === true);
 
     selectAllBags.mutate(
