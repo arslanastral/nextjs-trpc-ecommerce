@@ -51,8 +51,10 @@ export function ItemsSelect({ data, setPrice }: ItemSelectionProps) {
   };
 
   const toggleAll = async () => {
+    const shouldDeselect = data.every((e) => e.selected === true);
+
     selectAllBags.mutate(
-      {},
+      { shouldDeselect },
       {
         onSuccess: () => {
           current.cart.getCartItems.invalidate();
