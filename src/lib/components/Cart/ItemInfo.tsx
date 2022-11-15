@@ -20,7 +20,11 @@ export function ItemInfo({ image, title, quantity, stock, storeName }: ItemInfoP
   return (
     <div>
       <Group noWrap>
-        <Avatar src={image} size={94} radius="md" />
+        <Avatar
+          src={`https://res.cloudinary.com/dv9wpbflv/image/upload/v${image}.jpg`}
+          size={94}
+          radius="md"
+        />
         <div>
           <Text size="xs" sx={{ textTransform: 'uppercase' }} weight={700} color="dimmed">
             {storeName}

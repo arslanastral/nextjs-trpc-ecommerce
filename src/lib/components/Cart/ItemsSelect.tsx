@@ -77,7 +77,7 @@ export function ItemsSelect({ data }: ItemSelectionProps) {
           title={e.item.title}
           toggleRow={toggleRow}
           selected={e.selected}
-          image={`https://res.cloudinary.com/dv9wpbflv/image/upload/v${e.item.image}.jpg`}
+          image={e.item.image}
           price={(+e.item.priceInCents / 100).toString()}
           quantity={e.itemCount}
           stock={e.item.stock}
