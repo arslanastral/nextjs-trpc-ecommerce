@@ -9,7 +9,7 @@ function Cart() {
 
   return (
     <div className="w-full flex justify-center">
-      {!data?.length && (
+      {!data?.length && !isLoading && (
         <div className="w-[max(92%,1400px)] flex justify-center bg-white rounded-lg">
           <div className="flex flex-col gap-4 max-w-[300px] min-h-[500px] justify-center">
             <Title order={2} color="dark" weight={300}>
@@ -21,7 +21,7 @@ function Cart() {
           </div>
         </div>
       )}
-      {data?.length && (
+      {data?.length && !isLoading && (
         <div className="w-[max(92%,1400px)] ">
           <Title order={1} color="dark">
             My Cart
