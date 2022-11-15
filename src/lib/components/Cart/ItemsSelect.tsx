@@ -35,7 +35,7 @@ interface ItemSelectionProps {
 export function ItemsSelect({ data, setPrice }: ItemSelectionProps) {
   const current = trpc.useContext();
   const selectBag = trpc.cart.toggleBagSelect.useMutation();
-  const selectAllBags = trpc.cart.selectAllBags.useMutation();
+  const selectAllBags = trpc.cart.toggleAllBagsSelect.useMutation();
 
   console.log(selectBag.data);
 

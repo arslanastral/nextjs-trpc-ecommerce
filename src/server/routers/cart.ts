@@ -96,7 +96,7 @@ export const cartRouter = router({
 
       return selected;
     }),
-  selectAllBags: protectedProcedure
+  toggleAllBagsSelect: protectedProcedure
     .input(z.object({ shouldDeselect: z.boolean().optional() }))
     .mutation(async ({ input, ctx }) => {
       let cartId = await getCartId(ctx);
