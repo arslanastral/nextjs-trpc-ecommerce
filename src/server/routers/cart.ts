@@ -115,6 +115,37 @@ export const cartRouter = router({
 
       return selected;
     }),
+  getCartItemsPrice: protectedProcedure.query(async ({ ctx }) => {
+    let cartId = await getCartId(ctx);
+    if (!cartId) return null;
+
+    let cart = await ctx.prisma.bag.findMany({
+      where: {
+        cartId: cartId,
+        selected: true,
+        item: {
+          stock: {
+            gt: 0
+          }
+        }
+      },
+      select: {
+        itemCount: true,
+        item: {
+          select: {
+            priceInCents: true
+          }
+        }
+      }
+    });
+
+    const price: number = cart.reduce((price: number, bag) => {
+      let currentItemPrice: number = (bag.itemCount * +bag.item.priceInCents) / 100;
+      return price + currentItemPrice;
+    }, 0);
+
+    return price;
+  }),
 
   removeFromCart: protectedProcedure.query(async ({ ctx }) => {
     let id = await getBuyerId(ctx);
