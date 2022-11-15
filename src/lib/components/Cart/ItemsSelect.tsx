@@ -51,11 +51,14 @@ export function ItemsSelect({ data, setPrice }: ItemSelectionProps) {
   };
 
   const toggleAll = async () => {
-    selectAllBags.mutate(undefined, {
-      onSuccess: () => {
-        current.cart.getCartItems.invalidate();
+    selectAllBags.mutate(
+      {},
+      {
+        onSuccess: () => {
+          current.cart.getCartItems.invalidate();
+        }
       }
-    });
+    );
   };
 
   const rows = data.map((e) => {
