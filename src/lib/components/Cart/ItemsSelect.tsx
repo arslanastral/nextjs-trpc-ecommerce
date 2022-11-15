@@ -29,10 +29,9 @@ type CartBag = {
 
 interface ItemSelectionProps {
   data: CartBag[];
-  setPrice: (price: number) => void;
 }
 
-export function ItemsSelect({ data, setPrice }: ItemSelectionProps) {
+export function ItemsSelect({ data }: ItemSelectionProps) {
   const current = trpc.useContext();
   const selectBag = trpc.cart.toggleBagSelect.useMutation();
   const selectAllBags = trpc.cart.toggleAllBagsSelect.useMutation();
@@ -45,6 +44,7 @@ export function ItemsSelect({ data, setPrice }: ItemSelectionProps) {
       { bagId: id, isSelected: selected },
       {
         onSuccess: () => {
+          current.cart.getCartItemsPrice.invalidate();
           current.cart.getCartItems.invalidate();
         }
       }
