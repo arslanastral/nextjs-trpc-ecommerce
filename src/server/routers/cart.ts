@@ -152,12 +152,60 @@ export const cartRouter = router({
 
     return id;
   }),
+  incrementCartItemCount: protectedProcedure
+    .input(z.object({ id: z.number() }))
+    .mutation(async ({ input, ctx }) => {
+      let cartId = await getCartId(ctx);
+      if (!cartId) return null;
+
+      let updatedCount = await ctx.prisma.bag.update({
+        where: {
+          id: input.id
+        },
+        data: {
+          itemCount: {
+            increment: 1
+          }
+        }
+      });
+
+      return updatedCount;
+    }),
+  decrementCartItemCount: protectedProcedure
+    .input(z.object({ id: z.number() }))
+    .mutation(async ({ input, ctx }) => {
+      let cartId = await getCartId(ctx);
+      if (!cartId) return null;
+
+      let updatedCount = await ctx.prisma.bag.update({
+        where: {
+          id: input.id
+        },
+        data: {
+          itemCount: {
+            decrement: 1
+          }
+        }
+      });
+
+      return updatedCount;
+    }),
 
   updateCartItemCount: protectedProcedure
-    .input(sellerInfoInput)
+    .input(z.object({ id: z.number(), quantity: z.number().min(1) }))
     .mutation(async ({ input, ctx }) => {
-      let id = await getBuyerId(ctx);
+      let cartId = await getCartId(ctx);
+      if (!cartId) return null;
 
-      return id;
+      let updatedCount = await ctx.prisma.bag.update({
+        where: {
+          id: input.id
+        },
+        data: {
+          itemCount: input.quantity
+        }
+      });
+
+      return updatedCount;
     })
 });
