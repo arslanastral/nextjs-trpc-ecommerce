@@ -8,13 +8,14 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export interface ItemInfoProps {
+  storeName: string;
   image: string;
   title: string;
   quantity: number;
-  stock?: string;
+  stock?: number;
 }
 
-export function ItemInfo({ image, title, quantity, stock }: ItemInfoProps) {
+export function ItemInfo({ image, title, quantity, stock, storeName }: ItemInfoProps) {
   const { classes } = useStyles();
   return (
     <div>
@@ -22,7 +23,7 @@ export function ItemInfo({ image, title, quantity, stock }: ItemInfoProps) {
         <Avatar src={image} size={94} radius="md" />
         <div>
           <Text size="xs" sx={{ textTransform: 'uppercase' }} weight={700} color="dimmed">
-            Free Shipping
+            {storeName}
           </Text>
 
           <Text size="lg" weight={500}>
@@ -38,7 +39,7 @@ export function ItemInfo({ image, title, quantity, stock }: ItemInfoProps) {
           <Group noWrap spacing={10} mt={5}>
             <IconAlertCircle stroke={1.5} size={16} className={classes.icon} />
             <Text size="xs" color="dimmed">
-              1 Item Left
+              {stock} Item Left
             </Text>
           </Group>
         </div>

@@ -80,6 +80,8 @@ export function ItemsSelect({ data }: ItemSelectionProps) {
           image={`https://res.cloudinary.com/dv9wpbflv/image/upload/v${e.item.image}.jpg`}
           price={(+e.item.priceInCents / 100).toString()}
           quantity={e.itemCount}
+          stock={e.item.stock}
+          storeName={e.item.seller.storeName}
         />
       );
     });

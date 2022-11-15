@@ -33,7 +33,7 @@ interface ItemRowProps {
 type ItemProps = ItemInfoProps & ItemRowProps;
 
 export const Item = memo(
-  ({ id, toggleRow, title, image, selected, price, quantity, stock }: ItemProps) => {
+  ({ id, toggleRow, title, image, selected, price, quantity, stock, storeName }: ItemProps) => {
     const { classes, cx } = useStyles();
     const [itemQuantity, setItemQuantity] = useState<number | undefined>(quantity);
 
@@ -48,7 +48,13 @@ export const Item = memo(
         </td>
         <td>
           {/* <Group spacing="sm"> */}
-          <ItemInfo image={image} title={title} quantity={itemQuantity ?? 1} />
+          <ItemInfo
+            image={image}
+            title={title}
+            quantity={itemQuantity ?? 1}
+            stock={stock}
+            storeName={storeName}
+          />
           {/* </Group> */}
         </td>
         <td>
