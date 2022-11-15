@@ -86,6 +86,7 @@ model Bag {
   itemCount Int
   item      Product @relation(fields: [productId], references: [id])
   Cart      Cart    @relation(fields: [cartId], references: [id])
+  selected  Boolean @default(false)
   cartId    String
   productId String
 
