@@ -207,5 +207,20 @@ export const cartRouter = router({
       });
 
       return updatedCount;
+    }),
+  deleteItem: protectedProcedure
+    .input(z.object({ id: z.number() }))
+    .mutation(async ({ input, ctx }) => {
+      let cartId = await getCartId(ctx);
+      if (!cartId) return null;
+
+      let deletedItem = await ctx.prisma.bag.deleteMany({
+        where: {
+          id: input.id,
+          cartId: cartId
+        }
+      });
+
+      return deletedItem;
     })
 });
