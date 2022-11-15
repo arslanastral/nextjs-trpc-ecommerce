@@ -10,9 +10,9 @@ import {
 } from '@mantine/core';
 import { IconTrash } from '@tabler/icons';
 import { ItemInfo } from './ItemInfo';
-import { QuantityInput } from '../Products/QuantityInput';
 import { ItemInfoProps } from './ItemInfo';
 import { memo, useState } from 'react';
+import { CartQuantityInput } from './CartQuantityInput';
 
 const useStyles = createStyles((theme) => ({
   rowSelected: {
@@ -35,7 +35,6 @@ type ItemProps = ItemInfoProps & ItemRowProps;
 export const Item = memo(
   ({ id, toggleRow, title, image, selected, price, quantity, stock, storeName }: ItemProps) => {
     const { classes, cx } = useStyles();
-    const [itemQuantity, setItemQuantity] = useState<number | undefined>(quantity);
 
     return (
       <tr className={cx({ [classes.rowSelected]: selected })}>
@@ -51,7 +50,7 @@ export const Item = memo(
           <ItemInfo
             image={image}
             title={title}
-            quantity={itemQuantity ?? 1}
+            quantity={quantity ?? 1}
             stock={stock}
             storeName={storeName}
           />
@@ -66,7 +65,7 @@ export const Item = memo(
               <IconTrash size={22} stroke={1.5} />
             </ActionIcon>
             <div className="max-w-[130px]">
-              <QuantityInput value={itemQuantity} setValue={setItemQuantity} />
+              <CartQuantityInput value={quantity} id={id} selectedRow={selected} />
             </div>
           </Group>
         </td>
