@@ -1,6 +1,6 @@
 import { trpc } from '@/utils/trpc';
 import { useCallback, useState } from 'react';
-import { createStyles, Table, Checkbox, ScrollArea } from '@mantine/core';
+import { createStyles, Table, Checkbox, ScrollArea, LoadingOverlay } from '@mantine/core';
 import { Item } from './Item';
 
 const useStyles = createStyles((theme) => ({
@@ -82,6 +82,7 @@ export function ItemsSelect({ data, setPrice }: ItemSelectionProps) {
 
   return (
     <ScrollArea>
+      <LoadingOverlay visible={selectBag.isLoading || selectAllBags.isLoading} overlayBlur={1} />
       <Table sx={{ minWidth: 320 }} verticalSpacing="sm">
         <thead>
           <tr>
