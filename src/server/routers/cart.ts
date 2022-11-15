@@ -30,6 +30,7 @@ export const cartRouter = router({
       select: {
         bags: {
           select: {
+            selected: true,
             id: true,
             itemCount: true,
             item: {
