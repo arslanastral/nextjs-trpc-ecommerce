@@ -63,20 +63,22 @@ export function ItemsSelect({ data, setPrice }: ItemSelectionProps) {
     );
   };
 
-  const rows = data.map((e) => {
-    return (
-      <Item
-        key={e.id}
-        id={e.id}
-        title={e.item.title}
-        toggleRow={toggleRow}
-        selected={e.selected}
-        image={`https://res.cloudinary.com/dv9wpbflv/image/upload/v${e.item.image}.jpg`}
-        price={(+e.item.priceInCents / 100).toString()}
-        quantity={e.itemCount}
-      />
-    );
-  });
+  const rows = data
+    .sort((a, b) => (a.id > b.id ? 1 : -1))
+    .map((e) => {
+      return (
+        <Item
+          key={e.id}
+          id={e.id}
+          title={e.item.title}
+          toggleRow={toggleRow}
+          selected={e.selected}
+          image={`https://res.cloudinary.com/dv9wpbflv/image/upload/v${e.item.image}.jpg`}
+          price={(+e.item.priceInCents / 100).toString()}
+          quantity={e.itemCount}
+        />
+      );
+    });
 
   return (
     <ScrollArea>
