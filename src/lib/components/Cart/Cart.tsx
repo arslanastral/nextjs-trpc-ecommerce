@@ -30,8 +30,8 @@ function Cart() {
             <div className="bg-white text-white flex-1 rounded-lg">
               {data && <ItemsSelect data={data} />}
             </div>
-            <div className="bg-white text-white min-w-[300px] rounded-lg flex flex-col justify-between p-4">
-              <div className="text-black w-full  min-h-[300px] ">
+            <div className="bg-white text-white min-w-[300px] rounded-lg flex flex-col justify-between p-4 max-h-[300px]">
+              <div className="text-black w-full">
                 <Table fontSize="lg">
                   <tbody>
                     <tr>
