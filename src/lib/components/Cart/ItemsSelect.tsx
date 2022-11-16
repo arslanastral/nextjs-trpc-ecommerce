@@ -1,5 +1,4 @@
 import { trpc } from '@/utils/trpc';
-import { useCallback, useState } from 'react';
 import { createStyles, Table, Checkbox, ScrollArea, LoadingOverlay } from '@mantine/core';
 import { Item } from './Item';
 
