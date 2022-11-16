@@ -51,7 +51,13 @@ function Cart() {
                 </Table>
               </div>
 
-              <Button fullWidth radius="md" className="h-[45px] font-light text-lg">
+              <Button
+                component={Link}
+                href="/checkout"
+                fullWidth
+                radius="md"
+                className="h-[45px] font-light text-lg"
+              >
                 Proceed To Checkout
               </Button>
             </div>
