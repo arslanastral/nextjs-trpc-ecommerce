@@ -1,5 +1,5 @@
 import { trpc } from '@/utils/trpc';
-import { Button, Text, Skeleton, Loader, Title, Table } from '@mantine/core';
+import { Button, Text, Skeleton, Loader, Title, Table, Badge } from '@mantine/core';
 import Link from 'next/link';
 import { useState } from 'react';
 import CheckoutAddress from './CheckoutAddress';
@@ -40,8 +40,16 @@ function Checkout() {
               <CheckoutItems data={data} />
               <CheckoutAddress setAddressId={setAddressId} addressId={addressId} />
             </div>
-            <div className="bg-white text-white min-w-[300px] rounded-lg flex flex-col justify-between p-4 max-h-[300px]">
-              <div className="text-black w-full ">
+            <div className=" text-white min-w-[320px] rounded-lg flex flex-col justify-between min-h-[500px] gap-4">
+              <div className="text-black w-full bg-white p-6 rounded-lg">
+                <Title order={2} color="dark" className="flex items-center gap-3">
+                  Payment <Badge color="green">Secure</Badge>
+                </Title>
+                <Title order={4} color="dark" weight={300} mt={4}>
+                  Payments processed by stripe
+                </Title>
+              </div>
+              <div className="text-black w-full bg-white flex-1 p-3 flex flex-col justify-between rounded-lg">
                 <Table fontSize="lg">
                   <tbody>
                     <tr>
@@ -59,11 +67,10 @@ function Checkout() {
                     </tr>
                   </tbody>
                 </Table>
+                <Button fullWidth radius="md" className="h-[45px] font-light text-lg">
+                  Place Order
+                </Button>
               </div>
-
-              <Button fullWidth radius="md" className="h-[45px] font-light text-lg">
-                Place Order
-              </Button>
             </div>
           </div>
         </div>
