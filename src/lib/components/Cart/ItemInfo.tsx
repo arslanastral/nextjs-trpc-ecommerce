@@ -1,4 +1,4 @@
-import { createStyles, Avatar, Text, Group } from '@mantine/core';
+import { createStyles, Avatar, Text, Group, Indicator } from '@mantine/core';
 import { IconAlertCircle, IconTag } from '@tabler/icons';
 
 const useStyles = createStyles((theme) => ({
@@ -14,18 +14,30 @@ export interface ItemInfoProps {
   quantity: number;
   stock?: number;
   price?: string;
+  isForCheckout?: boolean;
 }
 
-export function ItemInfo({ image, title, quantity, stock, storeName, price }: ItemInfoProps) {
+export function ItemInfo({
+  image,
+  title,
+  quantity,
+  stock,
+  storeName,
+  price,
+  isForCheckout = false
+}: ItemInfoProps) {
   const { classes } = useStyles();
   return (
     <div>
       <Group noWrap>
-        <Avatar
-          src={`https://res.cloudinary.com/dv9wpbflv/image/upload/v${image}.jpg`}
-          size={94}
-          radius="md"
-        />
+        <Indicator label={quantity} disabled={!isForCheckout} inline size={22}>
+          <Avatar
+            src={`https://res.cloudinary.com/dv9wpbflv/image/upload/v${image}.jpg`}
+            size={94}
+            radius="md"
+          />
+        </Indicator>
+
         <div>
           <Text size="xs" sx={{ textTransform: 'uppercase' }} weight={700} color="dimmed">
             {storeName}
@@ -35,11 +47,13 @@ export function ItemInfo({ image, title, quantity, stock, storeName, price }: It
             {title}
           </Text>
 
-          <Group noWrap spacing={10} mt={3}>
-            <Text size="md" color="dimmed">
-              x{quantity}
-            </Text>
-          </Group>
+          {!isForCheckout && (
+            <Group noWrap spacing={10} mt={3}>
+              <Text size="md" color="dimmed">
+                x{quantity}
+              </Text>
+            </Group>
+          )}
 
           <Group noWrap spacing={10} mt={5}>
             {price && (
