@@ -30,7 +30,7 @@ function CheckoutAddress({ setAddressId, addressId }: CheckoutAddressProps) {
   }, [data, handleAddressSelect, addressId]);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col p-6 flex-1">
       <AddressModal opened={opened} setOpened={setOpened} />
       <Title order={2} color="dark">
         Shipping Address

@@ -31,16 +31,16 @@ function Checkout() {
       )}
       {data?.length && !isLoading && (
         <div className="w-[max(92%,1400px)] ">
-          <Title order={1} color="dark">
+          <Title order={1} color="dark" ml={15}>
             Checkout
           </Title>
 
-          <div className="mt-8 min-h-[600px] rounded flex gap-6 flex-col lg:flex-row">
-            <div className="bg-white text-black p-6 flex-1 rounded-lg flex gap-10">
+          <div className="mt-8 min-h-[600px] rounded flex gap-4 flex-col lg:flex-row">
+            <div className="text-black bg-white flex-1 flex gap-4 rounded-lg flex-col">
               <CheckoutItems data={data} />
               <CheckoutAddress setAddressId={setAddressId} addressId={addressId} />
             </div>
-            <div className=" text-white min-w-[320px] rounded-lg flex flex-col justify-between min-h-[500px] gap-4">
+            <div className=" text-white min-w-[320px] rounded-lg flex flex-col justify-between max-h-[500px] gap-4">
               <div className="text-black w-full bg-white p-6 rounded-lg">
                 <Title order={2} color="dark" className="flex items-center gap-3">
                   Payment <Badge color="green">Secure</Badge>
@@ -49,7 +49,7 @@ function Checkout() {
                   Payments processed by stripe
                 </Title>
               </div>
-              <div className="text-black w-full bg-white flex-1 p-3 flex flex-col justify-between rounded-lg">
+              <div className="text-black w-full bg-white flex-1 p-4 flex flex-col justify-between rounded-lg">
                 <Table fontSize="lg">
                   <tbody>
                     <tr>
