@@ -14,7 +14,12 @@ function Checkout() {
             <Title order={2} color="dark" weight={300}>
               You haven&apos;t selected anything from your cart
             </Title>
-            <Button component={Link} href="/" radius="md" className="h-[45px] font-light text-lg">
+            <Button
+              component={Link}
+              href="/cart"
+              radius="md"
+              className="h-[45px] font-light text-lg"
+            >
               Go To Cart
             </Button>
           </div>
@@ -50,13 +55,7 @@ function Checkout() {
                 </Table>
               </div>
 
-              <Button
-                component={Link}
-                href="/checkout"
-                fullWidth
-                radius="md"
-                className="h-[45px] font-light text-lg"
-              >
+              <Button fullWidth radius="md" className="h-[45px] font-light text-lg">
                 Place Order
               </Button>
             </div>
