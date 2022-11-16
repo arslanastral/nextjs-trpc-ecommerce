@@ -53,6 +53,41 @@ export const cartRouter = router({
 
     return cart?.bags;
   }),
+  getSelectedCartItems: protectedProcedure.query(async ({ ctx }) => {
+    let cartId = await getCartId(ctx);
+    if (!cartId) return null;
+
+    let bags = await ctx.prisma.bag.findMany({
+      where: {
+        cartId: cartId,
+        selected: true,
+        checkedOut: false,
+        item: {
+          stock: {
+            gt: 0
+          }
+        }
+      },
+      select: {
+        id: true,
+        itemCount: true,
+        item: {
+          select: {
+            image: true,
+            title: true,
+            priceInCents: true,
+            seller: {
+              select: {
+                storeName: true
+              }
+            }
+          }
+        }
+      }
+    });
+
+    return bags;
+  }),
 
   addToCart: protectedProcedure
     .input(z.object({ id: z.string(), quantity: z.number().min(1) }))
