@@ -20,7 +20,7 @@ type CheckoutItemsData = {
 
 function CheckoutItems({ data }: CheckoutItemsData) {
   return (
-    <>
+    <div className="flex flex-col">
       <Title order={2} color="dark">
         Your Items
       </Title>
@@ -42,7 +42,7 @@ function CheckoutItems({ data }: CheckoutItemsData) {
             </div>
           ))}
       </div>
-    </>
+    </div>
   );
 }
 
