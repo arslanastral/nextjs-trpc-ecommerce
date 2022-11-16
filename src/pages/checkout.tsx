@@ -3,7 +3,7 @@ import { PageWithLayout } from '@/lib/types/page';
 import { ReactElement } from 'react';
 import Layout from '@/lib/components/Layouts/Layout';
 import { useSession, signOut } from 'next-auth/react';
-import Cart from '@/lib/components/Cart/Cart';
+import Checkout from '@/lib/components/Checkout/Checkout';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { GetServerSideProps } from 'next';
@@ -35,7 +35,7 @@ const CheckoutPage: PageWithLayout = () => {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
-      <Cart />
+      <Checkout />
     </div>
   );
 };
