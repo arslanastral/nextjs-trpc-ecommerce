@@ -1,5 +1,5 @@
 import { createStyles, Avatar, Text, Group } from '@mantine/core';
-import { IconAlertCircle } from '@tabler/icons';
+import { IconAlertCircle, IconTag } from '@tabler/icons';
 
 const useStyles = createStyles((theme) => ({
   icon: {
@@ -13,9 +13,10 @@ export interface ItemInfoProps {
   title: string;
   quantity: number;
   stock?: number;
+  price?: string;
 }
 
-export function ItemInfo({ image, title, quantity, stock, storeName }: ItemInfoProps) {
+export function ItemInfo({ image, title, quantity, stock, storeName, price }: ItemInfoProps) {
   const { classes } = useStyles();
   return (
     <div>
@@ -41,10 +42,23 @@ export function ItemInfo({ image, title, quantity, stock, storeName }: ItemInfoP
           </Group>
 
           <Group noWrap spacing={10} mt={5}>
-            <IconAlertCircle stroke={1.5} size={16} className={classes.icon} />
-            <Text size="xs" color="dimmed">
-              {stock} Item Left
-            </Text>
+            {price && (
+              <>
+                <IconTag stroke={1.5} size={16} className={classes.icon} />
+                <Text size="sm" color="dimmed">
+                  ${price}
+                </Text>
+              </>
+            )}
+
+            {stock && (
+              <>
+                <IconAlertCircle stroke={1.5} size={16} className={classes.icon} />
+                <Text size="sm" color="dimmed">
+                  {stock} Item Left
+                </Text>
+              </>
+            )}
           </Group>
         </div>
       </Group>
