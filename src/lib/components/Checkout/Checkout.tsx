@@ -1,6 +1,8 @@
 import { trpc } from '@/utils/trpc';
 import { Button, Text, Skeleton, Loader, Title, Table } from '@mantine/core';
 import Link from 'next/link';
+import CheckoutAddress from './CheckoutAddress';
+import CheckoutItems from './CheckoutItems';
 
 function Checkout() {
   const { data, isLoading, error } = trpc.cart.getSelectedCartItems.useQuery();
@@ -30,12 +32,14 @@ function Checkout() {
           <Title order={1} color="dark">
             Checkout
           </Title>
+
           <div className="mt-8 min-h-[600px] rounded flex gap-6 flex-col lg:flex-row">
-            <div className="bg-white text-white flex-1 rounded-lg">
-              {data && JSON.stringify(data)}
+            <div className="bg-white text-black p-6 flex-1 rounded-lg flex gap-10">
+              <CheckoutItems data={data} />
+              <CheckoutAddress />
             </div>
-            <div className="bg-white text-white min-w-[300px] rounded-lg flex flex-col justify-between p-4">
-              <div className="text-black w-full  min-h-[300px] ">
+            <div className="bg-white text-white min-w-[300px] rounded-lg flex flex-col justify-between p-4 max-h-[300px]">
+              <div className="text-black w-full ">
                 <Table fontSize="lg">
                   <tbody>
                     <tr>
