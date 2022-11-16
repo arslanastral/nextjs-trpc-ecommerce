@@ -39,7 +39,7 @@ function CheckoutAddress({ setAddressId, addressId }: CheckoutAddressProps) {
         {data?.length ? 'Select an address or add a new one' : 'Add a new shipping address'}
       </Title>
       <div className="min-w-[400px] mt-4">
-        <ScrollArea style={{ height: 240 }}>
+        <ScrollArea style={{ maxHeight: 240 }}>
           <SimpleGrid spacing="lg" cols={1}>
             {data &&
               data
@@ -65,7 +65,7 @@ function CheckoutAddress({ setAddressId, addressId }: CheckoutAddressProps) {
           fullWidth
           radius="md"
           variant="outline"
-          className=" text-md"
+          className="h-[45px] text-md"
           mt={14}
         >
           + Add New Address
