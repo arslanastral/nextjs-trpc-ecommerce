@@ -45,5 +45,6 @@ NEXTAUTH_SECRET=VJ13WCJAjH1SNoLpvUUIWhvk9+cEfsnOMnjssSsvzJQ=
 NEXTAUTH_LOGIN=http://localhost:3000/api/login
 NEXTAUTH_SIGNUP=http://localhost:3000/api/signup
 CLOUDINARY_URL=<cloudinary://[API_KEY]:[API_SECRET]@[CLOUD_NAME]>
+STRIPE_SECRET_KEY=<your-secret-key>
 CURRENT_ENV=dev
 ```
