@@ -1,6 +1,6 @@
 import { router, protectedProcedure } from '../trpc';
 import { getBuyerId, getCartId } from '@/server/functions/identity';
-import { sellerInfoInput } from '../schema';
+import { getSelectedCartItems, getCartItemsPrice } from '@/server/functions/cart';
 import { z } from 'zod';
 
 export const cartRouter = router({
@@ -54,37 +54,7 @@ export const cartRouter = router({
     return cart?.bags;
   }),
   getSelectedCartItems: protectedProcedure.query(async ({ ctx }) => {
-    let cartId = await getCartId(ctx);
-    if (!cartId) return null;
-
-    let bags = await ctx.prisma.bag.findMany({
-      where: {
-        cartId: cartId,
-        selected: true,
-        checkedOut: false,
-        item: {
-          stock: {
-            gt: 0
-          }
-        }
-      },
-      select: {
-        id: true,
-        itemCount: true,
-        item: {
-          select: {
-            image: true,
-            title: true,
-            priceInCents: true,
-            seller: {
-              select: {
-                storeName: true
-              }
-            }
-          }
-        }
-      }
-    });
+    let bags = await getSelectedCartItems(ctx);
 
     return bags;
   }),
@@ -151,33 +121,7 @@ export const cartRouter = router({
       return selected;
     }),
   getCartItemsPrice: protectedProcedure.query(async ({ ctx }) => {
-    let cartId = await getCartId(ctx);
-    if (!cartId) return null;
-
-    let cart = await ctx.prisma.bag.findMany({
-      where: {
-        cartId: cartId,
-        selected: true,
-        item: {
-          stock: {
-            gt: 0
-          }
-        }
-      },
-      select: {
-        itemCount: true,
-        item: {
-          select: {
-            priceInCents: true
-          }
-        }
-      }
-    });
-
-    const price: number = cart.reduce((price: number, bag) => {
-      let currentItemPrice: number = (bag.itemCount * +bag.item.priceInCents) / 100;
-      return price + currentItemPrice;
-    }, 0);
+    let price = await getCartItemsPrice(ctx);
 
     return price;
   }),
