@@ -103,9 +103,9 @@ model Order {
   address           Address?    @relation(fields: [addressId], references: [id])
   addressId         String?
   buyer             Buyer       @relation(fields: [buyerId], references: [id])
-  buyerId           String      @unique
+  buyerId           String
   seller            Seller      @relation(fields: [sellerId], references: [id])
-  sellerId          String      @unique
+  sellerId          String
   totalPriceInCents String?
   Bag               Bag[]
 }
