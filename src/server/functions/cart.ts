@@ -101,5 +101,34 @@ export async function getSelectedOrderItems(ctx: Context) {
     }
   });
 
-  return bags;
+  if (!bags.length) return null;
+
+  let flattenedBag = bags.map((e) => {
+    let bag = {
+      id: e.id,
+      itemCount: e.itemCount,
+      priceInCents: e.item.priceInCents,
+      title: e.item.title,
+      sellerId: e.item.seller.id
+    };
+    return bag;
+  });
+
+  type Bag = {
+    id: number;
+    itemCount: number;
+    priceInCents: string;
+    title: string;
+    sellerId: string;
+  };
+
+  let reduce = flattenedBag.reduce((bag: Record<string, Bag[]>, item, i) => {
+    bag[item.sellerId] = bag[item.sellerId] || [];
+    bag[item.sellerId].push(item);
+    return bag;
+  }, {});
+
+  let groupedBySeller = Object.entries(reduce).map(([sellerId, items]) => ({ sellerId, items }));
+
+  return groupedBySeller;
 }
