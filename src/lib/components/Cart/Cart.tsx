@@ -1,7 +1,8 @@
 import { trpc } from '@/utils/trpc';
-import { Button, Text, Skeleton, Loader, Title, Table } from '@mantine/core';
+import { Button, Text, Skeleton, Loader, Title } from '@mantine/core';
 import { ItemsSelect } from './ItemsSelect';
 import Link from 'next/link';
+import PricePreview from './PricePreview';
 
 function Cart() {
   const { data, isLoading, error } = trpc.cart.getCartItems.useQuery();
@@ -32,23 +33,7 @@ function Cart() {
             </div>
             <div className="bg-white text-white min-w-[300px] rounded-lg flex flex-col justify-between p-4 max-h-[300px]">
               <div className="text-black w-full">
-                <Table fontSize="lg">
-                  <tbody>
-                    <tr>
-                      <td className="text-left">Subtotal</td>
-                      <td className="text-right">${price.data}</td>
-                    </tr>
-                    <tr>
-                      <td className="text-left">Shipping</td>
-                      <td className="text-right font-medium">FREE</td>
-                    </tr>
-                    <tr>
-                      <td className="text-left font-semibold">Total</td>
-
-                      <td className="text-right font-semibold">${price.data}</td>
-                    </tr>
-                  </tbody>
-                </Table>
+                <PricePreview price={price.data ?? 0} />
               </div>
 
               <Button

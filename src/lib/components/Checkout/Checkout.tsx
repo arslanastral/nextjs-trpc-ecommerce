@@ -2,6 +2,7 @@ import { trpc } from '@/utils/trpc';
 import { Button, Text, Skeleton, Loader, Title, Table, Badge } from '@mantine/core';
 import Link from 'next/link';
 import { useState } from 'react';
+import PricePreview from '../Cart/PricePreview';
 import CheckoutAddress from './CheckoutAddress';
 import CheckoutItems from './CheckoutItems';
 
@@ -50,23 +51,7 @@ function Checkout() {
                 </Title>
               </div>
               <div className="text-black w-full bg-white flex-1 p-4 flex flex-col justify-between rounded-lg">
-                <Table fontSize="lg">
-                  <tbody>
-                    <tr>
-                      <td className="text-left">Subtotal</td>
-                      <td className="text-right">${price.data}</td>
-                    </tr>
-                    <tr>
-                      <td className="text-left">Shipping</td>
-                      <td className="text-right font-medium">FREE</td>
-                    </tr>
-                    <tr>
-                      <td className="text-left font-semibold">Total</td>
-
-                      <td className="text-right font-semibold">${price.data}</td>
-                    </tr>
-                  </tbody>
-                </Table>
+                <PricePreview price={price.data ?? 0} />
                 <Button fullWidth radius="md" className="h-[45px] font-light text-lg">
                   Place Order
                 </Button>
