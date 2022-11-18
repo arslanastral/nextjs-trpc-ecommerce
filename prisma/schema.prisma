@@ -113,6 +113,7 @@ model Payment {
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
   id        String        @id @default(cuid())
+  refId     String
   status    PaymentStatus @default(PENDING)
   Order     Order[]
 }
