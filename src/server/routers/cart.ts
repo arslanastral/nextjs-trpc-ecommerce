@@ -2,6 +2,7 @@ import { router, protectedProcedure } from '../trpc';
 import { getBuyerId, getCartId } from '@/server/functions/identity';
 import { getSelectedCartItems, getCartItemsPrice } from '@/server/functions/cart';
 import { getProductStock } from '../functions/product';
+import { quantityInput } from '../schema';
 import { z } from 'zod';
 
 export const cartRouter = router({
@@ -155,21 +156,14 @@ export const cartRouter = router({
 
     return price;
   }),
+  incrementItemCount: protectedProcedure.input(quantityInput).mutation(async ({ input, ctx }) => {
+    let cartId = await getCartId(ctx);
+    if (!cartId) return null;
 
-  removeFromCart: protectedProcedure.query(async ({ ctx }) => {
-    let id = await getBuyerId(ctx);
+    let stock = await getProductStock(ctx, input.productId);
+    if (!stock) return null;
 
-    return id;
-  }),
-  incrementItemCount: protectedProcedure
-    .input(z.object({ id: z.number() }))
-    .mutation(async ({ input, ctx }) => {
-      let cartId = await getCartId(ctx);
-      if (!cartId) return null;
-
-      let stock = await getProductStock(ctx, input.id);
-      if (!stock) return null;
-
+    if (input.value < stock) {
       let updatedCount = await ctx.prisma.bag.update({
         where: {
           id: input.id
@@ -182,7 +176,10 @@ export const cartRouter = router({
       });
 
       return updatedCount;
-    }),
+    }
+
+    return 'stock_limit';
+  }),
   decrementItemCount: protectedProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ input, ctx }) => {
@@ -203,23 +200,28 @@ export const cartRouter = router({
       return updatedCount;
     }),
 
-  updateItemCount: protectedProcedure
-    .input(z.object({ id: z.number(), quantity: z.number().min(1) }))
-    .mutation(async ({ input, ctx }) => {
-      let cartId = await getCartId(ctx);
-      if (!cartId) return null;
+  updateItemCount: protectedProcedure.input(quantityInput).mutation(async ({ input, ctx }) => {
+    let cartId = await getCartId(ctx);
+    if (!cartId) return null;
 
+    let stock = await getProductStock(ctx, input.productId);
+    if (!stock) return null;
+
+    if (input.value < stock) {
       let updatedCount = await ctx.prisma.bag.update({
         where: {
           id: input.id
         },
         data: {
-          itemCount: input.quantity
+          itemCount: input.value
         }
       });
 
       return updatedCount;
-    }),
+    }
+
+    return 'stock_limit';
+  }),
   deleteItem: protectedProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ input, ctx }) => {
