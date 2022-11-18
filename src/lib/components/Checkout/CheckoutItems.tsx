@@ -12,6 +12,7 @@ type CartBag = {
   id: number;
   item: Item;
   itemCount: number;
+  productId: string;
 };
 
 type CheckoutItemsData = {
@@ -38,6 +39,7 @@ function CheckoutItems({ data }: CheckoutItemsData) {
                 quantity={e.itemCount}
                 price={(+e.item.priceInCents / 100).toString()}
                 isForCheckout={true}
+                productId={e.productId}
               />
             </div>
           ))}
