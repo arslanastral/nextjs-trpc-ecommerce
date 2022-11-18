@@ -83,5 +83,20 @@ export const orderRouter = router({
       }
 
       return session.url;
+    }),
+
+  verify: protectedProcedure
+    .input(z.object({ id: z.string().min(1) }))
+    .query(async ({ input, ctx }) => {
+      let buyerId = await getBuyerId(ctx);
+      if (!buyerId) return null;
+
+      let payment = ctx.prisma.payment.findUnique({
+        where: {
+          id: input.id
+        }
+      });
+
+      return payment;
     })
 });
