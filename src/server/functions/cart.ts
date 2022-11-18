@@ -9,6 +9,7 @@ export async function getCartItemsPrice(ctx: Context) {
     where: {
       cartId: cartId,
       selected: true,
+      checkedOut: false,
       item: {
         stock: {
           gt: 0

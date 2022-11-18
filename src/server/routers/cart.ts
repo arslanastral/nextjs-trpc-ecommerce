@@ -10,7 +10,8 @@ export const cartRouter = router({
 
     let items = await ctx.prisma.bag.aggregate({
       where: {
-        cartId: cartId
+        cartId: cartId,
+        checkedOut: false
       },
       _sum: {
         itemCount: true
@@ -29,6 +30,9 @@ export const cartRouter = router({
       },
       select: {
         bags: {
+          where: {
+            checkedOut: false
+          },
           select: {
             selected: true,
             id: true,
@@ -65,24 +69,32 @@ export const cartRouter = router({
       let cartId = await getCartId(ctx);
       if (!cartId) return null;
 
-      let addedItem = await ctx.prisma.bag.upsert({
+      let updatedItem = await ctx.prisma.bag.updateMany({
         where: {
-          product_in_cart: {
-            cartId: cartId,
-            productId: input.id
-          }
-        },
-        update: {
-          itemCount: { increment: input.quantity }
-        },
-        create: {
           cartId: cartId,
-          itemCount: 1,
+          productId: input.id,
+          checkedOut: false
+        },
+        data: {
+          cartId: cartId,
+          itemCount: { increment: input.quantity },
           productId: input.id
         }
       });
 
-      return addedItem;
+      if (!updatedItem.count) {
+        let newBagItem = await ctx.prisma.bag.create({
+          data: {
+            cartId: cartId,
+            itemCount: 1,
+            productId: input.id
+          }
+        });
+
+        return newBagItem;
+      }
+
+      return updatedItem;
     }),
   toggleBagSelect: protectedProcedure
     .input(z.object({ bagId: z.number(), isSelected: z.boolean() }))
@@ -90,9 +102,11 @@ export const cartRouter = router({
       let cartId = await getCartId(ctx);
       if (!cartId) return null;
 
-      let selected = await ctx.prisma.bag.update({
+      let selected = await ctx.prisma.bag.updateMany({
         where: {
-          id: input.bagId
+          id: input.bagId,
+          checkedOut: false,
+          cartId: cartId
         },
         data: {
           selected: !input.isSelected
@@ -111,7 +125,8 @@ export const cartRouter = router({
 
       let selected = await ctx.prisma.bag.updateMany({
         where: {
-          cartId: cartId
+          cartId: cartId,
+          checkedOut: false
         },
         data: {
           selected: shouldDeselect ? false : true
