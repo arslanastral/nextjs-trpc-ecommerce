@@ -33,7 +33,7 @@ function Cart() {
             </div>
             <div className="bg-white text-white min-w-[300px] rounded-lg flex flex-col justify-between p-4 max-h-[300px]">
               <div className="text-black w-full">
-                <PricePreview price={price.data ?? 0} />
+                <PricePreview price={price.data ?? '0'} />
               </div>
 
               <Button
