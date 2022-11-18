@@ -90,8 +90,6 @@ model Bag {
   cartId     String
   productId  String
   orderId    String?
-
-  @@unique([cartId, productId], name: "product_in_cart")
 }
 
 model Order {
