@@ -52,6 +52,7 @@ export async function getSelectedCartItems(ctx: Context) {
     select: {
       id: true,
       itemCount: true,
+      productId: true,
       item: {
         select: {
           image: true,
