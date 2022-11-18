@@ -1,5 +1,6 @@
 import { trpc } from '@/utils/trpc';
-import { Title, Button, SimpleGrid, ScrollArea } from '@mantine/core';
+import { Title, Button, SimpleGrid, ScrollArea, Alert } from '@mantine/core';
+import { IconAlertCircle } from '@tabler/icons';
 import { useState, useCallback, useEffect } from 'react';
 import AddressModal from '../Dashboard/Buyer/AddressModal';
 import { AddressCheckbox } from './AddressCheckbox';
@@ -36,7 +37,18 @@ function CheckoutAddress({ setAddressId, addressId }: CheckoutAddressProps) {
         Shipping Address
       </Title>
       <Title order={4} color="dark" weight={300} mt={4}>
-        {data?.length ? 'Select an address or add a new one' : 'Add a new shipping address'}
+        {data?.length ? (
+          'Select an address or add a new one'
+        ) : (
+          <Alert
+            icon={<IconAlertCircle size={16} />}
+            title="Forgetting Address?"
+            color="red"
+            mt={15}
+          >
+            No Addresses found. Please add a shipping address for your items.
+          </Alert>
+        )}
       </Title>
       <div className="min-w-[400px] mt-4">
         <ScrollArea style={{ maxHeight: 240 }}>
