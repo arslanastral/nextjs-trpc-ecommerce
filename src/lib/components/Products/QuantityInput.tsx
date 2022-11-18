@@ -43,9 +43,16 @@ interface QuantityInputProps {
   setValue: (value: number | undefined) => void;
   min?: number;
   max?: number;
+  disabled?: boolean;
 }
 
-export function QuantityInput({ value, setValue, min = 1, max = 10 }: QuantityInputProps) {
+export function QuantityInput({
+  value,
+  setValue,
+  disabled = false,
+  min = 1,
+  max = 10
+}: QuantityInputProps) {
   const { classes } = useStyles();
   const handlers = useRef<NumberInputHandlers>(null);
 
@@ -55,7 +62,7 @@ export function QuantityInput({ value, setValue, min = 1, max = 10 }: QuantityIn
         size={28}
         variant="transparent"
         onClick={() => handlers.current?.decrement()}
-        disabled={value === min}
+        disabled={value === min || disabled}
         className={classes.control}
         onMouseDown={(event) => event.preventDefault()}
         radius="sm"
@@ -64,6 +71,7 @@ export function QuantityInput({ value, setValue, min = 1, max = 10 }: QuantityIn
       </ActionIcon>
 
       <NumberInput
+        disabled={disabled}
         variant="unstyled"
         min={min}
         max={max}
@@ -77,7 +85,7 @@ export function QuantityInput({ value, setValue, min = 1, max = 10 }: QuantityIn
         size={28}
         variant="transparent"
         onClick={() => handlers.current?.increment()}
-        disabled={value === max}
+        disabled={value === max || disabled}
         className={classes.control}
         onMouseDown={(event) => event.preventDefault()}
         radius="sm"
