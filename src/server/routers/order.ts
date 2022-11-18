@@ -1,4 +1,5 @@
 import { router, protectedProcedure } from '../trpc';
+import { randomUUID } from 'crypto';
 import { getBuyerId, getCartId } from '@/server/functions/identity';
 import { getSelectedOrderItems, getCartItemsPrice } from '@/server/functions/cart';
 import { z } from 'zod';
@@ -19,6 +20,8 @@ export const orderRouter = router({
 
       let lineItems = items.map((e) => e.items).flat();
 
+      let refId = randomUUID();
+
       const session = await stripe.checkout.sessions.create({
         line_items: lineItems.map((item) => {
           return {
@@ -34,15 +37,16 @@ export const orderRouter = router({
         }) as [],
 
         mode: 'payment',
-        success_url: `${process.env.NEXTAUTH_URL}cart`,
-        cancel_url: `${process.env.NEXTAUTH_URL}checkout`
+        success_url: `${process.env.NEXTAUTH_URL}payment/${refId}`,
+        cancel_url: `${process.env.NEXTAUTH_URL}payment/${refId}`
       });
 
       let sellerOrders = [];
 
       let payment = await ctx.prisma.payment.create({
         data: {
-          id: session.id
+          id: session.id,
+          refId: refId
         }
       });
 
@@ -88,15 +92,34 @@ export const orderRouter = router({
   verify: protectedProcedure
     .input(z.object({ id: z.string().min(1) }))
     .query(async ({ input, ctx }) => {
-      let buyerId = await getBuyerId(ctx);
-      if (!buyerId) return null;
-
-      let payment = ctx.prisma.payment.findUnique({
+      let payment = await ctx.prisma.payment.findFirst({
         where: {
-          id: input.id
+          refId: input.id
         }
       });
 
-      return payment;
+      if (!payment) return null;
+
+      const paymentSession = await stripe.checkout.sessions.retrieve(payment.id);
+      if (!paymentSession) return null;
+
+      if (paymentSession.status === 'open') {
+        return { status: paymentSession.status, link: paymentSession.url };
+      }
+
+      if (payment.status === 'PENDING' && paymentSession.status === 'complete') {
+        let updatedPayment = await ctx.prisma.payment.update({
+          where: {
+            id: payment.id
+          },
+          data: {
+            status: 'SUCCESS'
+          }
+        });
+
+        return { status: paymentSession.status };
+      }
+
+      return { status: paymentSession.status };
     })
 });
