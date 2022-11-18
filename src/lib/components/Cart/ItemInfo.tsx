@@ -1,5 +1,6 @@
 import { createStyles, Avatar, Text, Group, Indicator } from '@mantine/core';
 import { IconAlertCircle, IconTag } from '@tabler/icons';
+import Link from 'next/link';
 
 const useStyles = createStyles((theme) => ({
   icon: {
@@ -45,9 +46,11 @@ export function ItemInfo({
             {storeName}
           </Text>
 
-          <Text size="lg" weight={500}>
-            {title}
-          </Text>
+          <Link href={`products/${productId}`}>
+            <Text size="lg" weight={500}>
+              {title}
+            </Text>
+          </Link>
 
           {!isForCheckout && (
             <Group noWrap spacing={10} mt={3}>

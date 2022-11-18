@@ -27,9 +27,9 @@ type CartBag = {
   productId: string;
 };
 
-interface ItemSelectionProps {
+type ItemSelectionProps = {
   data: CartBag[];
-}
+};
 
 export function ItemsSelect({ data }: ItemSelectionProps) {
   const current = trpc.useContext();
