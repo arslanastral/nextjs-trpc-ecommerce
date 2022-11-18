@@ -92,6 +92,7 @@ export async function getSelectedOrderItems(ctx: Context) {
         select: {
           title: true,
           priceInCents: true,
+          image: true,
           seller: {
             select: {
               id: true
@@ -110,7 +111,8 @@ export async function getSelectedOrderItems(ctx: Context) {
       itemCount: e.itemCount,
       priceInCents: e.item.priceInCents,
       title: e.item.title,
-      sellerId: e.item.seller.id
+      sellerId: e.item.seller.id,
+      image: e.item.image
     };
     return bag;
   });
@@ -121,6 +123,7 @@ export async function getSelectedOrderItems(ctx: Context) {
     priceInCents: string;
     title: string;
     sellerId: string;
+    image: string;
   };
 
   let reduce = flattenedBag.reduce((bag: Record<string, Bag[]>, item, i) => {
