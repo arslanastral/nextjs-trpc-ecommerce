@@ -1,8 +1,8 @@
 import { Table } from '@mantine/core';
 
 type PricePreviewProps = {
-  price?: number;
-  shippingPrice?: number | string;
+  price?: string;
+  shippingPrice?: string;
 };
 
 function PricePreview({ price, shippingPrice = 'FREE' }: PricePreviewProps) {
