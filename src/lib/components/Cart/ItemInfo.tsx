@@ -32,7 +32,7 @@ export function ItemInfo({
       <Group noWrap>
         <Indicator label={quantity} disabled={!isForCheckout} inline size={22}>
           <Avatar
-            src={`https://res.cloudinary.com/dv9wpbflv/image/upload/v${image}.jpg`}
+            src={`https://res.cloudinary.com/dv9wpbflv/image/upload/w_100,f_auto,q_auto/v${image}.jpg`}
             size={94}
             radius="md"
           />
