@@ -130,7 +130,11 @@ export const orderRouter = router({
           }
         });
 
-        let bags = items[0].Bag;
+        let bags = items
+          .map((e) => {
+            return [...e.Bag];
+          })
+          .flat();
 
         for await (const product of bags) {
           await ctx.prisma.product.update({
