@@ -85,6 +85,7 @@ export function CartQuantityInput({
     if (selectedRow) {
       current.cart.getCartItemsPrice.invalidate();
     }
+    current.cart.getItemCount.invalidate();
     current.cart.getCartItems.invalidate();
   };
 
