@@ -51,12 +51,14 @@ interface CartQuantityInputProps {
   value: number | undefined;
   min?: number;
   max?: number;
+  productId: string;
 }
 
 export function CartQuantityInput({
   id,
   selectedRow,
-  value,
+  value = 1,
+  productId,
   min = 1,
   max = 10
 }: CartQuantityInputProps) {
@@ -66,9 +68,18 @@ export function CartQuantityInput({
   const incrementItem = trpc.cart.incrementItemCount.useMutation();
   const decrementItem = trpc.cart.decrementItemCount.useMutation();
   const updateItemCount = trpc.cart.updateItemCount.useMutation();
+  const [cartLimit, setCartLimit] = useState<boolean>(false);
 
   const handleIncrement = async () => {
-    incrementItem.mutate({ id }, { onSuccess: invalidateData });
+    incrementItem.mutate(
+      { id, productId, value },
+      {
+        onSuccess: (data) => {
+          if (data === 'stock_limit') setCartLimit(true);
+          invalidateData();
+        }
+      }
+    );
   };
 
   const handleDecrement = async () => {
@@ -77,7 +88,15 @@ export function CartQuantityInput({
 
   const handleItemCount = async (value: number) => {
     if (value) {
-      updateItemCount.mutate({ id, quantity: value }, { onSuccess: invalidateData });
+      updateItemCount.mutate(
+        { id, productId, value },
+        {
+          onSuccess: (data) => {
+            if (data === 'stock_limit') setCartLimit(true);
+            invalidateData();
+          }
+        }
+      );
     }
   };
 
@@ -100,7 +119,7 @@ export function CartQuantityInput({
         size={28}
         variant="transparent"
         onClick={handleDecrement}
-        disabled={value === min || incrementItem.isLoading}
+        disabled={value === min || cartLimit}
         className={classes.control}
         onMouseDown={(event) => event.preventDefault()}
         radius="sm"
@@ -112,6 +131,7 @@ export function CartQuantityInput({
         variant="unstyled"
         min={min}
         max={max}
+        disabled={cartLimit}
         handlersRef={handlers}
         value={value}
         onChange={handleItemCount}
@@ -122,7 +142,7 @@ export function CartQuantityInput({
         size={28}
         variant="transparent"
         onClick={handleIncrement}
-        disabled={value === max}
+        disabled={value === max || cartLimit}
         className={classes.control}
         onMouseDown={(event) => event.preventDefault()}
         radius="sm"
