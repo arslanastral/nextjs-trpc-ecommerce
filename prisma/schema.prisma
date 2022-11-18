@@ -56,7 +56,7 @@ model Product {
   category     Category[]
   featured     Boolean    @default(false)
   description  String
-  stock        Int        @default(1)
+  stock        Int        @default(10)
   sold         Int        @default(0)
   image        String
   seller       Seller     @relation(fields: [sellerId], references: [id], onUpdate: Cascade, onDelete: Cascade)
