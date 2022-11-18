@@ -35,7 +35,18 @@ interface ItemRowProps {
 type ItemProps = ItemInfoProps & ItemRowProps;
 
 export const Item = memo(
-  ({ id, toggleRow, title, image, selected, price, quantity, stock, storeName }: ItemProps) => {
+  ({
+    id,
+    toggleRow,
+    title,
+    image,
+    selected,
+    price,
+    quantity,
+    stock,
+    storeName,
+    productId
+  }: ItemProps) => {
     const { classes, cx } = useStyles();
     const current = trpc.useContext();
     const deleteItem = trpc.cart.deleteItem.useMutation();
@@ -74,6 +85,7 @@ export const Item = memo(
             quantity={quantity ?? 1}
             stock={stock}
             storeName={storeName}
+            productId={productId}
           />
           {/* </Group> */}
         </td>
@@ -87,7 +99,13 @@ export const Item = memo(
               <IconTrash size={22} stroke={1.5} />
             </ActionIcon>
             <div className="max-w-[130px]">
-              <CartQuantityInput value={quantity} id={id} selectedRow={selected} />
+              <CartQuantityInput
+                value={quantity}
+                id={id}
+                selectedRow={selected}
+                productId={productId}
+                max={stock}
+              />
             </div>
           </Group>
         </td>

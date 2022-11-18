@@ -1,5 +1,4 @@
 import { trpc } from '@/utils/trpc';
-import { useCallback, useState } from 'react';
 import { createStyles, Table, Checkbox, ScrollArea, LoadingOverlay } from '@mantine/core';
 import { Item } from './Item';
 
@@ -25,6 +24,7 @@ type CartBag = {
   selected: boolean;
   item: Item;
   itemCount: number;
+  productId: string;
 };
 
 interface ItemSelectionProps {
@@ -82,6 +82,7 @@ export function ItemsSelect({ data }: ItemSelectionProps) {
           quantity={e.itemCount}
           stock={e.item.stock}
           storeName={e.item.seller.storeName}
+          productId={e.productId}
         />
       );
     });

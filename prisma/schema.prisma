@@ -56,7 +56,7 @@ model Product {
   category     Category[]
   featured     Boolean    @default(false)
   description  String
-  stock        Int        @default(1)
+  stock        Int        @default(10)
   sold         Int        @default(0)
   image        String
   seller       Seller     @relation(fields: [sellerId], references: [id], onUpdate: Cascade, onDelete: Cascade)
@@ -90,8 +90,6 @@ model Bag {
   cartId     String
   productId  String
   orderId    String?
-
-  @@unique([cartId, productId], name: "product_in_cart")
 }
 
 model Order {
@@ -99,13 +97,14 @@ model Order {
   updatedAt         DateTime    @updatedAt
   id                String      @id @default(cuid())
   status            OrderStatus @default(PROCESSING)
-  payment           Payment?
+  payment           Payment?    @relation(fields: [paymentId], references: [id])
+  paymentId         String?
   address           Address?    @relation(fields: [addressId], references: [id])
   addressId         String?
   buyer             Buyer       @relation(fields: [buyerId], references: [id])
-  buyerId           String      @unique
+  buyerId           String
   seller            Seller      @relation(fields: [sellerId], references: [id])
-  sellerId          String      @unique
+  sellerId          String
   totalPriceInCents String?
   Bag               Bag[]
 }
@@ -114,9 +113,9 @@ model Payment {
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
   id        String        @id @default(cuid())
+  refId     String
   status    PaymentStatus @default(PENDING)
-  order     Order         @relation(fields: [orderId], references: [id])
-  orderId   String        @unique
+  Order     Order[]
 }
 
 model Address {

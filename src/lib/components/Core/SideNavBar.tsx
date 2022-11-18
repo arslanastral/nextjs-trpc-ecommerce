@@ -110,7 +110,7 @@ export function SideNavBar({ opened }: { opened: boolean }) {
       p="md"
       fixed={true}
       hidden={!opened}
-      zIndex="2"
+      zIndex={150}
     >
       <Navbar.Section grow>
         <Group className={classes.header} position="right">

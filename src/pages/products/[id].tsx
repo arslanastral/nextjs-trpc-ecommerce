@@ -38,6 +38,7 @@ const ProductPage: PageWithLayout = () => {
           category={data.category[0].name ?? ''}
           description={data.description}
           price={(+data.priceInCents / 100).toString()}
+          stock={data.stock}
         />
       </>
     )

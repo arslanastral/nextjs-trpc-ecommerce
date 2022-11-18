@@ -13,7 +13,7 @@ export const productRouter = router({
     let imageId = await uploadToCloudinary(input.image);
     if (!imageId) return null;
 
-    let priceInCents = (input.price * 100).toString();
+    let priceInCents = (input.price * 100).toFixed();
     let itemCat = +input.category <= 7 ? +input.category : 7; //assign a known category
     let product = await ctx.prisma.product.create({
       data: {
@@ -64,7 +64,7 @@ export const productRouter = router({
       updatedImage = (await uploadToCloudinary(input.image, public_id)) ?? input.imageId;
     }
 
-    let priceInCents = (input.price * 100).toString();
+    let priceInCents = (input.price * 100).toFixed();
 
     let updatedProduct = await ctx.prisma.product.updateMany({
       where: {

@@ -55,7 +55,7 @@ function ControlBar() {
     >
       <div className="flex items-center min-h-full">
         <Burger
-          className="lg:hidden ml-3 z-20 relative block"
+          className="lg:hidden ml-3 z-[160] relative block"
           color={opened ? 'white' : 'black'}
           opened={opened}
           onClick={() => {
@@ -77,8 +77,8 @@ function ControlBar() {
           size="sm"
         />
 
-        <div className="mr-3 mt-3">
-          <Indicator label={data ?? 0} inline size={22}>
+        <div className={`mr-3 ${session ? 'mt-3' : ''}`}>
+          <Indicator label={data ?? 0} inline size={22} disabled={!session}>
             <ActionIcon component={Link} href="/cart" size="lg" color="brown" title="Checkout">
               <IconShoppingCart size={25} stroke={1.6} />
             </ActionIcon>
