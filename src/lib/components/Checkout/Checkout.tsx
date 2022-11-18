@@ -1,5 +1,6 @@
 import { trpc } from '@/utils/trpc';
-import { Button, Text, Skeleton, Loader, Title, Table, Badge } from '@mantine/core';
+import { Button, Text, Skeleton, Loader, Title, Badge, Alert } from '@mantine/core';
+import { IconAlertCircle } from '@tabler/icons';
 import Link from 'next/link';
 import { useState } from 'react';
 import PricePreview from '../Cart/PricePreview';
@@ -8,8 +9,25 @@ import CheckoutItems from './CheckoutItems';
 
 function Checkout() {
   const { data, isLoading, error } = trpc.cart.getSelectedCartItems.useQuery();
+  const placeOrder = trpc.order.placeOrder.useMutation();
   const [addressId, setAddressId] = useState<string>('');
   const price = trpc.cart.getCartItemsPrice.useQuery();
+  const [orderError, setOrderError] = useState<boolean>(false);
+
+  const handleOrder = async () => {
+    setOrderError(false);
+    if (addressId) {
+      placeOrder.mutate(
+        { addressId },
+        {
+          onSuccess: (data) => {
+            if (data) window.location.href = data;
+          },
+          onError: () => setOrderError(true)
+        }
+      );
+    }
+  };
 
   return (
     <div className="w-full flex justify-center">
@@ -35,6 +53,16 @@ function Checkout() {
           <Title order={1} color="dark" ml={15}>
             Checkout
           </Title>
+          {orderError && (
+            <Alert
+              icon={<IconAlertCircle size={16} />}
+              title="Something Went Wrong"
+              color="red"
+              mt={15}
+            >
+              We weren&apos;t able to place your order. Please try again later.
+            </Alert>
+          )}
 
           <div className="mt-8 min-h-[600px] rounded flex gap-4 flex-col lg:flex-row">
             <div className="text-black bg-white flex-1 flex gap-4 rounded-lg flex-col">
@@ -51,9 +79,15 @@ function Checkout() {
                 </Title>
               </div>
               <div className="text-black w-full bg-white flex-1 p-4 flex flex-col justify-between rounded-lg">
-                <PricePreview price={price.data ?? 0} />
-                <Button fullWidth radius="md" className="h-[45px] font-light text-lg">
-                  Place Order
+                <PricePreview price={price.data ?? '0'} />
+                <Button
+                  leftIcon={isLoading ? <Loader color="white" size="sm" /> : ''}
+                  onClick={handleOrder}
+                  fullWidth
+                  radius="md"
+                  className="h-[45px] font-light text-lg"
+                >
+                  {isLoading ? 'Creating Order' : 'Place Order'}
                 </Button>
               </div>
             </div>
