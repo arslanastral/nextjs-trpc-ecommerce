@@ -67,6 +67,18 @@ export const orderRouter = router({
           }
         });
 
+        let checkedOut = await ctx.prisma.bag.updateMany({
+          where: {
+            cartId: cartId,
+            checkedOut: false,
+            selected: true
+          },
+          data: {
+            checkedOut: true,
+            selected: false
+          }
+        });
+
         sellerOrders.push(order);
       }
 
