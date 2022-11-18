@@ -30,7 +30,7 @@ export async function getCartItemsPrice(ctx: Context) {
     return price + currentItemPrice;
   }, 0);
 
-  return price;
+  return price.toFixed(2);
 }
 
 export async function getSelectedCartItems(ctx: Context) {
