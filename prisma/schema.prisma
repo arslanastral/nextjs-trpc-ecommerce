@@ -99,7 +99,8 @@ model Order {
   updatedAt         DateTime    @updatedAt
   id                String      @id @default(cuid())
   status            OrderStatus @default(PROCESSING)
-  payment           Payment?
+  payment           Payment?    @relation(fields: [paymentId], references: [id])
+  paymentId         String?
   address           Address?    @relation(fields: [addressId], references: [id])
   addressId         String?
   buyer             Buyer       @relation(fields: [buyerId], references: [id])
@@ -115,8 +116,7 @@ model Payment {
   updatedAt DateTime      @updatedAt
   id        String        @id @default(cuid())
   status    PaymentStatus @default(PENDING)
-  order     Order         @relation(fields: [orderId], references: [id])
-  orderId   String        @unique
+  Order     Order[]
 }
 
 model Address {
