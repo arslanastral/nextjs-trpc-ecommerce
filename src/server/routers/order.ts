@@ -28,7 +28,10 @@ export const orderRouter = router({
             price_data: {
               currency: 'usd',
               product_data: {
-                name: item.title
+                name: item.title,
+                images: [
+                  `https://res.cloudinary.com/dv9wpbflv/image/upload/w_300,f_auto,q_auto/v${item.image}.jpg`
+                ]
               },
               unit_amount: item.priceInCents
             },
