@@ -81,13 +81,13 @@ function Checkout() {
               <div className="text-black w-full bg-white flex-1 p-4 flex flex-col justify-between rounded-lg">
                 <PricePreview price={price.data ?? '0'} />
                 <Button
-                  leftIcon={isLoading ? <Loader color="white" size="sm" /> : ''}
+                  leftIcon={placeOrder.isLoading ? <Loader color="white" size="sm" /> : ''}
                   onClick={handleOrder}
                   fullWidth
                   radius="md"
                   className="h-[45px] font-light text-lg"
                 >
-                  {isLoading ? 'Creating Order' : 'Place Order'}
+                  {placeOrder.isLoading ? 'Creating Order' : 'Place Order'}
                 </Button>
               </div>
             </div>
