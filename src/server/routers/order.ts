@@ -44,8 +44,6 @@ export const orderRouter = router({
         cancel_url: `${process.env.NEXTAUTH_URL}payment/${refId}`
       });
 
-      let sellerOrders = [];
-
       let payment = await ctx.prisma.payment.create({
         data: {
           id: session.id,
@@ -59,7 +57,7 @@ export const orderRouter = router({
           return price + currentItemPrice;
         }, 0);
 
-        let order = await ctx.prisma.order.create({
+        await ctx.prisma.order.create({
           data: {
             addressId: input.addressId,
             totalPriceInCents: bagPrice?.toString(),
@@ -74,7 +72,7 @@ export const orderRouter = router({
           }
         });
 
-        let checkedOut = await ctx.prisma.bag.updateMany({
+        await ctx.prisma.bag.updateMany({
           where: {
             cartId: cartId,
             checkedOut: false,
@@ -85,8 +83,6 @@ export const orderRouter = router({
             selected: false
           }
         });
-
-        sellerOrders.push(order);
       }
 
       return session.url;
