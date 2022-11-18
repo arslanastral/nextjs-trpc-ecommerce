@@ -77,8 +77,8 @@ function ControlBar() {
           size="sm"
         />
 
-        <div className="mr-3 mt-3">
-          <Indicator label={data ?? 0} inline size={22}>
+        <div className={`mr-3 ${session ? 'mt-3' : ''}`}>
+          <Indicator label={data ?? 0} inline size={22} disabled={!session}>
             <ActionIcon component={Link} href="/cart" size="lg" color="brown" title="Checkout">
               <IconShoppingCart size={25} stroke={1.6} />
             </ActionIcon>
