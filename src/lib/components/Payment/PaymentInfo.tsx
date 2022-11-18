@@ -30,7 +30,7 @@ function PaymentInfo({ status, checkoutLink }: PaymentInfoProps) {
           )}
           {status === 'open' && (
             <>
-              <IconAlertTriangle size={60} color="green" stroke={1.5} />
+              <IconAlertTriangle size={60} color="red" stroke={1.5} />
               <Title order={1} weight={300} color="dark" ml={15}>
                 Payment Pending
               </Title>
@@ -65,7 +65,6 @@ function PaymentInfo({ status, checkoutLink }: PaymentInfoProps) {
           {status === 'open' && checkoutLink && (
             <>
               <Button
-                color="blue"
                 component={Link}
                 href={checkoutLink}
                 fullWidth
