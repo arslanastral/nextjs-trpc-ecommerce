@@ -15,6 +15,7 @@ export interface ItemInfoProps {
   stock?: number;
   price?: string;
   isForCheckout?: boolean;
+  productId: string;
 }
 
 export function ItemInfo({
@@ -24,6 +25,7 @@ export function ItemInfo({
   stock,
   storeName,
   price,
+  productId,
   isForCheckout = false
 }: ItemInfoProps) {
   const { classes } = useStyles();
