@@ -107,7 +107,7 @@ export const orderRouter = router({
       }
 
       if (payment.status === 'PENDING' && paymentSession.status === 'complete') {
-        let updatedPayment = await ctx.prisma.payment.update({
+        await ctx.prisma.payment.update({
           where: {
             id: payment.id
           },
@@ -115,6 +115,35 @@ export const orderRouter = router({
             status: 'SUCCESS'
           }
         });
+
+        let items = await ctx.prisma.order.findMany({
+          where: {
+            paymentId: payment.id
+          },
+          select: {
+            Bag: {
+              select: {
+                itemCount: true,
+                productId: true
+              }
+            }
+          }
+        });
+
+        let bags = items[0].Bag;
+
+        for await (const product of bags) {
+          await ctx.prisma.product.update({
+            where: {
+              id: product.productId
+            },
+            data: {
+              stock: {
+                decrement: product.itemCount
+              }
+            }
+          });
+        }
 
         return { status: paymentSession.status };
       }
