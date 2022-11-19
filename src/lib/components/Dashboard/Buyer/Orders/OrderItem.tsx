@@ -18,7 +18,15 @@ export type BuyerOrderProps = {
   bags: Bag[];
   sellerName: string;
   paymentStatus?: 'PENDING' | 'SUCCESS' | 'FAILED';
-  orderStatus: string;
+  orderStatus:
+    | 'OUTOFSTOCK'
+    | 'USERCANCELLED'
+    | 'SELLERCANCELLED'
+    | 'PROCESSING'
+    | 'PACKED'
+    | 'SHIPPED'
+    | 'OUTFORDELIVERY'
+    | 'DELIVERED';
   totalPrice: string;
   paymentLink?: string;
 };

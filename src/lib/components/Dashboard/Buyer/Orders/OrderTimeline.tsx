@@ -8,8 +8,16 @@ import {
 } from '@tabler/icons';
 
 type OrderTimelineProps = {
-  orderStatus: string;
-  paymentStatus: string;
+  orderStatus:
+    | 'OUTOFSTOCK'
+    | 'USERCANCELLED'
+    | 'SELLERCANCELLED'
+    | 'PROCESSING'
+    | 'PACKED'
+    | 'SHIPPED'
+    | 'OUTFORDELIVERY'
+    | 'DELIVERED';
+  paymentStatus?: 'PENDING' | 'SUCCESS' | 'FAILED';
   sellerName: string;
 };
 
