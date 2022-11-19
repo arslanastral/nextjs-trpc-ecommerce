@@ -194,5 +194,48 @@ export const orderRouter = router({
     });
 
     return buyerOrders;
-  })
+  }),
+  getBuyerOrderById: protectedProcedure
+    .input(z.object({ id: z.string().min(1) }))
+    .query(async ({ input, ctx }) => {
+      let id = await getBuyerId(ctx);
+      if (!id) return null;
+
+      let buyerOrder = await ctx.prisma.order.findUnique({
+        where: {
+          id: input.id
+        },
+        select: {
+          id: true,
+          Bag: {
+            select: {
+              productId: true,
+              itemCount: true,
+              item: {
+                select: {
+                  image: true,
+                  title: true,
+                  priceInCents: true
+                }
+              }
+            }
+          },
+          seller: {
+            select: {
+              storeName: true
+            }
+          },
+          payment: {
+            select: {
+              refId: true,
+              status: true
+            }
+          },
+          status: true,
+          totalPriceInCents: true
+        }
+      });
+
+      return buyerOrder;
+    })
 });
