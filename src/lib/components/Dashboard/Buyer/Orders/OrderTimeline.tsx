@@ -9,7 +9,7 @@ import {
 
 export function OrderTimeline() {
   return (
-    <div className="bg-white p-6 rounded-lg">
+    <div className="bg-white p-10 rounded-lg">
       <Title order={2} weight={300} color="dark">
         Order Tracker
       </Title>
