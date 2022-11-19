@@ -4,7 +4,7 @@ import OrderInfo from './OrderInfo';
 import { OrderTimeline } from './OrderTimeline';
 import { type Bag, BuyerOrderProps } from './OrderItem';
 import OrderAddress from './OrderAddress';
-import { AddressWithId } from '@/server/schema';
+import { PaymentSummary } from './PaymentSummary';
 
 export type OrderAddressType = {
   address: {
@@ -51,8 +51,13 @@ function Order({
           sellerName={sellerName}
         />
       </div>
-      <div className="mt-4">
+      <div className="flex gap-4 mt-4">
         <OrderAddress address={address} />
+        <PaymentSummary
+          totalPriceInCents={(+totalPrice / 100).toString()}
+          paymentStatus={paymentStatus}
+          paymentLink={paymentLink}
+        />
       </div>
     </div>
   );
