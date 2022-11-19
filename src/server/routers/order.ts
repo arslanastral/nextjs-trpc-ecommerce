@@ -183,6 +183,7 @@ export const orderRouter = router({
         },
         payment: {
           select: {
+            refId: true,
             status: true
           }
         },
