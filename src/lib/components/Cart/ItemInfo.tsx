@@ -32,7 +32,7 @@ export function ItemInfo({
   const { classes } = useStyles();
   return (
     <div>
-      <Group noWrap>
+      <Group>
         <Indicator label={quantity} disabled={!isForCheckout} inline size={22}>
           <Avatar
             src={`https://res.cloudinary.com/dv9wpbflv/image/upload/w_100,f_auto,q_auto/v${image}.jpg`}
