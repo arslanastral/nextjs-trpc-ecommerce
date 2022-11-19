@@ -11,7 +11,7 @@ const BuyerOrders: PageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Zavy | My Orders</title>
+        <title>My Orders | Zavy</title>
         <meta name="description" content="An ecommerce store" />
       </Head>
 
