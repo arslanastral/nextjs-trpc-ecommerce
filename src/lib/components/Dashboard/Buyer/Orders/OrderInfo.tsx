@@ -17,7 +17,7 @@ type OrderInfoProps = {
 
 function OrderInfo({ data }: OrderInfoProps) {
   return (
-    <div className="flex flex-col p-10 flex-1">
+    <div className="flex flex-col p-10 flex-1 bg-white rounded-lg">
       <Title order={2} weight={300} color="dark">
         Your Items
       </Title>
