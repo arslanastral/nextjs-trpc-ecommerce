@@ -24,7 +24,17 @@ const BuyerOrderPage: PageWithLayout = () => {
         <title>Order | Zavy</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      {data && <Order {...data} />}
+      {data && (
+        <Order
+          id={data.id}
+          bags={data.Bag}
+          orderStatus={data.status}
+          paymentStatus={data.payment?.status}
+          sellerName={data.seller.storeName}
+          totalPrice={data.totalPriceInCents ?? ''}
+          paymentLink={data.payment?.refId}
+        />
+      )}
     </>
   );
 };
