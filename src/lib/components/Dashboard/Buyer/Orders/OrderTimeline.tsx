@@ -7,7 +7,13 @@ import {
   IconHeartHandshake
 } from '@tabler/icons';
 
-export function OrderTimeline() {
+type OrderTimelineProps = {
+  orderStatus: string;
+  paymentStatus: string;
+  sellerName: string;
+};
+
+export function OrderTimeline({ orderStatus, paymentStatus, sellerName }: OrderTimelineProps) {
   return (
     <div className="bg-white p-10 rounded-lg">
       <Title order={2} weight={300} color="dark">
