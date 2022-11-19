@@ -17,7 +17,7 @@ export type BuyerOrderProps = {
   id: string;
   bags: Bag[];
   sellerName: string;
-  paymentStatus?: string;
+  paymentStatus?: 'PENDING' | 'SUCCESS' | 'FAILED';
   orderStatus: string;
   totalPrice: string;
   paymentLink?: string;
