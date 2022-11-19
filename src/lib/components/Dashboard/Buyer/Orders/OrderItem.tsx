@@ -3,7 +3,7 @@ import { ItemInfo } from '@/lib/components/Cart/ItemInfo';
 import { IconBuildingStore, IconFileInvoice, IconBox, IconReceipt2 } from '@tabler/icons';
 import Link from 'next/link';
 
-type Bag = {
+export type Bag = {
   item: {
     title: string;
     image: string;
@@ -13,7 +13,7 @@ type Bag = {
   itemCount: number;
 };
 
-type BuyerOrderProps = {
+export type BuyerOrderProps = {
   id: string;
   bags: Bag[];
   sellerName: string;
