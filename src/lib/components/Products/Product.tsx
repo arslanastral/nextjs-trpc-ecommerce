@@ -56,7 +56,7 @@ const Product = ({ id, title, image, description, category, price, stock }: Prod
               <Skeleton visible={loading} radius={0}>
                 <Image
                   fill={true}
-                  src={`https://res.cloudinary.com/dv9wpbflv/image/upload/v${image}.jpg`}
+                  src={`https://res.cloudinary.com/dv9wpbflv/image/upload/f_auto,q_auto/v${image}.jpg`}
                   alt="Product Image"
                   onLoad={() => setLoading(false)}
                 />
