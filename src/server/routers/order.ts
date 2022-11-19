@@ -207,6 +207,17 @@ export const orderRouter = router({
         },
         select: {
           id: true,
+          address: {
+            select: {
+              id: true,
+              isDefault: true,
+              city: true,
+              country: true,
+              postalCode: true,
+              region: true,
+              addressLine1: true
+            }
+          },
           Bag: {
             select: {
               productId: true,
