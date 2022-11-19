@@ -9,7 +9,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export interface ItemInfoProps {
-  storeName: string;
+  storeName?: string;
   image: string;
   title: string;
   quantity: number;
