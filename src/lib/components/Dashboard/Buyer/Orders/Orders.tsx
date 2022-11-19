@@ -18,6 +18,7 @@ function Orders() {
           let notPaid = paymentStatus === 'PENDING' || paymentStatus === 'FAILED';
           return (
             <Order
+              id={order.id}
               key={i}
               bags={order.Bag}
               orderStatus={order.status}
