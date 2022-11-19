@@ -153,5 +153,17 @@ export const orderRouter = router({
       }
 
       return { status: paymentSession.status };
-    })
+    }),
+  getBuyerOrders: protectedProcedure.query(async ({ ctx }) => {
+    let id = await getBuyerId(ctx);
+    if (!id) return null;
+
+    let buyerOrders = await ctx.prisma.order.findMany({
+      where: {
+        buyerId: id
+      }
+    });
+
+    return buyerOrders;
+  })
 });
