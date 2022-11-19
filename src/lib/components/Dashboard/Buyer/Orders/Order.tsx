@@ -1,6 +1,7 @@
 import { Text, Button, Badge } from '@mantine/core';
 import { ItemInfo } from '@/lib/components/Cart/ItemInfo';
 import { IconBuildingStore, IconFileInvoice, IconBox, IconReceipt2 } from '@tabler/icons';
+import Link from 'next/link';
 
 type Bag = {
   item: {
@@ -18,9 +19,17 @@ type BuyerOrderProps = {
   paymentStatus?: string;
   orderStatus: string;
   totalPrice: string;
+  paymentLink?: string;
 };
 
-function Order({ bags, sellerName, paymentStatus, orderStatus, totalPrice }: BuyerOrderProps) {
+function Order({
+  bags,
+  sellerName,
+  paymentStatus,
+  orderStatus,
+  totalPrice,
+  paymentLink
+}: BuyerOrderProps) {
   let paymentInfo = '';
   if (paymentStatus === 'PENDING') {
     paymentInfo = 'Payment Pending';
@@ -66,7 +75,12 @@ function Order({ bags, sellerName, paymentStatus, orderStatus, totalPrice }: Buy
             Track Order
           </Button>
         ) : (
-          <Button variant="outline" leftIcon={<IconReceipt2 stroke={1.5} size={20} />}>
+          <Button
+            component={Link}
+            href={paymentLink ?? ''}
+            variant="outline"
+            leftIcon={<IconReceipt2 stroke={1.5} size={20} />}
+          >
             Pay Now
           </Button>
         )}
