@@ -163,6 +163,7 @@ export const orderRouter = router({
         buyerId: id
       },
       select: {
+        id: true,
         Bag: {
           select: {
             productId: true,
