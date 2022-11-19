@@ -21,13 +21,20 @@ type BuyerOrderProps = {
 };
 
 function Order({ bags, sellerName, paymentStatus, orderStatus, totalPrice }: BuyerOrderProps) {
+  let paymentInfo = '';
+  if (paymentStatus === 'PENDING') {
+    paymentInfo = 'Payment Pending';
+  } else {
+    paymentInfo = 'Payment Failed';
+  }
+
   return (
     <div className="mt-4 rounded-lg p-4 bg-white">
       <div className="flex items-center justify-between">
         <Button leftIcon={<IconBuildingStore stroke={1.5} />} variant="subtle">
           {sellerName}
         </Button>
-        <Badge>{paymentStatus === 'SUCCESS' ? orderStatus : paymentStatus}</Badge>
+        <Badge>{paymentStatus === 'SUCCESS' ? orderStatus : paymentInfo}</Badge>
       </div>
 
       {bags && (
