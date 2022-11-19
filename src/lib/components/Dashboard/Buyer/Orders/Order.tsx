@@ -3,6 +3,22 @@ import { IconHash, IconBuildingStore } from '@tabler/icons';
 import OrderInfo from './OrderInfo';
 import { OrderTimeline } from './OrderTimeline';
 import { type Bag, BuyerOrderProps } from './OrderItem';
+import OrderAddress from './OrderAddress';
+import { AddressWithId } from '@/server/schema';
+
+export type OrderAddressType = {
+  address: {
+    isDefault: boolean;
+    addressLine1: string;
+    city: string;
+    postalCode: string | null;
+    region: string;
+    country: string;
+    id: string;
+  } | null;
+};
+
+type OrderPropsWithAddress = OrderAddressType & BuyerOrderProps;
 
 function Order({
   id,
@@ -11,8 +27,9 @@ function Order({
   paymentStatus,
   orderStatus,
   totalPrice,
-  paymentLink
-}: BuyerOrderProps) {
+  paymentLink,
+  address
+}: OrderPropsWithAddress) {
   return (
     <div className="p-8">
       <Title order={1}>Your Order</Title>
@@ -26,14 +43,16 @@ function Order({
       </div>
 
       <div className="flex gap-4 mt-10">
-        <div className="bg-white">
-          <OrderInfo data={bags} />
-        </div>
+        <OrderInfo data={bags} />
+
         <OrderTimeline
           orderStatus={orderStatus}
           paymentStatus={paymentStatus}
           sellerName={sellerName}
         />
+      </div>
+      <div className="mt-4">
+        <OrderAddress address={address} />
       </div>
     </div>
   );
