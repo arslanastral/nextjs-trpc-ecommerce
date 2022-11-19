@@ -14,6 +14,7 @@ type Bag = {
 };
 
 type BuyerOrderProps = {
+  id: string;
   bags: Bag[];
   sellerName: string;
   paymentStatus?: string;
@@ -23,6 +24,7 @@ type BuyerOrderProps = {
 };
 
 function Order({
+  id,
   bags,
   sellerName,
   paymentStatus,
@@ -71,7 +73,12 @@ function Order({
         )}
 
         {paymentStatus === 'SUCCESS' ? (
-          <Button variant="outline" leftIcon={<IconBox stroke={1.5} size={20} />}>
+          <Button
+            component={Link}
+            href={`/dashboard/buyer/orders/${id}`}
+            variant="outline"
+            leftIcon={<IconBox stroke={1.5} size={20} />}
+          >
             Track Order
           </Button>
         ) : (
