@@ -33,6 +33,7 @@ const BuyerOrderPage: PageWithLayout = () => {
           sellerName={data.seller.storeName}
           totalPrice={data.totalPriceInCents ?? ''}
           paymentLink={data.payment?.refId}
+          address={data.address}
         />
       )}
     </>
