@@ -1,13 +1,16 @@
-import { Text, Button, Badge } from '@mantine/core';
+import { Text, Button, Modal, Badge, Title } from '@mantine/core';
 import { ItemInfo } from '@/lib/components/Cart/ItemInfo';
 import {
   IconBuildingStore,
   IconFileInvoice,
   IconBox,
   IconReceipt2,
-  IconReceipt
+  IconReceipt,
+  IconHash
 } from '@tabler/icons';
 import Link from 'next/link';
+import { useState } from 'react';
+import { OrderTimeline } from './OrderTimeline';
 
 export type Bag = {
   item: {
@@ -46,6 +49,8 @@ function OrderItem({
   totalPrice,
   paymentLink
 }: BuyerOrderProps) {
+  const [opened, setOpened] = useState<boolean>(false);
+
   let paymentInfo = '';
   if (paymentStatus === 'PENDING') {
     paymentInfo = 'Payment Pending';
@@ -55,6 +60,17 @@ function OrderItem({
 
   return (
     <div className="mt-4 rounded-lg p-4 bg-white">
+      <Modal opened={opened} onClose={() => setOpened(false)}>
+        <Title order={4} weight={300} color="dimmed" className="flex items-center">
+          <IconHash /> {id}
+        </Title>
+
+        <OrderTimeline
+          orderStatus={orderStatus}
+          paymentStatus={paymentStatus}
+          sellerName={sellerName}
+        />
+      </Modal>
       <div className="flex items-center justify-between">
         <Button leftIcon={<IconBuildingStore stroke={1.5} />} variant="subtle">
           {sellerName}
@@ -97,8 +113,7 @@ function OrderItem({
               View Order
             </Button>
             <Button
-              component={Link}
-              href={`/dashboard/buyer/orders/${id}`}
+              onClick={() => setOpened(true)}
               variant="outline"
               leftIcon={<IconBox stroke={1.5} size={20} />}
             >
