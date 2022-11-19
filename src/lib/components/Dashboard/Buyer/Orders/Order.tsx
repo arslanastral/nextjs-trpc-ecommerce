@@ -1,6 +1,6 @@
 import { Text, Button, Badge } from '@mantine/core';
 import { ItemInfo } from '@/lib/components/Cart/ItemInfo';
-import { IconBuildingStore, IconFileInvoice, IconBox } from '@tabler/icons';
+import { IconBuildingStore, IconFileInvoice, IconBox, IconReceipt2 } from '@tabler/icons';
 
 type Bag = {
   item: {
@@ -15,7 +15,7 @@ type Bag = {
 type BuyerOrderProps = {
   bags: Bag[];
   sellerName: string;
-  paymentStatus: string;
+  paymentStatus?: string;
   orderStatus: string;
   totalPrice: string;
 };
@@ -48,13 +48,21 @@ function Order({ bags, sellerName, paymentStatus, orderStatus, totalPrice }: Buy
         </div>
       )}
       <div className="flex justify-between mt-4 items-center">
-        <Text className="text-md pl-3 flex gap-2 text-brown-500">
-          <IconFileInvoice stroke={1.5} /> ${totalPrice}
-        </Text>
+        {totalPrice && (
+          <Text className="text-md pl-3 flex gap-2 text-brown-500">
+            <IconFileInvoice stroke={1.5} /> ${(+totalPrice / 100).toString()}
+          </Text>
+        )}
 
-        <Button variant="outline" leftIcon={<IconBox stroke={1.5} size={20} />}>
-          Track Order
-        </Button>
+        {paymentStatus === 'SUCCESS' ? (
+          <Button variant="outline" leftIcon={<IconBox stroke={1.5} size={20} />}>
+            Track Order
+          </Button>
+        ) : (
+          <Button variant="outline" leftIcon={<IconReceipt2 stroke={1.5} size={20} />}>
+            Pay Now
+          </Button>
+        )}
       </div>
     </div>
   );
