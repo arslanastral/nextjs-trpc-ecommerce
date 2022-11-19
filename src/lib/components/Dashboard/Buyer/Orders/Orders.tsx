@@ -1,9 +1,6 @@
 import { Title } from '@mantine/core';
 import { trpc } from '@/utils/trpc';
 import Order from './Order';
-import { RouterOutput } from '@/utils/trpc';
-
-type BuyerOrder = RouterOutput['order']['getBuyerOrders'];
 
 function Orders() {
   const { data, isLoading, error } = trpc.order.getBuyerOrders.useQuery();
