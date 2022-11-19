@@ -3,7 +3,7 @@ import { type OrderAddressType } from './Order';
 
 function OrderAddress({ address }: OrderAddressType) {
   return (
-    <div className="flex flex-col p-10 rounded-lg bg-white">
+    <div className="flex flex-col flex-1 p-10 rounded-lg bg-white">
       <Title order={2} weight={300} color="dark">
         Shipping Address
       </Title>
