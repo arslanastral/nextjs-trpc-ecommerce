@@ -8,30 +8,28 @@ function OrderAddress({ address }: OrderAddressType) {
         Shipping Address
       </Title>
       <div className=" rounded-lg mt-4">
-        <div className="w-64">
-          <Card p="lg" radius="md" withBorder>
-            <Group position="apart" mt="md" mb="xs">
-              <Text weight={500}>{address?.city}</Text>
-              {address?.isDefault && <Badge variant="light">default</Badge>}
-            </Group>
+        <Card p="lg" radius="md" withBorder>
+          <Group position="apart" mt="md" mb="xs">
+            <Text weight={500}>{address?.city}</Text>
+            {address?.isDefault && <Badge variant="light">default</Badge>}
+          </Group>
 
-            <Text size="sm" color="dimmed">
-              {address?.addressLine1}
-            </Text>
+          <Text size="sm" color="dimmed">
+            {address?.addressLine1}
+          </Text>
 
-            <Text size="sm" color="dimmed">
-              {address?.postalCode}
-            </Text>
+          <Text size="sm" color="dimmed">
+            {address?.postalCode}
+          </Text>
 
-            <Text size="sm" color="dimmed">
-              {address?.city}
-            </Text>
+          <Text size="sm" color="dimmed">
+            {address?.city}
+          </Text>
 
-            <Text size="sm" color="dimmed">
-              {address?.country}
-            </Text>
-          </Card>
-        </div>
+          <Text size="sm" color="dimmed">
+            {address?.country}
+          </Text>
+        </Card>
       </div>
     </div>
   );

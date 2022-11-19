@@ -42,7 +42,7 @@ function Order({
         </Title>
       </div>
 
-      <div className="flex gap-4 mt-10">
+      <div className="flex gap-4 mt-10 flex-col xl:flex-row">
         <OrderInfo data={bags} />
 
         <OrderTimeline
@@ -51,7 +51,7 @@ function Order({
           sellerName={sellerName}
         />
       </div>
-      <div className="flex gap-4 mt-4">
+      <div className="flex gap-4 mt-4 flex-col xl:flex-row">
         <OrderAddress address={address} />
         <PaymentSummary
           totalPriceInCents={(+totalPrice / 100).toString()}
