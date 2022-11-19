@@ -14,14 +14,21 @@ function Orders() {
       <Title order={1}>My Orders</Title>
       {data &&
         data.map((order, i) => {
+          let paymentStatus = order.payment?.status;
+          let notPaid = paymentStatus === 'PENDING' || paymentStatus === 'FAILED';
           return (
             <Order
               key={i}
               bags={order.Bag}
               orderStatus={order.status}
-              paymentStatus={order.payment?.status}
+              paymentStatus={paymentStatus}
               sellerName={order.seller.storeName}
               totalPrice={order.totalPriceInCents ?? ''}
+              paymentLink={
+                notPaid
+                  ? `${process.env.NEXT_PUBLIC_CURRENT_URL}payment/${order.payment?.refId}`
+                  : ''
+              }
             />
           );
         })}
