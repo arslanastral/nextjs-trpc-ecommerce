@@ -161,6 +161,33 @@ export const orderRouter = router({
     let buyerOrders = await ctx.prisma.order.findMany({
       where: {
         buyerId: id
+      },
+      select: {
+        Bag: {
+          select: {
+            productId: true,
+            itemCount: true,
+            item: {
+              select: {
+                image: true,
+                title: true,
+                priceInCents: true
+              }
+            }
+          }
+        },
+        seller: {
+          select: {
+            storeName: true
+          }
+        },
+        payment: {
+          select: {
+            status: true
+          }
+        },
+        status: true,
+        totalPriceInCents: true
       }
     });
 
