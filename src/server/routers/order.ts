@@ -53,7 +53,7 @@ export const orderRouter = router({
 
       for await (const bag of items) {
         const bagPrice: number = bag.items.reduce((price: number, bag) => {
-          let currentItemPrice: number = bag.itemCount * +bag.priceInCents * 100;
+          let currentItemPrice: number = bag.itemCount * +bag.priceInCents;
           return price + currentItemPrice;
         }, 0);
 
