@@ -29,7 +29,11 @@ function Order({
         <div className="bg-white">
           <OrderInfo data={bags} />
         </div>
-        <OrderTimeline />
+        <OrderTimeline
+          orderStatus={orderStatus}
+          paymentStatus={paymentStatus}
+          sellerName={sellerName}
+        />
       </div>
     </div>
   );
