@@ -1,6 +1,6 @@
 import { Title } from '@mantine/core';
 import { trpc } from '@/utils/trpc';
-import Order from './Order';
+import OrderItem from './OrderItem';
 
 function Orders() {
   const { data, isLoading, error } = trpc.order.getBuyerOrders.useQuery();
@@ -17,7 +17,7 @@ function Orders() {
           let paymentStatus = order.payment?.status;
           let notPaid = paymentStatus === 'PENDING' || paymentStatus === 'FAILED';
           return (
-            <Order
+            <OrderItem
               id={order.id}
               key={i}
               bags={order.Bag}
