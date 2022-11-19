@@ -3,6 +3,7 @@ import { PageWithLayout } from '@/lib/types/page';
 import { ReactElement } from 'react';
 import { DashboardLayout } from '@/lib/components/Layouts/DashboardLayout';
 import { useSession, signOut } from 'next-auth/react';
+import Orders from '@/lib/components/Dashboard/Buyer/Orders/Orders';
 
 const BuyerOrders: PageWithLayout = () => {
   const { data: session, status } = useSession();
@@ -10,11 +11,11 @@ const BuyerOrders: PageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Zavy | My Orders</title>
+        <title>My Orders | Zavy</title>
         <meta name="description" content="An ecommerce store" />
       </Head>
 
-      <div>Hello My Orders</div>
+      <Orders />
     </>
   );
 };

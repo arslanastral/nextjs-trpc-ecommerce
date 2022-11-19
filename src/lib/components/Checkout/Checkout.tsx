@@ -49,8 +49,8 @@ function Checkout() {
         </div>
       )}
       {data?.length && !isLoading && (
-        <div className="w-[max(92%,1400px)] ">
-          <Title order={1} color="dark" ml={15}>
+        <div className="w-full lg:w-[max(92%,1400px)] ">
+          <Title order={1} color="dark">
             Checkout
           </Title>
           {orderError && (
@@ -69,7 +69,7 @@ function Checkout() {
               <CheckoutItems data={data} />
               <CheckoutAddress setAddressId={setAddressId} addressId={addressId} />
             </div>
-            <div className=" text-white min-w-[320px] rounded-lg flex flex-col justify-between max-h-[500px] gap-4">
+            <div className=" text-white rounded-lg flex flex-col justify-between max-h-[500px] gap-4">
               <div className="text-black w-full bg-white p-6 rounded-lg">
                 <Title order={2} color="dark" className="flex items-center gap-3">
                   Payment <Badge color="green">Secure</Badge>

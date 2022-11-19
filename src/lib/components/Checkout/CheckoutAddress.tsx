@@ -50,7 +50,7 @@ function CheckoutAddress({ setAddressId, addressId }: CheckoutAddressProps) {
           </Alert>
         )}
       </Title>
-      <div className="min-w-[400px] mt-4">
+      <div className="mt-4">
         <ScrollArea style={{ maxHeight: 240 }}>
           <SimpleGrid spacing="lg" cols={1}>
             {data &&

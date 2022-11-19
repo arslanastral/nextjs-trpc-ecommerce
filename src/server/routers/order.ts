@@ -53,7 +53,7 @@ export const orderRouter = router({
 
       for await (const bag of items) {
         const bagPrice: number = bag.items.reduce((price: number, bag) => {
-          let currentItemPrice: number = bag.itemCount * +bag.priceInCents * 100;
+          let currentItemPrice: number = bag.itemCount * +bag.priceInCents;
           return price + currentItemPrice;
         }, 0);
 
@@ -153,5 +153,100 @@ export const orderRouter = router({
       }
 
       return { status: paymentSession.status };
+    }),
+  getBuyerOrders: protectedProcedure.query(async ({ ctx }) => {
+    let id = await getBuyerId(ctx);
+    if (!id) return null;
+
+    let buyerOrders = await ctx.prisma.order.findMany({
+      where: {
+        buyerId: id
+      },
+      select: {
+        id: true,
+        Bag: {
+          select: {
+            productId: true,
+            itemCount: true,
+            item: {
+              select: {
+                image: true,
+                title: true,
+                priceInCents: true
+              }
+            }
+          }
+        },
+        seller: {
+          select: {
+            storeName: true
+          }
+        },
+        payment: {
+          select: {
+            refId: true,
+            status: true
+          }
+        },
+        status: true,
+        totalPriceInCents: true
+      }
+    });
+
+    return buyerOrders;
+  }),
+  getBuyerOrderById: protectedProcedure
+    .input(z.object({ id: z.string().min(1) }))
+    .query(async ({ input, ctx }) => {
+      let id = await getBuyerId(ctx);
+      if (!id) return null;
+
+      let buyerOrder = await ctx.prisma.order.findUnique({
+        where: {
+          id: input.id
+        },
+        select: {
+          id: true,
+          address: {
+            select: {
+              id: true,
+              isDefault: true,
+              city: true,
+              country: true,
+              postalCode: true,
+              region: true,
+              addressLine1: true
+            }
+          },
+          Bag: {
+            select: {
+              productId: true,
+              itemCount: true,
+              item: {
+                select: {
+                  image: true,
+                  title: true,
+                  priceInCents: true
+                }
+              }
+            }
+          },
+          seller: {
+            select: {
+              storeName: true
+            }
+          },
+          payment: {
+            select: {
+              refId: true,
+              status: true
+            }
+          },
+          status: true,
+          totalPriceInCents: true
+        }
+      });
+
+      return buyerOrder;
     })
 });
