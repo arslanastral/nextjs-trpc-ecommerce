@@ -9,14 +9,14 @@ import Order from '@/lib/components/Dashboard/Buyer/Orders/Order';
 
 const BuyerOrderPage: PageWithLayout = () => {
   const id = useRouter().query.id as string;
-  //   const { data, error, isLoading } = trpc.product.sellableProductById.useQuery(
-  //     { id },
-  //     { enabled: !!id }
-  //   );
+  const { data, error, isLoading } = trpc.order.getBuyerOrderById.useQuery(
+    { id },
+    { enabled: !!id }
+  );
 
-  //   if (error) {
-  //     return <NextError title={error.message} statusCode={error.data?.httpStatus ?? 500} />;
-  //   }
+  if (error) {
+    return <NextError title={error.message} statusCode={error.data?.httpStatus ?? 500} />;
+  }
 
   return (
     <>
@@ -24,7 +24,7 @@ const BuyerOrderPage: PageWithLayout = () => {
         <title>Order | Zavy</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <Order />
+      {data && <Order {...data} />}
     </>
   );
 };
