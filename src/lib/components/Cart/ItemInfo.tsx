@@ -46,7 +46,7 @@ export function ItemInfo({
             {storeName}
           </Text>
 
-          <Link href={`products/${productId}`}>
+          <Link href={`${process.env.NEXT_PUBLIC_CURRENT_URL}products/${productId}`}>
             <Text size="lg" weight={500}>
               {title}
             </Text>
