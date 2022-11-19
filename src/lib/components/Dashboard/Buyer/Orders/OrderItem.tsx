@@ -1,6 +1,12 @@
 import { Text, Button, Badge } from '@mantine/core';
 import { ItemInfo } from '@/lib/components/Cart/ItemInfo';
-import { IconBuildingStore, IconFileInvoice, IconBox, IconReceipt2 } from '@tabler/icons';
+import {
+  IconBuildingStore,
+  IconFileInvoice,
+  IconBox,
+  IconReceipt2,
+  IconReceipt
+} from '@tabler/icons';
 import Link from 'next/link';
 
 export type Bag = {
@@ -81,23 +87,43 @@ function OrderItem({
         )}
 
         {paymentStatus === 'SUCCESS' ? (
-          <Button
-            component={Link}
-            href={`/dashboard/buyer/orders/${id}`}
-            variant="outline"
-            leftIcon={<IconBox stroke={1.5} size={20} />}
-          >
-            Track Order
-          </Button>
+          <div className="flex items-center gap-4">
+            <Button
+              component={Link}
+              href={`/dashboard/buyer/orders/${id}`}
+              variant="outline"
+              leftIcon={<IconReceipt stroke={1.5} size={20} />}
+            >
+              View Order
+            </Button>
+            <Button
+              component={Link}
+              href={`/dashboard/buyer/orders/${id}`}
+              variant="outline"
+              leftIcon={<IconBox stroke={1.5} size={20} />}
+            >
+              Track Order
+            </Button>
+          </div>
         ) : (
-          <Button
-            component={Link}
-            href={paymentLink ?? ''}
-            variant="outline"
-            leftIcon={<IconReceipt2 stroke={1.5} size={20} />}
-          >
-            Pay Now
-          </Button>
+          <div className="flex items-center gap-4">
+            <Button
+              component={Link}
+              href={`/dashboard/buyer/orders/${id}`}
+              variant="outline"
+              leftIcon={<IconBox stroke={1.5} size={20} />}
+            >
+              View Order
+            </Button>
+            <Button
+              component={Link}
+              href={paymentLink ?? ''}
+              variant="outline"
+              leftIcon={<IconReceipt2 stroke={1.5} size={20} />}
+            >
+              Pay Now
+            </Button>
+          </div>
         )}
       </div>
     </div>
