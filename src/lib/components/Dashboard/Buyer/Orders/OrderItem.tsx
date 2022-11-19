@@ -126,7 +126,7 @@ function OrderItem({
               component={Link}
               href={`/dashboard/buyer/orders/${id}`}
               variant="outline"
-              leftIcon={<IconBox stroke={1.5} size={20} />}
+              leftIcon={<IconReceipt stroke={1.5} size={20} />}
             >
               View Order
             </Button>
