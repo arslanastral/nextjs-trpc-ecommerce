@@ -9,10 +9,14 @@ import Order from '@/lib/components/Dashboard/Seller/Orders/Order';
 
 const SellerOrderPage: PageWithLayout = () => {
   const id = useRouter().query.id as string;
+  const { data, error, isLoading } = trpc.order.getSellerOrderById.useQuery(
+    { id },
+    { enabled: !!id }
+  );
 
-  //   if (error) {
-  //     return <NextError title={error.message} statusCode={error.data?.httpStatus ?? 500} />;
-  //   }
+  if (error) {
+    return <NextError title={error.message} statusCode={error.data?.httpStatus ?? 500} />;
+  }
 
   return (
     <>
