@@ -1,6 +1,6 @@
 import { router, protectedProcedure } from '../trpc';
 import { randomUUID } from 'crypto';
-import { getBuyerId, getCartId } from '@/server/functions/identity';
+import { getBuyerId, getSellerId, getCartId } from '@/server/functions/identity';
 import { getSelectedOrderItems, getCartItemsPrice } from '@/server/functions/cart';
 import { z } from 'zod';
 import { stripe } from '@/utils/stripe';
@@ -248,5 +248,38 @@ export const orderRouter = router({
       });
 
       return buyerOrder;
-    })
+    }),
+  getSellerOrders: protectedProcedure.query(async ({ ctx }) => {
+    let id = await getSellerId(ctx);
+    if (!id) return null;
+
+    let sellerOrders = await ctx.prisma.order.findMany({
+      where: {
+        sellerId: id,
+        payment: {
+          status: 'SUCCESS'
+        }
+      },
+      select: {
+        id: true,
+        Bag: {
+          select: {
+            productId: true,
+            itemCount: true,
+            item: {
+              select: {
+                image: true,
+                title: true,
+                priceInCents: true
+              }
+            }
+          }
+        },
+        status: true,
+        totalPriceInCents: true
+      }
+    });
+
+    return sellerOrders;
+  })
 });
