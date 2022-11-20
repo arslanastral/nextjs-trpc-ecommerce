@@ -76,7 +76,8 @@ export const productRouter = router({
         title: input.title,
         priceInCents: priceInCents,
         description: input.description,
-        image: updatedImage
+        image: updatedImage,
+        stock: input.stock
       }
     });
 
