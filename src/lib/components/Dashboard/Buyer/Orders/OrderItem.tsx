@@ -58,6 +58,13 @@ function OrderItem({
     paymentInfo = 'Payment Failed';
   }
 
+  let badgeColor = '';
+  if (paymentStatus === 'PENDING' || paymentStatus === 'FAILED') {
+    badgeColor = 'orange';
+  } else {
+    badgeColor = '';
+  }
+
   return (
     <div className="mt-4 rounded-lg p-4 bg-white">
       <Modal opened={opened} onClose={() => setOpened(false)}>
@@ -75,7 +82,7 @@ function OrderItem({
         <Button leftIcon={<IconBuildingStore stroke={1.5} />} variant="subtle">
           {sellerName}
         </Button>
-        <Badge>{paymentStatus === 'SUCCESS' ? orderStatus : paymentInfo}</Badge>
+        <Badge color={badgeColor}>{paymentStatus === 'SUCCESS' ? orderStatus : paymentInfo}</Badge>
       </div>
 
       {bags && (
