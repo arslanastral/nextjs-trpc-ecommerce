@@ -1,23 +1,12 @@
 import { Title, Badge, Text } from '@mantine/core';
 import { IconHash, IconBuildingStore } from '@tabler/icons';
 import OrderInfo from '@/lib/components/Dashboard/Buyer/Orders/OrderInfo';
-import { type Bag, SellerOrderProps } from './OrderItem';
+import { type OrderAddressType } from '@/lib/components/Dashboard/Buyer/Orders/Order';
+import { type SellerOrderProps } from './OrderItem';
 import OrderAddress from '@/lib/components/Dashboard/Buyer/Orders/OrderAddress';
 import { PaymentSummary } from '@/lib/components/Dashboard/Buyer/Orders/PaymentSummary';
 
-export type OrderAddressType = {
-  address: {
-    isDefault: boolean;
-    addressLine1: string;
-    city: string;
-    postalCode: string | null;
-    region: string;
-    country: string;
-    id: string;
-  } | null;
-};
-
-type OrderPropsWithAddress = OrderAddressType & SellerOrderProps;
+type OrderPropsWithAddress = SellerOrderProps & OrderAddressType;
 
 function Order({ id, bags, orderStatus, totalPrice, address }: OrderPropsWithAddress) {
   return (
