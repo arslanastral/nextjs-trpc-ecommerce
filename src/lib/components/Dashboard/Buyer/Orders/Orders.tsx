@@ -10,7 +10,7 @@ function Orders() {
   }
 
   return (
-    <div className="p-8">
+    <div className="p-2">
       <Title order={1}>My Orders</Title>
       {data &&
         data.map((order, i) => {
