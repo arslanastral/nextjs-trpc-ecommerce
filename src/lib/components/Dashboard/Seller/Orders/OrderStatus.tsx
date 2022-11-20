@@ -63,7 +63,7 @@ const useStyles = createStyles((theme, { opened }: { opened: boolean }) => ({
   }
 }));
 
-export function OrderStatus() {
+export function OrderStatus({ id, orderStatus }: { id: string; orderStatus: string }) {
   const [opened, setOpened] = useState(false);
   const { classes } = useStyles({ opened });
   const [selected, setSelected] = useState(status[0]);
