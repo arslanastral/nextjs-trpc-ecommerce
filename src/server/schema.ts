@@ -58,8 +58,24 @@ export const quantityInput = z.object({
   value: z.number().min(1)
 });
 
+export const statusUpdateInput = z.object({
+  orderStatus: z.enum([
+    'PACKED',
+    'SHIPPED',
+    'OUTFORDELIVERY',
+    'DELIVERED',
+    'OUTOFSTOCK',
+    'SELLERCANCELLED'
+  ])
+});
+
+export const statusUpdateInputWithId = statusUpdateInput.extend({
+  id: z.string().min(1)
+});
+
 export type SellerInfo = z.infer<typeof sellerInfoInput>;
 export type Address = z.infer<typeof addressInput>;
 export type AddressWithId = z.infer<typeof addressInputWithId>;
 export type Product = z.infer<typeof productInput>;
 export type ProductWithId = z.infer<typeof productInputWithId>;
+export type StatusUpdateInput = z.infer<typeof statusUpdateInput>;
