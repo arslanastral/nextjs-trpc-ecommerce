@@ -289,7 +289,7 @@ export const orderRouter = router({
       let id = await getSellerId(ctx);
       if (!id) return null;
 
-      let sellerOrderById = await ctx.prisma.order.findMany({
+      let sellerOrderById = await ctx.prisma.order.findFirst({
         where: {
           sellerId: id,
           id: input.id,
@@ -313,7 +313,16 @@ export const orderRouter = router({
             }
           },
           status: true,
-          totalPriceInCents: true
+          totalPriceInCents: true,
+          address: {
+            select: {
+              city: true,
+              country: true,
+              postalCode: true,
+              region: true,
+              addressLine1: true
+            }
+          }
         }
       });
 
