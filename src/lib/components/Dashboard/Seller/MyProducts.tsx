@@ -54,7 +54,6 @@ function MyProducts() {
                 title={e.title}
                 description={e.description}
                 price={(+e.priceInCents / 100).toString()}
-                status="In Stock"
                 image={`https://res.cloudinary.com/dv9wpbflv/image/upload/v${e.image}.jpg`}
                 category={e.category[0].id.toString()}
                 openEditModal={() => setOpenProductModal(true)}

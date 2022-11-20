@@ -10,7 +10,6 @@ type ProductCardProps = {
   description: string;
   price: string;
   category: string;
-  status?: string;
   badge?: string;
   imageId: string;
   stock: number;
@@ -25,7 +24,6 @@ function ProductCard({
   description,
   category,
   price,
-  status,
   badge,
   stock,
   openEditModal,
@@ -40,13 +38,27 @@ function ProductCard({
       description,
       price: +price,
       category,
-      imageId
+      imageId,
+      stock
     };
 
     setEditableProduct(product);
     openEditModal();
   };
   const [loading, setLoading] = useState<boolean>(true);
+
+  let status;
+
+  switch (true) {
+    case stock < 10:
+      status = `${stock} ${stock === 1 ? 'Item' : 'Items'} Left`;
+      break;
+    case stock === 0:
+      status = `Out Of Stock`;
+      break;
+    default:
+      status = 'In Stock';
+  }
 
   return (
     <div className="w-[337px]">
