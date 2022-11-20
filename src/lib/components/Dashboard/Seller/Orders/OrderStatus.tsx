@@ -73,6 +73,7 @@ const useStyles = createStyles((theme, { opened }: { opened: boolean }) => ({
 }));
 
 export function OrderStatus({ id, orderStatus }: { id: string; orderStatus: string }) {
+  const current = trpc.useContext();
   const buyerOrderStatus = trpc.order.setBuyerOrderStatus.useMutation();
   const [opened, setOpened] = useState(false);
   const { classes } = useStyles({ opened });
@@ -94,8 +95,14 @@ export function OrderStatus({ id, orderStatus }: { id: string; orderStatus: stri
       buyerOrderStatus.mutate(
         { id, orderStatus },
         {
-          onSuccess: () =>
-            setSelected(status[status.findIndex((status) => status.value === orderStatus)])
+          onSuccess: (id) => {
+            if (id) {
+              current.order.getSellerOrderById.invalidate({ id });
+            } else {
+              current.order.getSellerOrderById.invalidate();
+            }
+            setSelected(status[status.findIndex((status) => status.value === orderStatus)]);
+          }
         }
       );
     }
