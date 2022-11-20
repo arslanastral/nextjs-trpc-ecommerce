@@ -95,51 +95,53 @@ function OrderItem({
           })}
         </div>
       )}
-      <div className="flex justify-between mt-4 items-center">
+      <div className="flex justify-between mt-4 items-center flex-col lg:flex-row">
         {totalPrice && (
           <Text className="text-md pl-3 flex gap-2 text-brown-500">
             <IconFileInvoice stroke={1.5} /> ${(+totalPrice / 100).toString()}
           </Text>
         )}
 
-        {paymentStatus === 'SUCCESS' ? (
-          <div className="flex items-center gap-4">
-            <Button
-              component={Link}
-              href={`/dashboard/buyer/orders/${id}`}
-              variant="outline"
-              leftIcon={<IconReceipt stroke={1.5} size={20} />}
-            >
-              View Order
-            </Button>
-            <Button
-              onClick={() => setOpened(true)}
-              variant="outline"
-              leftIcon={<IconBox stroke={1.5} size={20} />}
-            >
-              Track Order
-            </Button>
-          </div>
-        ) : (
-          <div className="flex items-center gap-4">
-            <Button
-              component={Link}
-              href={`/dashboard/buyer/orders/${id}`}
-              variant="outline"
-              leftIcon={<IconReceipt stroke={1.5} size={20} />}
-            >
-              View Order
-            </Button>
-            <Button
-              component={Link}
-              href={paymentLink ?? ''}
-              variant="outline"
-              leftIcon={<IconReceipt2 stroke={1.5} size={20} />}
-            >
-              Pay Now
-            </Button>
-          </div>
-        )}
+        <div className="flex items-center gap-4 mt-4">
+          {paymentStatus === 'SUCCESS' ? (
+            <>
+              <Button
+                component={Link}
+                href={`/dashboard/buyer/orders/${id}`}
+                variant="outline"
+                leftIcon={<IconReceipt stroke={1.5} size={20} />}
+              >
+                View Order
+              </Button>
+              <Button
+                onClick={() => setOpened(true)}
+                variant="outline"
+                leftIcon={<IconBox stroke={1.5} size={20} />}
+              >
+                Track Order
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                component={Link}
+                href={`/dashboard/buyer/orders/${id}`}
+                variant="outline"
+                leftIcon={<IconReceipt stroke={1.5} size={20} />}
+              >
+                View Order
+              </Button>
+              <Button
+                component={Link}
+                href={paymentLink ?? ''}
+                variant="outline"
+                leftIcon={<IconReceipt2 stroke={1.5} size={20} />}
+              >
+                Pay Now
+              </Button>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
