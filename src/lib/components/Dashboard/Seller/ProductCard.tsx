@@ -58,7 +58,7 @@ function ProductCard({
       status = `Out Of Stock`;
       break;
     default:
-      status = 'In Stock';
+      status = `${stock} In Stock`;
   }
 
   return (
@@ -98,7 +98,7 @@ function ProductCard({
 
         <Group position="apart" mt="md" mb="xs">
           <Text
-            className="whitespace-nowrap w-48"
+            className="whitespace-nowrap w-32"
             sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}
             size={20}
             weight={500}
