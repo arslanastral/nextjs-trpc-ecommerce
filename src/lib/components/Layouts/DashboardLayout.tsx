@@ -10,6 +10,7 @@ import {
   MediaQuery,
   Burger
 } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { useRouter } from 'next/router';
 import {
   IconShoppingCart,
@@ -102,10 +103,10 @@ type DashboardSection = '/dashboard/buyer' | '/dashboard/seller';
 
 export function DashboardLayout({ children }: React.PropsWithChildren<{}>) {
   const router = useRouter();
+  const [opened, handlers] = useDisclosure(false);
   const currentPath = router.pathname as DashboardSection;
   const { data: session, status } = useSession();
   const theme = useMantineTheme();
-  const [opened, setOpened] = useState(false);
   const { classes, cx } = useStyles();
   const [section, setSection] = useState<'/dashboard/buyer' | '/dashboard/seller'>(
     '/dashboard/buyer'
@@ -120,6 +121,7 @@ export function DashboardLayout({ children }: React.PropsWithChildren<{}>) {
       onClick={(event) => {
         event.preventDefault();
         setActive(item.link);
+        handlers.close();
         router.push(item.link);
       }}
     >
@@ -199,7 +201,7 @@ export function DashboardLayout({ children }: React.PropsWithChildren<{}>) {
             <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
               <Burger
                 opened={opened}
-                onClick={() => setOpened((o) => !o)}
+                onClick={() => handlers.toggle()}
                 size="sm"
                 color={theme.colors.gray[6]}
                 mr="xl"
