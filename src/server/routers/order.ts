@@ -4,6 +4,7 @@ import { getBuyerId, getSellerId, getCartId } from '@/server/functions/identity'
 import { getSelectedOrderItems, getCartItemsPrice } from '@/server/functions/cart';
 import { z } from 'zod';
 import { stripe } from '@/utils/stripe';
+import { Input } from '@mantine/core';
 
 export const orderRouter = router({
   placeOrder: protectedProcedure
@@ -281,5 +282,41 @@ export const orderRouter = router({
     });
 
     return sellerOrders;
-  })
+  }),
+  getSellerOrderById: protectedProcedure
+    .input(z.object({ id: z.string().min(1) }))
+    .query(async ({ input, ctx }) => {
+      let id = await getSellerId(ctx);
+      if (!id) return null;
+
+      let sellerOrderById = await ctx.prisma.order.findMany({
+        where: {
+          sellerId: id,
+          id: input.id,
+          payment: {
+            status: 'SUCCESS'
+          }
+        },
+        select: {
+          id: true,
+          Bag: {
+            select: {
+              productId: true,
+              itemCount: true,
+              item: {
+                select: {
+                  image: true,
+                  title: true,
+                  priceInCents: true
+                }
+              }
+            }
+          },
+          status: true,
+          totalPriceInCents: true
+        }
+      });
+
+      return sellerOrderById;
+    })
 });
