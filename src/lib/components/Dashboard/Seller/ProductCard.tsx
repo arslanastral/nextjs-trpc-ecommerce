@@ -1,6 +1,7 @@
 import { ProductWithId } from '@/server/schema';
 import { Skeleton, Button, Card, Group, Text, Badge, AspectRatio } from '@mantine/core';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 
 type ProductCardProps = {
@@ -75,13 +76,15 @@ function ProductCard({
           </AspectRatio>
         </Card.Section>
         <Group position="apart" mt="md" mb="xs">
-          <Text
-            className="whitespace-nowrap"
-            sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}
-            weight={500}
-          >
-            {title}
-          </Text>
+          <Link href={`/products/${id}`}>
+            <Text
+              className="whitespace-nowrap"
+              sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}
+              weight={500}
+            >
+              {title}
+            </Text>
+          </Link>
         </Group>
 
         <Text
