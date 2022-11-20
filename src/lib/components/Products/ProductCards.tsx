@@ -1,33 +1,51 @@
 import { trpc } from '@/utils/trpc';
+import { Title } from '@mantine/core';
 import NextError from 'next/error';
 import ProductCard from './ProductCard';
 import ProductCardSkeleton from './ProductCardSkeleton';
 
-function ProductCards() {
-  const { data, isLoading, error } = trpc.product.sellableProducts.useQuery();
+function ProductCards({ category, title }: { category?: number | undefined; title?: string }) {
+  const { data, isLoading, error } = trpc.product.sellableProducts.useQuery({ id: category });
 
   if (error) {
     return <NextError title={error.message} statusCode={error.data?.httpStatus ?? 500} />;
   }
 
   return (
-    <div className="flex flex-wrap justify-center gap-10">
-      {isLoading && Array.from(Array(8).keys()).map((e, i) => <ProductCardSkeleton key={i} />)}
+    <>
+      {title && (
+        <div className="flex w-full justify-center min-h-[6rem]">
+          <div className="flex flex-col items-center mb-4">
+            <Title weight={300} order={1} color="dark" td="underline" className="text-4xl">
+              {title}
+            </Title>
+            {data && !data.length && (
+              <Title weight={300} order={3} color="dimmed" mt={20}>
+                No Products Added In This Category Yet.
+              </Title>
+            )}
+          </div>
+        </div>
+      )}
 
-      {data &&
-        data.map((e, i) => {
-          return (
-            <ProductCard
-              key={i}
-              id={e.id}
-              title={e.title}
-              description={e.description}
-              price={(+e.priceInCents / 100).toString()}
-              image={`https://res.cloudinary.com/dv9wpbflv/image/upload/f_auto,q_auto/v${e.image}.jpg`}
-            />
-          );
-        })}
-    </div>
+      <div className="flex flex-wrap justify-center gap-10">
+        {isLoading && Array.from(Array(8).keys()).map((e, i) => <ProductCardSkeleton key={i} />)}
+
+        {data &&
+          data.map((e, i) => {
+            return (
+              <ProductCard
+                key={i}
+                id={e.id}
+                title={e.title}
+                description={e.description}
+                price={(+e.priceInCents / 100).toString()}
+                image={`https://res.cloudinary.com/dv9wpbflv/image/upload/f_auto,q_auto/v${e.image}.jpg`}
+              />
+            );
+          })}
+      </div>
+    </>
   );
 }
 export default ProductCards;
