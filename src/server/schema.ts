@@ -36,7 +36,10 @@ export const productInput = z.object({
     .min(1, { message: 'Product must have a title' })
     .max(50, { message: 'Product title must be under 50 characters' }),
   price: z.number().min(1, { message: 'Product must have a price' }),
-  stock: z.number().min(1),
+  stock: z
+    .number()
+    .min(10, { message: 'Stock must be atleast 10' })
+    .max(100, { message: 'Stock must be under 100' }),
   category: z
     .string()
     .min(1, { message: 'Product must have a category' })
