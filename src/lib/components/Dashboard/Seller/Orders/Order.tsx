@@ -14,7 +14,7 @@ function Order({ id, bags, orderStatus, totalPrice, address }: OrderPropsWithAdd
   return (
     <div className="p-3">
       <div className="flex items-center justify-between gap-3 mt-4 flex-wrap">
-        <Title order={1}>Buyer Order</Title> <OrderStatus />
+        <Title order={1}>Buyer Order</Title> <OrderStatus id={id} orderStatus={orderStatus} />
       </div>
 
       <div className="flex items-center gap-3 mt-4 flex-wrap">
