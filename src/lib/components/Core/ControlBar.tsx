@@ -24,6 +24,7 @@ import { useState } from 'react';
 import { Burger } from '@mantine/core';
 import { useScrollLock } from '@mantine/hooks';
 import { SideNavBar } from './SideNavBar';
+import ProductModal from '../Dashboard/Seller/ProductModal';
 
 const useStyles = createStyles((theme) => ({
   input: {
@@ -37,6 +38,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function ControlBar() {
+  const [modalOpened, setModalOpened] = useState<boolean>(false);
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const [opened, handlers] = useDisclosure(false);
   const [scrollLocked, setScrollLocked] = useScrollLock();
@@ -103,9 +105,9 @@ function ControlBar() {
 
         {session && (
           <>
+            <ProductModal opened={modalOpened} setOpened={setModalOpened} />
             <Button
-              component={Link}
-              href="/dashboard/seller/products"
+              onClick={() => setModalOpened(true)}
               leftIcon={<IconBolt size="16px" />}
               className="text-[16px] font-medium rounded-lg hidden lg:block hover:bg-brown-50"
               variant="outline"
