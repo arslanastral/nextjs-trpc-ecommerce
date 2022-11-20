@@ -18,6 +18,7 @@ import {
   IconBolt
 } from '@tabler/icons';
 import { useSession, signOut } from 'next-auth/react';
+import { useDisclosure } from '@mantine/hooks';
 import Link from 'next/link';
 import { useState } from 'react';
 import { Burger } from '@mantine/core';
@@ -37,8 +38,8 @@ const useStyles = createStyles((theme) => ({
 
 function ControlBar() {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const [opened, handlers] = useDisclosure(false);
   const [scrollLocked, setScrollLocked] = useScrollLock();
-  const [opened, setOpened] = useState(false);
   const title = opened ? 'Close navigation' : 'Open navigation';
   const dark = colorScheme === 'dark';
   const { data: session, status } = useSession();
@@ -59,12 +60,12 @@ function ControlBar() {
           color={opened ? 'white' : 'black'}
           opened={opened}
           onClick={() => {
-            setOpened((o) => !o);
+            handlers.toggle();
             setScrollLocked((c) => !c);
           }}
           title={title}
         />
-        <SideNavBar opened={opened} />
+        <SideNavBar opened={opened} closeSideBar={() => handlers.close()} />
       </div>
 
       <div className="flex items-center min-h-full gap-5 mr-4">

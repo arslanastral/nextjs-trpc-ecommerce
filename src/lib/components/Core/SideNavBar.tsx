@@ -81,7 +81,13 @@ const data = [
   { link: '', label: 'Other' }
 ];
 
-export function SideNavBar({ opened }: { opened: boolean }) {
+export function SideNavBar({
+  opened,
+  closeSideBar
+}: {
+  opened: boolean;
+  closeSideBar: () => void;
+}) {
   const { data: session, status } = useSession();
   const { classes, cx } = useStyles();
   const [active, setActive] = useState('');
@@ -94,6 +100,7 @@ export function SideNavBar({ opened }: { opened: boolean }) {
       key={item.label}
       onClick={(event) => {
         event.preventDefault();
+        closeSideBar();
         setActive(item.label);
       }}
     >
