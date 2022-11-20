@@ -53,7 +53,6 @@ export const productRouter = router({
 
     return products;
   }),
-
   update: protectedProcedure.input(productInputWithId).mutation(async ({ input, ctx }) => {
     let sellerId = await getSellerId(ctx);
     if (!sellerId) return null;
@@ -100,25 +99,32 @@ export const productRouter = router({
 
       return deletedProduct;
     }),
-  sellableProducts: publicProcedure.query(async ({ ctx }) => {
-    let products = await ctx.prisma.product.findMany({
-      where: {
-        stock: {
-          gt: 0
+  sellableProducts: publicProcedure
+    .input(z.object({ id: z.number().min(1).max(7).optional() }))
+    .query(async ({ input, ctx }) => {
+      let products = await ctx.prisma.product.findMany({
+        where: {
+          stock: {
+            gt: 0
+          },
+          category: {
+            every: {
+              id: input.id ?? undefined
+            }
+          }
+        },
+        select: {
+          id: true,
+          priceInCents: true,
+          title: true,
+          image: true,
+          description: true,
+          category: true
         }
-      },
-      select: {
-        id: true,
-        priceInCents: true,
-        title: true,
-        image: true,
-        description: true,
-        category: true
-      }
-    });
+      });
 
-    return products;
-  }),
+      return products;
+    }),
   sellableProductById: publicProcedure
     .input(z.object({ id: z.string().min(1) }))
     .query(async ({ input, ctx }) => {

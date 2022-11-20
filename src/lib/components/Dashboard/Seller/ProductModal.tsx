@@ -195,6 +195,25 @@ function ProductModal({ opened, setOpened }: ProductModalProps) {
               )}
             />
 
+            <Controller
+              name="stock"
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <NumberInput
+                  value={field.value}
+                  onChange={field.onChange}
+                  size="lg"
+                  label="Available Stock"
+                  placeholder="20"
+                  classNames={classes}
+                  mt={15}
+                  hideControls
+                  error={errors.stock?.message}
+                />
+              )}
+            />
+
             <DropzoneButton onDrop={handleImageUpload} />
             <Text color={src ? 'green' : 'red'} size="md" mt={15}>
               {errors.image?.message && !src && <>Product must have an image</>}

@@ -10,7 +10,7 @@ import {
   MediaQuery,
   Burger
 } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { useDisclosure, useScrollLock } from '@mantine/hooks';
 import { useRouter } from 'next/router';
 import {
   IconShoppingCart,
@@ -88,14 +88,12 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
 const tabs = {
   '/dashboard/buyer': [
-    { link: '/dashboard/buyer/orders', label: 'Ongoing Orders', icon: IconShoppingCart },
-    { link: '/dashboard/buyer/purchases', label: 'My Purchases', icon: IconShirt },
+    { link: '/dashboard/buyer/orders', label: 'My Orders', icon: IconShoppingCart },
     { link: '/dashboard/buyer/addresses', label: 'Address Book', icon: IconAddressBook }
   ],
   '/dashboard/seller': [
     { link: '/dashboard/seller/products', label: 'My Products', icon: IconBuildingStore },
-    { link: '/dashboard/seller/orders', label: 'Orders', icon: IconShoppingCart },
-    { link: '/dashboard/seller/customers', label: 'Customers', icon: IconUsers }
+    { link: '/dashboard/seller/orders', label: 'Order Fulfillment', icon: IconShoppingCart }
   ]
 };
 
@@ -104,6 +102,7 @@ type DashboardSection = '/dashboard/buyer' | '/dashboard/seller';
 export function DashboardLayout({ children }: React.PropsWithChildren<{}>) {
   const router = useRouter();
   const [opened, handlers] = useDisclosure(false);
+  const [scrollLocked, setScrollLocked] = useScrollLock();
   const currentPath = router.pathname as DashboardSection;
   const { data: session, status } = useSession();
   const theme = useMantineTheme();
@@ -149,6 +148,7 @@ export function DashboardLayout({ children }: React.PropsWithChildren<{}>) {
 
   return (
     <AppShell
+      zIndex={160}
       styles={{
         main: {
           background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0]
@@ -201,7 +201,10 @@ export function DashboardLayout({ children }: React.PropsWithChildren<{}>) {
             <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
               <Burger
                 opened={opened}
-                onClick={() => handlers.toggle()}
+                onClick={() => {
+                  handlers.toggle();
+                  setScrollLocked((c) => !c);
+                }}
                 size="sm"
                 color={theme.colors.gray[6]}
                 mr="xl"

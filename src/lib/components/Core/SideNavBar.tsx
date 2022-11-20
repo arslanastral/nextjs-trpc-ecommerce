@@ -70,15 +70,15 @@ const useStyles = createStyles((theme, _params, getRef) => {
   };
 });
 
-const data = [
-  { link: '', label: 'New' },
-  { link: '', label: 'Health & Beauty' },
-  { link: '', label: `Women's Fasion` },
-  { link: '', label: `Men's Fashion` },
-  { link: '', label: 'Luxury' },
-  { link: '', label: 'Electronics' },
-  { link: '', label: 'Sports' },
-  { link: '', label: 'Other' }
+export const pages = [
+  { link: '/', label: 'New' },
+  { link: '/category/health-and-beauty', label: 'Health & Beauty' },
+  { link: '/category/women-fashion', label: `Women's Fashion` },
+  { link: '/category/men-fashion', label: `Men's Fashion` },
+  { link: '/category/luxury', label: 'Luxury' },
+  { link: '/category/electronics', label: 'Electronics' },
+  { link: '/category/sports', label: 'Sports' },
+  { link: '/category/other', label: 'Other' }
 ];
 
 export function SideNavBar({
@@ -91,10 +91,8 @@ export function SideNavBar({
   const { data: session, status } = useSession();
   const { classes, cx } = useStyles();
   const [active, setActive] = useState('');
-  const title = opened ? 'Close navigation' : 'Open navigation';
-  const isMobile = useMediaQuery('(max-width: 1600px)');
-  const links = data.map((item) => (
-    <a
+  const links = pages.map((item) => (
+    <Link
       className={cx(classes.link, { [classes.linkActive]: item.label === active })}
       href={item.link}
       key={item.label}
@@ -105,7 +103,7 @@ export function SideNavBar({
       }}
     >
       <span>{item.label.toUpperCase()}</span>
-    </a>
+    </Link>
   ));
 
   return (
