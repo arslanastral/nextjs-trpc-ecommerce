@@ -11,6 +11,7 @@ import {
 import Link from 'next/link';
 import { useState } from 'react';
 import { OrderTimeline } from './OrderTimeline';
+import { statusMap } from '../../Seller/Orders/OrderItem';
 
 export type Bag = {
   item: {
@@ -82,7 +83,9 @@ function OrderItem({
         <Button leftIcon={<IconBuildingStore stroke={1.5} />} variant="subtle">
           {sellerName}
         </Button>
-        <Badge color={badgeColor}>{paymentStatus === 'SUCCESS' ? orderStatus : paymentInfo}</Badge>
+        <Badge color={badgeColor}>
+          {paymentStatus === 'SUCCESS' ? statusMap[orderStatus] : paymentInfo}
+        </Badge>
       </div>
 
       {bags && (

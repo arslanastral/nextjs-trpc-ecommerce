@@ -21,6 +21,17 @@ export type Bag = {
   itemCount: number;
 };
 
+export const statusMap = {
+  OUTOFSTOCK: 'Out Of Stock',
+  USERCANCELLED: 'Cancelled',
+  SELLERCANCELLED: 'Seller Cancelled',
+  PROCESSING: 'Processing',
+  PACKED: 'Order Packed',
+  SHIPPED: 'Order Shipped',
+  OUTFORDELIVERY: 'Out For Delivery',
+  DELIVERED: 'Delivered'
+};
+
 export type SellerOrderProps = {
   id: string;
   bags: Bag[];
@@ -40,7 +51,7 @@ function OrderItem({ id, bags, orderStatus, totalPrice }: SellerOrderProps) {
   return (
     <div className="mt-4 rounded-lg p-4 bg-white">
       <div className="flex items-center justify-between">
-        <Badge>{orderStatus}</Badge>
+        <Badge>{statusMap[orderStatus]}</Badge>
       </div>
 
       {bags && (
