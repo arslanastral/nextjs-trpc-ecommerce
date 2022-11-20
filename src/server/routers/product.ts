@@ -100,7 +100,12 @@ export const productRouter = router({
       return deletedProduct;
     }),
   sellableProducts: publicProcedure
-    .input(z.object({ id: z.number().min(1).max(7).optional() }))
+    .input(
+      z.object({
+        id: z.number().min(1).max(7).optional(),
+        searchTerm: z.string().min(1).max(50).optional()
+      })
+    )
     .query(async ({ input, ctx }) => {
       let products = await ctx.prisma.product.findMany({
         where: {
@@ -111,6 +116,9 @@ export const productRouter = router({
             every: {
               id: input.id ?? undefined
             }
+          },
+          title: {
+            search: input.searchTerm ?? undefined
           }
         },
         select: {
