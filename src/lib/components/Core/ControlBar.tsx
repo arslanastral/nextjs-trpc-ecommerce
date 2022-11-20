@@ -25,6 +25,7 @@ import { Burger } from '@mantine/core';
 import { useScrollLock } from '@mantine/hooks';
 import { SideNavBar } from './SideNavBar';
 import ProductModal from '../Dashboard/Seller/ProductModal';
+import { useRouter } from 'next/router';
 
 const useStyles = createStyles((theme) => ({
   input: {
@@ -38,12 +39,14 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function ControlBar() {
+  const router = useRouter();
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const [opened, handlers] = useDisclosure(false);
   const [scrollLocked, setScrollLocked] = useScrollLock();
   const title = opened ? 'Close navigation' : 'Open navigation';
   const dark = colorScheme === 'dark';
+  const [searchTerm, setSearchTerm] = useState('');
   const { data: session, status } = useSession();
   const { data, isLoading, error } = trpc.cart.getItemCount.useQuery(undefined, {
     enabled: !!session
@@ -72,6 +75,15 @@ function ControlBar() {
 
       <div className="flex items-center min-h-full gap-5 mr-4">
         <TextInput
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.currentTarget.value)}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              if (searchTerm) {
+                router.push(`/search/${searchTerm}`);
+              }
+            }
+          }}
           className="mx-4"
           classNames={{ input: classes.input }}
           icon={<IconSearch size="15px" />}
