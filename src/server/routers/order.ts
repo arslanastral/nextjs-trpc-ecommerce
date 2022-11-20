@@ -4,7 +4,7 @@ import { getBuyerId, getSellerId, getCartId } from '@/server/functions/identity'
 import { getSelectedOrderItems, getCartItemsPrice } from '@/server/functions/cart';
 import { z } from 'zod';
 import { stripe } from '@/utils/stripe';
-import { Input } from '@mantine/core';
+import { statusUpdateInputWithId } from '../schema';
 
 export const orderRouter = router({
   placeOrder: protectedProcedure
@@ -329,19 +329,7 @@ export const orderRouter = router({
       return sellerOrderById;
     }),
   setBuyerOrderStatus: protectedProcedure
-    .input(
-      z.object({
-        id: z.string().min(1),
-        orderStatus: z.enum([
-          'PACKED',
-          'SHIPPED',
-          'OUTFORDELIVERY',
-          'DELIVERED',
-          'OUTOFSTOCK',
-          'SELLERCANCELLED'
-        ])
-      })
-    )
+    .input(statusUpdateInputWithId)
     .mutation(async ({ input, ctx }) => {
       let id = await getSellerId(ctx);
       if (!id) return null;
