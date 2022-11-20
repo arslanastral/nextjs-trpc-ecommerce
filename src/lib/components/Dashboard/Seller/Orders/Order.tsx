@@ -22,7 +22,7 @@ function Order({ id, bags, orderStatus, totalPrice, address }: OrderPropsWithAdd
         </Title>
       </div>
       <div className="flex gap-4 mt-10 flex-col xl:flex-row">
-        <OrderInfo data={bags} />
+        <OrderInfo data={bags} title="Ordered Items" />
       </div>
       <div className="flex gap-4 mt-4 flex-col xl:flex-row">
         <OrderAddress address={address} />
