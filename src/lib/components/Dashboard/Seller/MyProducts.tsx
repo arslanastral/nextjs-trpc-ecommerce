@@ -60,6 +60,7 @@ function MyProducts() {
                 openEditModal={() => setOpenProductModal(true)}
                 setEditableProduct={setEditableProduct}
                 imageId={e.image}
+                stock={e.stock}
               />
             );
           })}
