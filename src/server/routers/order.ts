@@ -347,6 +347,6 @@ export const orderRouter = router({
         }
       });
 
-      return setBuyerOrderStatus;
+      return input.id;
     })
 });
