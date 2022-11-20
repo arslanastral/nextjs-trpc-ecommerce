@@ -12,6 +12,13 @@ function Orders() {
   return (
     <div className="p-2">
       <Title order={1}>My Orders</Title>
+
+      {data && !data.length && (
+        <Title order={4} weight={300} color="dimmed" className="flex items-center" mt={20}>
+          You haven&apos;t ordered anything yet.
+        </Title>
+      )}
+
       {data &&
         data.map((order, i) => {
           let paymentStatus = order.payment?.status;
