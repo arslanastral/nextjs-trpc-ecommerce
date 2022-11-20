@@ -10,7 +10,7 @@ import {
   MediaQuery,
   Burger
 } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { useDisclosure, useScrollLock } from '@mantine/hooks';
 import { useRouter } from 'next/router';
 import {
   IconShoppingCart,
@@ -31,8 +31,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
   return {
     navbar: {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-      zIndex: 160
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white
     },
 
     title: {
@@ -105,6 +104,7 @@ type DashboardSection = '/dashboard/buyer' | '/dashboard/seller';
 export function DashboardLayout({ children }: React.PropsWithChildren<{}>) {
   const router = useRouter();
   const [opened, handlers] = useDisclosure(false);
+  const [scrollLocked, setScrollLocked] = useScrollLock();
   const currentPath = router.pathname as DashboardSection;
   const { data: session, status } = useSession();
   const theme = useMantineTheme();
@@ -150,6 +150,7 @@ export function DashboardLayout({ children }: React.PropsWithChildren<{}>) {
 
   return (
     <AppShell
+      zIndex={160}
       styles={{
         main: {
           background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0]
@@ -202,7 +203,10 @@ export function DashboardLayout({ children }: React.PropsWithChildren<{}>) {
             <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
               <Burger
                 opened={opened}
-                onClick={() => handlers.toggle()}
+                onClick={() => {
+                  handlers.toggle();
+                  setScrollLocked((c) => !c);
+                }}
                 size="sm"
                 color={theme.colors.gray[6]}
                 mr="xl"
