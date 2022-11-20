@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createStyles, UnstyledButton, Menu, Image, Group } from '@mantine/core';
+import { createStyles, UnstyledButton, Menu, Group, Loader } from '@mantine/core';
 import { trpc } from '@/utils/trpc';
 import { IconChevronDown } from '@tabler/icons';
 import {
@@ -102,22 +102,30 @@ export function OrderStatus({ id, orderStatus }: { id: string; orderStatus: stri
   };
 
   return (
-    <Menu
-      onOpen={() => setOpened(true)}
-      onClose={() => setOpened(false)}
-      radius="md"
-      width="target"
-    >
-      <Menu.Target>
-        <UnstyledButton className={classes.control}>
-          <Group spacing="xs">
-            {selected.icon}
-            <span className={classes.label}>{selected.label}</span>
-          </Group>
-          <IconChevronDown size={16} className={classes.icon} stroke={1.5} />
-        </UnstyledButton>
-      </Menu.Target>
-      <Menu.Dropdown>{items}</Menu.Dropdown>
-    </Menu>
+    <div className="flex items-center gap-4">
+      {buyerOrderStatus.isLoading && <Loader variant="dots" />}
+      <Menu
+        onOpen={() => setOpened(true)}
+        onClose={() => setOpened(false)}
+        radius="md"
+        width="target"
+      >
+        <Menu.Target>
+          <UnstyledButton
+            className={`${classes.control} ${
+              buyerOrderStatus.isLoading && 'text-slate-500 cursor-not-allowed'
+            }`}
+            disabled={buyerOrderStatus.isLoading}
+          >
+            <Group spacing="xs">
+              {selected.icon}
+              <span className={classes.label}>{selected.label}</span>
+            </Group>
+            <IconChevronDown size={16} className={classes.icon} stroke={1.5} />
+          </UnstyledButton>
+        </Menu.Target>
+        <Menu.Dropdown>{items}</Menu.Dropdown>
+      </Menu>
+    </div>
   );
 }
