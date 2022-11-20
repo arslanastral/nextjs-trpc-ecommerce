@@ -93,12 +93,12 @@ function ControlBar() {
             <Button
               component={Link}
               href="/login"
-              leftIcon={<IconUser size="16px" />}
+              leftIcon={<IconBolt size="16px" />}
               className="text-[16px] font-medium rounded-lg hidden lg:block bg-brown-600 hover:bg-brown-700"
               variant="filled"
               size="sm"
             >
-              Log In
+              Start Selling
             </Button>
           </>
         )}
