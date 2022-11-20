@@ -327,5 +327,38 @@ export const orderRouter = router({
       });
 
       return sellerOrderById;
+    }),
+  setBuyerOrderStatus: protectedProcedure
+    .input(
+      z.object({
+        id: z.string().min(1),
+        orderStatus: z.enum([
+          'PACKED',
+          'SHIPPED',
+          'OUTFORDELIVERY',
+          'DELIVERED',
+          'OUTOFSTOCK',
+          'SELLERCANCELLED'
+        ])
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      let id = await getSellerId(ctx);
+      if (!id) return null;
+
+      let setBuyerOrderStatus = await ctx.prisma.order.updateMany({
+        where: {
+          sellerId: id,
+          id: input.id,
+          payment: {
+            status: 'SUCCESS'
+          }
+        },
+        data: {
+          status: input.orderStatus
+        }
+      });
+
+      return setBuyerOrderStatus;
     })
 });
