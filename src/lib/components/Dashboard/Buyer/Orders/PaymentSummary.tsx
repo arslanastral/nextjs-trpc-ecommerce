@@ -17,7 +17,7 @@ export function PaymentSummary({
   }
 
   return (
-    <div className="bg-white p-10 rounded-lg lg:min-w-[411px]">
+    <div className="bg-white p-4 lg:p-10 rounded-lg lg:min-w-[411px]">
       <Title order={2} weight={300} color="dark" mb={15}>
         Payment
       </Title>

@@ -60,7 +60,7 @@ export function OrderTimeline({ orderStatus, paymentStatus, sellerName }: OrderT
   };
 
   return (
-    <div className="bg-white p-10 rounded-lg">
+    <div className="bg-white p-4 lg:p-10 rounded-lg">
       <Title order={2} weight={300} color="dark">
         Order Tracker
       </Title>
