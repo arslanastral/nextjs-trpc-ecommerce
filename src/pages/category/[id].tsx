@@ -18,18 +18,19 @@ const ProductCategoryPage: PageWithLayout = () => {
     other: { id: 7, label: 'Other' }
   };
 
+  let label =
+    id && `${id}` in categoryMap ? categoryMap[id as keyof typeof categoryMap].label : 'Latest';
+
   return (
     <div className="p-6 min-h-screen min-w-full text-white">
       <Head>
-        <title>ID | Zavy</title>
+        <title>{label} | Zavy</title>
         <meta name="description" content="An ecommerce store" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
       <ProductCards
-        title={
-          id && `${id}` in categoryMap ? categoryMap[id as keyof typeof categoryMap].label : ''
-        }
+        title={label}
         category={
           id && `${id}` in categoryMap ? categoryMap[id as keyof typeof categoryMap].id : undefined
         }
