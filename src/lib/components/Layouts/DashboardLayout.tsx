@@ -88,14 +88,12 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
 const tabs = {
   '/dashboard/buyer': [
-    { link: '/dashboard/buyer/orders', label: 'Ongoing Orders', icon: IconShoppingCart },
-    { link: '/dashboard/buyer/purchases', label: 'My Purchases', icon: IconShirt },
+    { link: '/dashboard/buyer/orders', label: 'My Orders', icon: IconShoppingCart },
     { link: '/dashboard/buyer/addresses', label: 'Address Book', icon: IconAddressBook }
   ],
   '/dashboard/seller': [
     { link: '/dashboard/seller/products', label: 'My Products', icon: IconBuildingStore },
-    { link: '/dashboard/seller/orders', label: 'Orders', icon: IconShoppingCart },
-    { link: '/dashboard/seller/customers', label: 'Customers', icon: IconUsers }
+    { link: '/dashboard/seller/orders', label: 'Order Fulfillment', icon: IconShoppingCart }
   ]
 };
 
