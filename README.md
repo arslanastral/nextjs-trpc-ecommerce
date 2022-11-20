@@ -1,11 +1,19 @@
 ![zavy-icon](https://raw.githubusercontent.com/chingu-voyages/v41-bears-team-32/main/public/favicon.ico)
 
-# Zavy - An ecommerce store
+# Zavy - An eCommerce Marketplace
 
-🚀 **Deploying at:** [https://zavy.netlify.app/](https://zavy.netlify.app/) && [https://zavy.vercel.app/](https://zavy.vercel.app/)  
-⚠ **Status:** In development
+🚀 **Deployed at:** [https://zavy.vercel.app/](https://zavy.vercel.app/) && [https://zavy.netlify.app/](https://zavy.netlify.app/)
 
-Zavy is an ecommerce store in development by `v41-bears-team-32`.
+Zavy is an eCommerce marketplace built by `v41-bears-team-32`.
+
+### MVP Features:
+
+- Connect buyers with sellers
+- Start selling with 1-Click
+- Seller can create their product card with live preview
+- Payment processing via Stripe
+- Failed or pending payment handling
+- Stateful Cart which remebers your selection
 
 ## Local Development Steps:
 
@@ -46,5 +54,6 @@ NEXTAUTH_LOGIN=http://localhost:3000/api/login
 NEXTAUTH_SIGNUP=http://localhost:3000/api/signup
 CLOUDINARY_URL=<cloudinary://[API_KEY]:[API_SECRET]@[CLOUD_NAME]>
 STRIPE_SECRET_KEY=<your-secret-key>
+NEXT_PUBLIC_CURRENT_URL=http://localhost:3000/
 CURRENT_ENV=dev
 ```
