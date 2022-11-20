@@ -8,13 +8,13 @@ import { PaymentSummary } from './PaymentSummary';
 
 export type OrderAddressType = {
   address: {
-    isDefault: boolean;
+    isDefault?: boolean;
     addressLine1: string;
     city: string;
     postalCode: string | null;
     region: string;
     country: string;
-    id: string;
+    id?: string;
   } | null;
 };
 
