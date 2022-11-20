@@ -42,6 +42,7 @@ export const productRouter = router({
       },
       select: {
         id: true,
+        stock: true,
         priceInCents: true,
         title: true,
         image: true,
@@ -75,7 +76,8 @@ export const productRouter = router({
         title: input.title,
         priceInCents: priceInCents,
         description: input.description,
-        image: updatedImage
+        image: updatedImage,
+        stock: input.stock
       }
     });
 

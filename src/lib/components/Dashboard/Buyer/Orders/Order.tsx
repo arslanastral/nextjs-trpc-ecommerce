@@ -8,13 +8,13 @@ import { PaymentSummary } from './PaymentSummary';
 
 export type OrderAddressType = {
   address: {
-    isDefault: boolean;
+    isDefault?: boolean;
     addressLine1: string;
     city: string;
     postalCode: string | null;
     region: string;
     country: string;
-    id: string;
+    id?: string;
   } | null;
 };
 
@@ -31,9 +31,9 @@ function Order({
   address
 }: OrderPropsWithAddress) {
   return (
-    <div className="p-8">
+    <div className="p-3">
       <Title order={1}>Your Order</Title>
-      <div className="flex items-center gap-4 mt-2">
+      <div className="flex items-center gap-3 mt-4 flex-wrap">
         <Title order={4} weight={300} color="dimmed" className="flex items-center">
           <IconHash /> {id}
         </Title>

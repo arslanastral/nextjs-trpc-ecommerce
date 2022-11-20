@@ -20,10 +20,16 @@ type OrderTimelineProps = {
     | 'OUTFORDELIVERY'
     | 'DELIVERED';
   paymentStatus?: 'PENDING' | 'SUCCESS' | 'FAILED';
-  sellerName: string;
+  sellerName?: string;
+  title?: string;
 };
 
-export function OrderTimeline({ orderStatus, paymentStatus, sellerName }: OrderTimelineProps) {
+export function OrderTimeline({
+  title = 'Track Order',
+  orderStatus,
+  paymentStatus,
+  sellerName = 'Seller'
+}: OrderTimelineProps) {
   let status = {
     OUTOFSTOCK: 0,
     USERCANCELLED: 0,
@@ -37,7 +43,7 @@ export function OrderTimeline({ orderStatus, paymentStatus, sellerName }: OrderT
 
   let processingInfo = {
     PENDING: 'Awaiting order payment',
-    SUCCESS: `${sellerName ?? 'Seller'} is processing your order`,
+    SUCCESS: `${sellerName} is processing your order`,
     FAILED: 'Awaiting order payment'
   };
 
@@ -60,9 +66,9 @@ export function OrderTimeline({ orderStatus, paymentStatus, sellerName }: OrderT
   };
 
   return (
-    <div className="bg-white p-10 rounded-lg">
+    <div className="bg-white p-4 lg:p-10 rounded-lg">
       <Title order={2} weight={300} color="dark">
-        Order Tracker
+        {title}
       </Title>
       <Timeline
         active={status[orderStatus]}

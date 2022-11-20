@@ -13,13 +13,14 @@ type Bag = {
 
 type OrderInfoProps = {
   data: Bag[];
+  title?: string;
 };
 
-function OrderInfo({ data }: OrderInfoProps) {
+function OrderInfo({ data, title = 'Your Items' }: OrderInfoProps) {
   return (
-    <div className="flex flex-col p-10 flex-1 bg-white rounded-lg">
+    <div className="flex flex-col p-4 lg:p-10 flex-1 bg-white rounded-lg">
       <Title order={2} weight={300} color="dark">
-        Your Items
+        {title}
       </Title>
       <div className="border rounded-lg mt-4">
         {data?.length &&

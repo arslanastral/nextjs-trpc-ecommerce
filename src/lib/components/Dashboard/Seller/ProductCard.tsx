@@ -1,6 +1,7 @@
 import { ProductWithId } from '@/server/schema';
 import { Skeleton, Button, Card, Group, Text, Badge, AspectRatio } from '@mantine/core';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 
 type ProductCardProps = {
@@ -10,9 +11,9 @@ type ProductCardProps = {
   description: string;
   price: string;
   category: string;
-  status?: string;
   badge?: string;
   imageId: string;
+  stock: number;
   openEditModal: () => void;
   setEditableProduct: (state: ProductWithId) => void;
 };
@@ -24,8 +25,8 @@ function ProductCard({
   description,
   category,
   price,
-  status,
   badge,
+  stock,
   openEditModal,
   setEditableProduct,
   imageId
@@ -38,13 +39,27 @@ function ProductCard({
       description,
       price: +price,
       category,
-      imageId
+      imageId,
+      stock
     };
 
     setEditableProduct(product);
     openEditModal();
   };
   const [loading, setLoading] = useState<boolean>(true);
+
+  let status;
+
+  switch (true) {
+    case stock < 10:
+      status = `${stock} ${stock === 1 ? 'Item' : 'Items'} Left`;
+      break;
+    case stock === 0:
+      status = `Out Of Stock`;
+      break;
+    default:
+      status = `${stock} In Stock`;
+  }
 
   return (
     <div className="w-[337px]">
@@ -61,13 +76,15 @@ function ProductCard({
           </AspectRatio>
         </Card.Section>
         <Group position="apart" mt="md" mb="xs">
-          <Text
-            className="whitespace-nowrap"
-            sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}
-            weight={500}
-          >
-            {title}
-          </Text>
+          <Link href={`/products/${id}`}>
+            <Text
+              className="whitespace-nowrap"
+              sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}
+              weight={500}
+            >
+              {title}
+            </Text>
+          </Link>
         </Group>
 
         <Text
@@ -81,7 +98,7 @@ function ProductCard({
 
         <Group position="apart" mt="md" mb="xs">
           <Text
-            className="whitespace-nowrap w-48"
+            className="whitespace-nowrap w-32"
             sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}
             size={20}
             weight={500}

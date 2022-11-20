@@ -11,6 +11,7 @@ import {
 import Link from 'next/link';
 import { useState } from 'react';
 import { OrderTimeline } from './OrderTimeline';
+import { statusMap } from '../../Seller/Orders/OrderItem';
 
 export type Bag = {
   item: {
@@ -58,6 +59,13 @@ function OrderItem({
     paymentInfo = 'Payment Failed';
   }
 
+  let badgeColor = '';
+  if (paymentStatus === 'PENDING' || paymentStatus === 'FAILED') {
+    badgeColor = 'orange';
+  } else {
+    badgeColor = '';
+  }
+
   return (
     <div className="mt-4 rounded-lg p-4 bg-white">
       <Modal opened={opened} onClose={() => setOpened(false)}>
@@ -75,7 +83,9 @@ function OrderItem({
         <Button leftIcon={<IconBuildingStore stroke={1.5} />} variant="subtle">
           {sellerName}
         </Button>
-        <Badge>{paymentStatus === 'SUCCESS' ? orderStatus : paymentInfo}</Badge>
+        <Badge color={badgeColor}>
+          {paymentStatus === 'SUCCESS' ? statusMap[orderStatus] : paymentInfo}
+        </Badge>
       </div>
 
       {bags && (
@@ -95,51 +105,53 @@ function OrderItem({
           })}
         </div>
       )}
-      <div className="flex justify-between mt-4 items-center">
+      <div className="flex justify-between mt-4 items-center flex-col lg:flex-row">
         {totalPrice && (
           <Text className="text-md pl-3 flex gap-2 text-brown-500">
             <IconFileInvoice stroke={1.5} /> ${(+totalPrice / 100).toString()}
           </Text>
         )}
 
-        {paymentStatus === 'SUCCESS' ? (
-          <div className="flex items-center gap-4">
-            <Button
-              component={Link}
-              href={`/dashboard/buyer/orders/${id}`}
-              variant="outline"
-              leftIcon={<IconReceipt stroke={1.5} size={20} />}
-            >
-              View Order
-            </Button>
-            <Button
-              onClick={() => setOpened(true)}
-              variant="outline"
-              leftIcon={<IconBox stroke={1.5} size={20} />}
-            >
-              Track Order
-            </Button>
-          </div>
-        ) : (
-          <div className="flex items-center gap-4">
-            <Button
-              component={Link}
-              href={`/dashboard/buyer/orders/${id}`}
-              variant="outline"
-              leftIcon={<IconReceipt stroke={1.5} size={20} />}
-            >
-              View Order
-            </Button>
-            <Button
-              component={Link}
-              href={paymentLink ?? ''}
-              variant="outline"
-              leftIcon={<IconReceipt2 stroke={1.5} size={20} />}
-            >
-              Pay Now
-            </Button>
-          </div>
-        )}
+        <div className="flex items-center gap-4 mt-4">
+          {paymentStatus === 'SUCCESS' ? (
+            <>
+              <Button
+                component={Link}
+                href={`/dashboard/buyer/orders/${id}`}
+                variant="outline"
+                leftIcon={<IconReceipt stroke={1.5} size={20} />}
+              >
+                View Order
+              </Button>
+              <Button
+                onClick={() => setOpened(true)}
+                variant="outline"
+                leftIcon={<IconBox stroke={1.5} size={20} />}
+              >
+                Track Order
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                component={Link}
+                href={`/dashboard/buyer/orders/${id}`}
+                variant="outline"
+                leftIcon={<IconReceipt stroke={1.5} size={20} />}
+              >
+                View Order
+              </Button>
+              <Button
+                component={Link}
+                href={paymentLink ?? ''}
+                variant="outline"
+                leftIcon={<IconReceipt2 stroke={1.5} size={20} />}
+              >
+                Pay Now
+              </Button>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

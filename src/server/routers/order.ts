@@ -1,9 +1,10 @@
 import { router, protectedProcedure } from '../trpc';
 import { randomUUID } from 'crypto';
-import { getBuyerId, getCartId } from '@/server/functions/identity';
+import { getBuyerId, getSellerId, getCartId } from '@/server/functions/identity';
 import { getSelectedOrderItems, getCartItemsPrice } from '@/server/functions/cart';
 import { z } from 'zod';
 import { stripe } from '@/utils/stripe';
+import { statusUpdateInputWithId } from '../schema';
 
 export const orderRouter = router({
   placeOrder: protectedProcedure
@@ -248,5 +249,104 @@ export const orderRouter = router({
       });
 
       return buyerOrder;
+    }),
+  getSellerOrders: protectedProcedure.query(async ({ ctx }) => {
+    let id = await getSellerId(ctx);
+    if (!id) return null;
+
+    let sellerOrders = await ctx.prisma.order.findMany({
+      where: {
+        sellerId: id,
+        payment: {
+          status: 'SUCCESS'
+        }
+      },
+      select: {
+        id: true,
+        Bag: {
+          select: {
+            productId: true,
+            itemCount: true,
+            item: {
+              select: {
+                image: true,
+                title: true,
+                priceInCents: true
+              }
+            }
+          }
+        },
+        status: true,
+        totalPriceInCents: true
+      }
+    });
+
+    return sellerOrders;
+  }),
+  getSellerOrderById: protectedProcedure
+    .input(z.object({ id: z.string().min(1) }))
+    .query(async ({ input, ctx }) => {
+      let id = await getSellerId(ctx);
+      if (!id) return null;
+
+      let sellerOrderById = await ctx.prisma.order.findFirst({
+        where: {
+          sellerId: id,
+          id: input.id,
+          payment: {
+            status: 'SUCCESS'
+          }
+        },
+        select: {
+          id: true,
+          Bag: {
+            select: {
+              productId: true,
+              itemCount: true,
+              item: {
+                select: {
+                  image: true,
+                  title: true,
+                  priceInCents: true
+                }
+              }
+            }
+          },
+          status: true,
+          totalPriceInCents: true,
+          address: {
+            select: {
+              city: true,
+              country: true,
+              postalCode: true,
+              region: true,
+              addressLine1: true
+            }
+          }
+        }
+      });
+
+      return sellerOrderById;
+    }),
+  setBuyerOrderStatus: protectedProcedure
+    .input(statusUpdateInputWithId)
+    .mutation(async ({ input, ctx }) => {
+      let id = await getSellerId(ctx);
+      if (!id) return null;
+
+      let setBuyerOrderStatus = await ctx.prisma.order.updateMany({
+        where: {
+          sellerId: id,
+          id: input.id,
+          payment: {
+            status: 'SUCCESS'
+          }
+        },
+        data: {
+          status: input.orderStatus
+        }
+      });
+
+      return input.id;
     })
 });

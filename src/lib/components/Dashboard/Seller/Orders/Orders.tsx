@@ -1,9 +1,9 @@
 import { Title } from '@mantine/core';
 import { trpc } from '@/utils/trpc';
-import OrderItem from './OrderItem';
+import OrderItem from '@/lib/components/Dashboard/Seller/Orders/OrderItem';
 
 function Orders() {
-  const { data, isLoading, error } = trpc.order.getBuyerOrders.useQuery();
+  const { data, isLoading, error } = trpc.order.getSellerOrders.useQuery();
 
   if (data) {
     console.log(data);
@@ -11,32 +11,23 @@ function Orders() {
 
   return (
     <div className="p-2">
-      <Title order={1}>My Orders</Title>
+      <Title order={1}>Orders</Title>
 
       {data && !data.length && (
         <Title order={4} weight={300} color="dimmed" className="flex items-center" mt={20}>
-          You haven&apos;t ordered anything yet.
+          You haven&apos;t received any orders yet.
         </Title>
       )}
 
       {data &&
         data.map((order, i) => {
-          let paymentStatus = order.payment?.status;
-          let notPaid = paymentStatus === 'PENDING' || paymentStatus === 'FAILED';
           return (
             <OrderItem
               id={order.id}
               key={i}
               bags={order.Bag}
               orderStatus={order.status}
-              paymentStatus={paymentStatus}
-              sellerName={order.seller.storeName}
               totalPrice={order.totalPriceInCents ?? ''}
-              paymentLink={
-                notPaid
-                  ? `${process.env.NEXT_PUBLIC_CURRENT_URL}payment/${order.payment?.refId}`
-                  : ''
-              }
             />
           );
         })}
