@@ -91,8 +91,6 @@ export function SideNavBar({
   const { data: session, status } = useSession();
   const { classes, cx } = useStyles();
   const [active, setActive] = useState('');
-  const title = opened ? 'Close navigation' : 'Open navigation';
-  const isMobile = useMediaQuery('(max-width: 1600px)');
   const links = data.map((item) => (
     <a
       className={cx(classes.link, { [classes.linkActive]: item.label === active })}
