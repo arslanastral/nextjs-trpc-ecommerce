@@ -9,7 +9,7 @@ export function PaymentSummary({
 }: {
   totalPriceInCents: string;
   paymentLink?: string;
-  paymentStatus: 'PENDING' | 'SUCCESS' | 'FAILED' | undefined;
+  paymentStatus?: 'PENDING' | 'SUCCESS' | 'FAILED' | undefined;
 }) {
   let paymentButton = false;
   if (paymentStatus === 'PENDING' || paymentStatus === 'FAILED') {
