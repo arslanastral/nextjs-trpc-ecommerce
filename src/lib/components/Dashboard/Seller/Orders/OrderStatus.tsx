@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { createStyles, UnstyledButton, Menu, Image, Group } from '@mantine/core';
+import { trpc } from '@/utils/trpc';
 import { IconChevronDown } from '@tabler/icons';
 import {
   IconLoader,
@@ -10,22 +11,30 @@ import {
   IconAlertTriangle,
   IconCircleX
 } from '@tabler/icons';
-
-//   'OUTOFSTOCK'
-//   | 'USERCANCELLED'
-//   | 'SELLERCANCELLED'
-//   | 'PROCESSING'
-//   | 'PACKED'
-//   | 'SHIPPED'
-//   | 'OUTFORDELIVERY'
-//   | 'DELIVERED';
+import { StatusUpdateInput } from '@/server/schema';
 
 const status = [
-  { label: 'Processing', value: 'PROCESSING', icon: <IconLoader /> },
-  { label: 'Packed', value: 'PACKED', icon: <IconPackage /> },
-  { label: 'Shipped', value: 'SHIPPED', icon: <IconPackgeExport /> },
-  { label: 'Out For Delivery', value: 'OUTFORDELIVERY', icon: <IconTruck /> },
-  { label: 'Delivered', value: 'DELIVERED', icon: <IconHeartHandshake /> }
+  {
+    label: 'Processing',
+    value: 'PROCESSING' as StatusUpdateInput['orderStatus'],
+    icon: <IconLoader />
+  },
+  { label: 'Packed', value: 'PACKED' as StatusUpdateInput['orderStatus'], icon: <IconPackage /> },
+  {
+    label: 'Shipped',
+    value: 'SHIPPED' as StatusUpdateInput['orderStatus'],
+    icon: <IconPackgeExport />
+  },
+  {
+    label: 'Out For Delivery',
+    value: 'OUTFORDELIVERY' as StatusUpdateInput['orderStatus'],
+    icon: <IconTruck />
+  },
+  {
+    label: 'Delivered',
+    value: 'DELIVERED' as StatusUpdateInput['orderStatus'],
+    icon: <IconHeartHandshake />
+  }
 ];
 
 const useStyles = createStyles((theme, { opened }: { opened: boolean }) => ({
@@ -64,14 +73,33 @@ const useStyles = createStyles((theme, { opened }: { opened: boolean }) => ({
 }));
 
 export function OrderStatus({ id, orderStatus }: { id: string; orderStatus: string }) {
+  const buyerOrderStatus = trpc.order.setBuyerOrderStatus.useMutation();
   const [opened, setOpened] = useState(false);
   const { classes } = useStyles({ opened });
-  const [selected, setSelected] = useState(status[0]);
+  const [selected, setSelected] = useState(
+    status[status.findIndex((status) => status.value === orderStatus)]
+  );
   const items = status.map((status) => (
-    <Menu.Item icon={status.icon} onClick={() => setSelected(status)} key={status.label}>
+    <Menu.Item
+      icon={status.icon}
+      onClick={() => handlebuyerOrderStatus(status.value)}
+      key={status.label}
+    >
       {status.label}
     </Menu.Item>
   ));
+
+  const handlebuyerOrderStatus = async (orderStatus: StatusUpdateInput['orderStatus']) => {
+    if (status && id) {
+      buyerOrderStatus.mutate(
+        { id, orderStatus },
+        {
+          onSuccess: () =>
+            setSelected(status[status.findIndex((status) => status.value === orderStatus)])
+        }
+      );
+    }
+  };
 
   return (
     <Menu
