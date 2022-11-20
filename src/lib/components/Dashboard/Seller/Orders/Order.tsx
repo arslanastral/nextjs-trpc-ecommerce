@@ -6,6 +6,7 @@ import { type SellerOrderProps } from './OrderItem';
 import OrderAddress from '@/lib/components/Dashboard/Buyer/Orders/OrderAddress';
 import { PaymentSummary } from '@/lib/components/Dashboard/Buyer/Orders/PaymentSummary';
 import { OrderStatus } from './OrderStatus';
+import { OrderTimeline } from '@/lib/components/Dashboard/Buyer/Orders/OrderTimeline';
 
 type OrderPropsWithAddress = SellerOrderProps & OrderAddressType;
 
@@ -23,6 +24,7 @@ function Order({ id, bags, orderStatus, totalPrice, address }: OrderPropsWithAdd
       </div>
       <div className="flex gap-4 mt-10 flex-col xl:flex-row">
         <OrderInfo data={bags} title="Ordered Items" />
+        <OrderTimeline orderStatus={orderStatus} title="Order Status" paymentStatus="SUCCESS" />
       </div>
       <div className="flex gap-4 mt-4 flex-col xl:flex-row">
         <OrderAddress address={address} />
