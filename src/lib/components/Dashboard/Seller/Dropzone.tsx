@@ -44,12 +44,12 @@ export function DropzoneButton({ onDrop }: DropZoneProp) {
         openRef={openRef}
         onDrop={(files) => handleImageUpload(files[0])}
         onReject={(files) =>
-          setError('Size is too big. Try With Different Image (Max 5mb is allowed)')
+          setError('Size is too big. Try With Different Image (Max 1mb is allowed)')
         }
         className={classes.dropzone}
         radius="md"
         accept={IMAGE_MIME_TYPE}
-        maxSize={10 * 1024 ** 2}
+        maxSize={1 * 1024 ** 2}
       >
         <div style={{ pointerEvents: 'none' }}>
           <Group position="center">
