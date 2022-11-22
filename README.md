@@ -2,9 +2,9 @@
 
 # Zavy - An eCommerce Marketplace
 
-🚀 **Deployed at:** [https://zavy.vercel.app/](https://zavy.vercel.app/) && [https://zavy.netlify.app/](https://zavy.netlify.app/)
+🚀 **Live Demo:** [https://zavy.vercel.app/](https://zavy.vercel.app/)
 
-Zavy is an eCommerce marketplace built by `v41-bears-team-32`.
+Zavy is an eCommerce marketplace built by [v41-bears-team-32](https://github.com/chingu-voyages/v41-bears-team-32) ([Chingu.io](https://www.chingu.io/) Voyage 41)
 
 ### MVP Features:
 
@@ -13,7 +13,7 @@ Zavy is an eCommerce marketplace built by `v41-bears-team-32`.
 - Seller can create their product card with live preview
 - Payment processing via Stripe
 - Failed or pending payment handling
-- Stateful Cart which remebers your selection
+- Stateful Cart which remembers your selection
 
 ## Local Development Steps:
 
@@ -27,7 +27,7 @@ $ `docker run --name zavy -e POSTGRES_PASSWORD=password -p 5432:5432 -d --rm pos
 
 This project uses [pnpm](https://pnpm.io/) for managing dependancies. If you don't already have it installed, install it using `npm install -g pnpm` or choose other available methods [here](https://pnpm.io/installation) and then:
 
-- `git clone https://github.com/chingu-voyages/v41-bears-team-32.git && cd v41-bears-team-32`
+- `git clone` this repo and `cd` into it
 - `pnpm install`
 
 #### 🛑 Complete 3️⃣ before continuing...
@@ -53,7 +53,7 @@ NEXTAUTH_SECRET=VJ13WCJAjH1SNoLpvUUIWhvk9+cEfsnOMnjssSsvzJQ=
 NEXTAUTH_LOGIN=http://localhost:3000/api/login
 NEXTAUTH_SIGNUP=http://localhost:3000/api/signup
 CLOUDINARY_URL=<cloudinary://[API_KEY]:[API_SECRET]@[CLOUD_NAME]>
-STRIPE_SECRET_KEY=<your-secret-key>
+STRIPE_SECRET_KEY=<your-test-mode-secret-key>
 NEXT_PUBLIC_CURRENT_URL=http://localhost:3000/
 CURRENT_ENV=dev
 ```
