@@ -2,8 +2,6 @@
 
 # Zavy - An eCommerce Marketplace
 
-🚀 **Live Demo:** [https://zavy.vercel.app/](https://zavy.vercel.app/)
-
 Zavy is an eCommerce marketplace built by [v41-bears-team-32](https://github.com/chingu-voyages/v41-bears-team-32) ([Chingu.io](https://www.chingu.io/) Voyage 41)
 
 ### MVP Features:
@@ -14,6 +12,41 @@ Zavy is an eCommerce marketplace built by [v41-bears-team-32](https://github.com
 - Payment processing via Stripe
 - Failed or pending payment handling
 - Stateful Cart which remembers your selection
+- Order tracking and status update
+
+## Preview
+
+![homepage](https://raw.githubusercontent.com/arslanastral/zavy-ecommerce/main/preview/Homepage.png)
+
+![create-product](https://raw.githubusercontent.com/arslanastral/zavy-ecommerce/main/preview/create-product.png)
+
+![product-page](https://raw.githubusercontent.com/arslanastral/zavy-ecommerce/main/preview/product-page.png)
+
+![cart](https://raw.githubusercontent.com/arslanastral/zavy-ecommerce/main/preview/cart.png)
+
+![checkout](https://raw.githubusercontent.com/arslanastral/zavy-ecommerce/main/preview/checkout.png)
+
+![zavy-stripe-integration](https://raw.githubusercontent.com/arslanastral/zavy-ecommerce/main/preview/custom-stripe.png)
+
+![payment-success](https://raw.githubusercontent.com/arslanastral/zavy-ecommerce/main/preview/payment-success.png)
+
+![buyer-orders](https://raw.githubusercontent.com/arslanastral/zavy-ecommerce/main/preview/buyer-order.png)
+
+![buyer-order-page](https://raw.githubusercontent.com/arslanastral/zavy-ecommerce/main/preview/buyer-order-page.png)
+
+![seller-order-page](https://raw.githubusercontent.com/arslanastral/zavy-ecommerce/main/preview/seller-order-page.png)
+
+![seller-order-page-status](https://raw.githubusercontent.com/arslanastral/zavy-ecommerce/main/preview/seller-order-page-status.png)
+
+![buyer-orders-after-status-update](https://raw.githubusercontent.com/arslanastral/zavy-ecommerce/main/preview/buyer-orders-updated-status.png)
+
+![order-with-pending-payment](https://raw.githubusercontent.com/arslanastral/zavy-ecommerce/main/preview/buyer-order-page-pending-payment.png)
+
+![seller-product-dashboard](https://raw.githubusercontent.com/arslanastral/zavy-ecommerce/main/preview/seller-products.png)
+
+![address-book](https://raw.githubusercontent.com/arslanastral/zavy-ecommerce/main/preview/address-book.png)
+
+![login-page](https://raw.githubusercontent.com/arslanastral/zavy-ecommerce/main/preview/login.png)
 
 ## Local Development Steps:
 
