@@ -5,10 +5,6 @@ import OrderItem from '@/lib/components/Dashboard/Seller/Orders/OrderItem';
 function Orders() {
   const { data, isLoading, error } = trpc.order.getSellerOrders.useQuery();
 
-  if (data) {
-    console.log(data);
-  }
-
   return (
     <div className="p-2">
       <Title order={1}>Orders</Title>

@@ -9,7 +9,6 @@ type PaymentInfoProps = {
 };
 
 function PaymentInfo({ status, checkoutLink }: PaymentInfoProps) {
-  console.log(status);
   useEffect(() => {
     if (!status) {
       window.location.href = '/';

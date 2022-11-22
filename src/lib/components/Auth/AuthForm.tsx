@@ -103,7 +103,6 @@ export function AuthForm({ title, buttonTitle, isForSignUp }: LoginFormProps) {
   });
 
   const onSubmit = async (data: FormData) => {
-    console.log(data);
     setError('');
     setMessage('');
     setisLoading(false);

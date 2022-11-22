@@ -5,10 +5,6 @@ import OrderItem from './OrderItem';
 function Orders() {
   const { data, isLoading, error } = trpc.order.getBuyerOrders.useQuery();
 
-  if (data) {
-    console.log(data);
-  }
-
   return (
     <div className="p-2">
       <Title order={1}>My Orders</Title>

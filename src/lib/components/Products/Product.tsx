@@ -39,7 +39,6 @@ const Product = ({ id, title, image, description, category, price, stock }: Prod
       {
         onSuccess: (data) => {
           if (data === 'stock_limit') setCartLimit(true);
-          console.log(data);
           setItemQuantity(1);
           current.cart.getItemCount.invalidate();
         }

@@ -33,7 +33,6 @@ export function DropzoneButton({ onDrop }: DropZoneProp) {
   const handleImageUpload = (file: File) => {
     setError('');
     setFileName(file.name);
-    console.log(fileName);
     let imageDataUrl = URL.createObjectURL(file);
     onDrop(imageDataUrl);
   };
